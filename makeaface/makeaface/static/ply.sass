@@ -1,0 +1,454 @@
+*
+    margin: 0
+    padding: 0
+
+
+html
+    font-size: 62.5%
+
+
+ul
+    margin-left: 1.5em
+
+    li
+        margin-left: .85em
+
+
+ol
+    margin-left: 2.35em
+
+    ol
+        margin-left: 2.5em
+
+
+ul ol
+    margin-left: 2.5em
+
+
+dd
+    margin-left: 2em
+
+
+body, th, td
+    font-family: Helvetica, Arial, sans-serif
+    font-size: 1.2em
+    line-height: 1.3em
+
+
+p, hr
+    margin-bottom: 1.6em
+
+
+p+p
+    margin-top: -.8em
+
+
+h1
+    font-size: 1.6em
+    margin: 1em 0 .5em
+
+
+h2
+    font-size: 1.5em
+    margin: 1.07em 0 .535em
+
+
+h3
+    font-size: 1.4em
+    margin: 1.14em 0 .57em
+
+
+h4
+    font-size: 1.3em
+    margin: 1.23em 0 .615em
+
+
+h5
+    font-size: 1.2em
+    margin: 1.33em 0 .67em
+
+
+h6
+    font-size: 1em
+    margin: 1.6em 0 .8em
+
+
+a img, :link img, :visited img
+    border: none
+
+
+table
+    border-collapse: collapse
+
+
+th, td
+    border: 1px solid #ccc
+    padding: 0.25em
+
+
+.grid
+    width: 950px
+    margin: 0 auto
+
+
+.showgrid
+    background: url(http://cloud.github.com/downloads/rentzsch/ply/ply-grid.png)
+
+
+body
+    margin: 1.5em 0
+
+
+=last
+    margin-right: 0
+    display: block
+
+
+div
+    &.border
+        padding-right: 4px
+        margin-right: 5px
+        border-right: 1px solid #eee
+
+    &.colborder
+        padding-right: 24px
+        margin-right: 25px
+        border-right: 1px solid #eee
+
+
+/* functions yay */
+
+!colwidth = 30
+!gutterwidth = 10
+
+=spancol(!cols)
+    !bodycols = !cols - 1
+    !width = !cols * !colwidth + (!cols - 1) * !gutterwidth
+    width: #{!width}px
+
+=span(!cols)
+    float: left
+    margin-right: #{!gutterwidth}px
+    display: inline
+    +spancol(!cols)
+
+=prefix(!cols)
+    !width = !cols * (!colwidth + !gutterwidth)
+    margin-left: #{!width}px
+
+=suffix(!cols)
+    !width = !cols * (!colwidth + !gutterwidth)
+    margin-right: #{!width}px
+
+=pull(!cols)
+    float: left
+    position: relative
+
+    !width = !cols * (!colwidth + !gutterwidth)
+    margin-left: -#{!width}px
+
+=push(!cols)
+    float: right
+    position: relative
+
+    !width = !cols * (!colwidth + !gutterwidth)
+    margin: 0 -#{!width}px 1.5em #{!width}px
+
+
+/* using functions boo */
+
+.span-1
+    +spancol(1)
+.span-2
+    +spancol(2)
+.span-3
+    +spancol(3)
+.span-4
+    +spancol(4)
+.span-5
+    +spancol(5)
+.span-6
+    +spancol(6)
+.span-7
+    +spancol(7)
+.span-8
+    +spancol(8)
+.span-9
+    +spancol(9)
+.span-10
+    +spancol(10)
+.span-11
+    +spancol(11)
+.span-12
+    +spancol(12)
+.span-13
+    +spancol(13)
+.span-14
+    +spancol(14)
+.span-15
+    +spancol(15)
+.span-16
+    +spancol(16)
+.span-17
+    +spancol(17)
+.span-18
+    +spancol(18)
+.span-19
+    +spancol(19)
+.span-20
+    +spancol(20)
+.span-21
+    +spancol(21)
+.span-22
+    +spancol(22)
+.span-23
+    +spancol(23)
+.span-24
+    +spancol(24)
+
+div
+    &.span-1
+        +span(1)
+    &.span-2
+        +span(2)
+    &.span-3
+        +span(3)
+    &.span-4
+        +span(4)
+    &.span-5
+        +span(5)
+    &.span-6
+        +span(6)
+    &.span-7
+        +span(7)
+    &.span-8
+        +span(8)
+    &.span-9
+        +span(9)
+    &.span-10
+        +span(10)
+    &.span-11
+        +span(11)
+    &.span-12
+        +span(12)
+    &.span-13
+        +span(13)
+    &.span-14
+        +span(14)
+    &.span-15
+        +span(15)
+    &.span-16
+        +span(16)
+    &.span-17
+        +span(17)
+    &.span-18
+        +span(18)
+    &.span-19
+        +span(19)
+    &.span-20
+        +span(20)
+    &.span-21
+        +span(21)
+    &.span-22
+        +span(22)
+    &.span-23
+        +span(23)
+    &.span-24
+        +span(24)
+        +last
+
+    &.suffix-1
+        +suffix(1)
+    &.suffix-2
+        +suffix(2)
+    &.suffix-3
+        +suffix(3)
+    &.suffix-4
+        +suffix(4)
+    &.suffix-5
+        +suffix(5)
+    &.suffix-6
+        +suffix(6)
+    &.suffix-7
+        +suffix(7)
+    &.suffix-8
+        +suffix(8)
+    &.suffix-9
+        +suffix(9)
+    &.suffix-10
+        +suffix(10)
+    &.suffix-11
+        +suffix(11)
+    &.suffix-12
+        +suffix(12)
+    &.suffix-13
+        +suffix(13)
+    &.suffix-14
+        +suffix(14)
+    &.suffix-15
+        +suffix(15)
+    &.suffix-16
+        +suffix(16)
+    &.suffix-17
+        +suffix(17)
+    &.suffix-18
+        +suffix(18)
+    &.suffix-19
+        +suffix(19)
+    &.suffix-20
+        +suffix(20)
+    &.suffix-21
+        +suffix(21)
+    &.suffix-22
+        +suffix(22)
+    &.suffix-23
+        +suffix(23)
+
+.prefix-1
+    +prefix(1)
+.prefix-2
+    +prefix(2)
+.prefix-3
+    +prefix(3)
+.prefix-4
+    +prefix(4)
+.prefix-5
+    +prefix(5)
+.prefix-6
+    +prefix(6)
+.prefix-7
+    +prefix(7)
+.prefix-8
+    +prefix(8)
+.prefix-9
+    +prefix(9)
+.prefix-10
+    +prefix(10)
+.prefix-11
+    +prefix(11)
+.prefix-12
+    +prefix(12)
+.prefix-13
+    +prefix(13)
+.prefix-14
+    +prefix(14)
+.prefix-15
+    +prefix(15)
+.prefix-16
+    +prefix(16)
+.prefix-17
+    +prefix(17)
+.prefix-18
+    +prefix(18)
+.prefix-19
+    +prefix(19)
+.prefix-20
+    +prefix(20)
+.prefix-21
+    +prefix(21)
+.prefix-22
+    +prefix(22)
+.prefix-23
+    +prefix(23)
+
+.pull-1
+    +pull(1)
+.pull-2
+    +pull(2)
+.pull-3
+    +pull(3)
+.pull-4
+    +pull(4)
+.pull-5
+    +pull(5)
+.pull-6
+    +pull(6)
+.pull-7
+    +pull(7)
+.pull-8
+    +pull(8)
+.pull-9
+    +pull(9)
+.pull-10
+    +pull(10)
+.pull-11
+    +pull(11)
+.pull-12
+    +pull(12)
+.pull-13
+    +pull(13)
+.pull-14
+    +pull(14)
+.pull-15
+    +pull(15)
+.pull-16
+    +pull(16)
+.pull-17
+    +pull(17)
+.pull-18
+    +pull(18)
+.pull-19
+    +pull(19)
+.pull-20
+    +pull(20)
+.pull-21
+    +pull(21)
+.pull-22
+    +pull(22)
+.pull-23
+    +pull(23)
+.pull-24
+    +pull(24)
+
+.push-1
+    +push(1)
+.push-2
+    +push(2)
+.push-3
+    +push(3)
+.push-4
+    +push(4)
+.push-5
+    +push(5)
+.push-6
+    +push(6)
+.push-7
+    +push(7)
+.push-8
+    +push(8)
+.push-9
+    +push(9)
+.push-10
+    +push(10)
+.push-11
+    +push(11)
+.push-12
+    +push(12)
+.push-13
+    +push(13)
+.push-14
+    +push(14)
+.push-15
+    +push(15)
+.push-16
+    +push(16)
+.push-17
+    +push(17)
+.push-18
+    +push(18)
+.push-19
+    +push(19)
+.push-20
+    +push(20)
+.push-21
+    +push(21)
+.push-22
+    +push(22)
+.push-23
+    +push(23)
+.push-24
+    +push(24)
+
+
+div.last
+    +last
