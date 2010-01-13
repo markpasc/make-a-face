@@ -1,11 +1,26 @@
 from __future__ import with_statement
 
+from cgi import parse_qs
+from cStringIO import StringIO
 import functools
+import logging
+from urlparse import urlparse
 
+from django.http import HttpResponse, HttpResponseRedirect
 from templateresponse import TemplateResponse
 import typepad
-import typepadapp.views.base
-import motion.views
+import typepad.api
+
+
+def oops(fn):
+    @functools.wraps(fn)
+    def hoops(*args, **kwargs):
+        try:
+            return fn(*args, **kwargs)
+        except Exception, exc:
+            logging.exception(exc)
+            return HttpResponse('%s: %s' % (type(exc).__name__, str(exc)), status=400, content_type='text/plain')
+    return hoops
 
 
 def home(request):
@@ -19,14 +34,28 @@ def home(request):
         {'events': events})
 
 
+@oops
 def upload_photo(request):
     if request.method != 'POST':
-        raise HttpResponse('POST required at this url', status=400, content_type='text/plain')
+        return HttpResponse('POST required at this url', status=400, content_type='text/plain')
 
-    assert request.META['CONTENT_TYPE'].startswith('image/jpeg')
-    body = request.raw_post_data
+    content_type = request.META['CONTENT_TYPE']
+    assert content_type.startswith('image/')
+    bodyfile = StringIO(request.raw_post_data)
 
-    # dur de dur
-    url = 'hur'
+    asset = typepad.api.Asset()
+    resp, content = typepad.api.browser_upload.upload(asset, bodyfile,
+        content_type=content_type, redirect_to='http://example.com/')
 
-    return HttpResponseRedirect('YAY', content_type='text/plain')
+    if resp.status != 302:
+        logging.debug('%d response from typepad: %s', resp.status, content)
+    assert resp.status == 302
+
+    if 'location' not in resp:
+        logging.debug('No Location in response, only %r', resp.keys())
+    loc = resp['location']
+    loc_parts = parse_qs(urlparse(loc).query)
+    loc = loc_parts['asset_url']
+
+    # Flash doodad needs a 200, not a redirect.
+    return HttpResponse(loc, content_type='text/plain')

@@ -1,4 +1,5 @@
 {% extends "makeaface/base.html" %}
+{% load abs %}
 
 {% block content %}
 
@@ -16,12 +17,12 @@
         cameraman.url = '{% url static path="makeaface/" %}';
         var mycam = cameraman.createCamera({
             'id': 'camera',
-            'width': '310',
-            'height': '310',
-            'sendto': '{% url upload_photo %}',
-            'errorSending': function(cam, err) { errorSending(cam, err) },
+            'width': '400',
+            'height': '400',
+            'sendto': '{% absoluteurl %}{% url upload_photo %}{% endabsoluteurl %}',
+            'errorSending': function(cam, err) { alert('OOPS: ' + err) },
             'tookPhoto': function(cam) { tookPhoto(cam) },
-            'droppedPhoto': function(cam) { droppedPhoto(cam) },
+            //'droppedPhoto': function(cam) { droppedPhoto(cam) },
             'sentPhoto': function(cam, url) { sentPhoto(cam, url) }
         });
     </script>
@@ -38,14 +39,11 @@
         function sentPhoto(cam, url) {
             window.location.href = url;
         }
-        function errorSending(cam, err) {
-            console.log(err);
-        }
     </script>
     {% endif %}
 
     {% for pic in events %}
-        <div>{{ pic }}</div>
+        <div>HI A PHOTO: {{ pic.object.links.rel__enclosure.maxwidth__458.href }}</div>
     {% endfor %}
 
 {% endblock %}
