@@ -96,7 +96,7 @@ th, td
 
 
 body
-    margin: 1.5em 0
+    margin: 10px 0
 
 
 =last
@@ -124,6 +124,7 @@ div
 =spancol(!cols)
     !bodycols = !cols - 1
     !width = !cols * !colwidth + (!cols - 1) * !gutterwidth
+    margin-bottom: #{!gutterwidth}px
     width: #{!width}px
 
 =span(!cols)
@@ -152,7 +153,7 @@ div
     position: relative
 
     !width = !cols * (!colwidth + !gutterwidth)
-    margin: 0 -#{!width}px 1.5em #{!width}px
+    margin: 0 -#{!width}px #{!gutterwidth}px #{!width}px
 
 
 /* using functions boo */

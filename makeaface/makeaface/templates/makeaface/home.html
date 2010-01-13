@@ -1,5 +1,51 @@
 {% extends "makeaface/base.html" %}
 
 {% block content %}
-    <p>wooble</p>
+
+    {% if user.is_anonymous %}
+        <p>Hi! <a href="{% url login %}">Sign in</a></p>
+    {% else %}
+        <p>Hi, {{ user.display_name }}! <a href="{% url logout %}">Sign out</a></p>
+    {% endif %}
+
+    {% if user.is_authenticated %}
+    <div id="camera"></div>
+
+    <script type="text/javascript" src="{% url static path="makeaface/cameraman.js" %}"></script>
+    <script type="text/javascript">
+        cameraman.url = '{% url static path="makeaface/" %}';
+        var mycam = cameraman.createCamera({
+            'id': 'camera',
+            'width': '310',
+            'height': '310',
+            'sendto': '{% url upload_photo %}',
+            'errorSending': function(cam, err) { errorSending(cam, err) },
+            'tookPhoto': function(cam) { tookPhoto(cam) },
+            'droppedPhoto': function(cam) { droppedPhoto(cam) },
+            'sentPhoto': function(cam, url) { sentPhoto(cam, url) }
+        });
+    </script>
+
+    <p><button id="take-picture">Take picture</button></p>
+
+    <script type="text/javascript">
+        $('#take-picture').click(function () {
+            mycam.takePhoto();
+        });
+        function tookPhoto(cam) {
+            cam.sendPhoto();
+        }
+        function sentPhoto(cam, url) {
+            window.location.href = url;
+        }
+        function errorSending(cam, err) {
+            console.log(err);
+        }
+    </script>
+    {% endif %}
+
+    {% for pic in events %}
+        <div>{{ pic }}</div>
+    {% endfor %}
+
 {% endblock %}

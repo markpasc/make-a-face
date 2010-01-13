@@ -63,6 +63,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.csrf.middleware.CsrfMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
 
     'djangoflash.middleware.FlashMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
@@ -81,7 +82,8 @@ TEMPLATE_DIRS = (
 )
 
 AUTHENTICATION_BACKENDS = (
-    'typepadapp.backends.TypePadBackend',
+    #'typepadapp.backends.TypePadBackend',
+    'makeaface.backends.ALaCarteBackend',
 )
 
 INSTALLED_APPS = (
@@ -89,6 +91,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.sites',
     'debug_toolbar',
+    'typepadapp',
     'makeaface',
 )
 
