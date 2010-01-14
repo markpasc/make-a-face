@@ -9,12 +9,6 @@ var defaultPictures = [];
 })();
 
 function onCellCreate(cell) {
-    cell.elem.css("background-color", "#aaaaff");
-    cell.elem.css("background-position", "center");
-    cell.elem.css("background-repeat", "no-repeat");
-    cell.elem.css("background-image", "url(http://static.typepad.com/.shared/images/default-avatars/avatar-03-250x250.gif)");
-    cell.elem.css("background-size", "100%");
-    cell.elem.css("-moz-background-size", "100%");
 
     if (cell.x == -2) {
         if (cell.y < faces.length) {
@@ -52,6 +46,3 @@ $(document).ready(
         cells[1][-1].setBothspan(3);
     }
 );
-
-
-

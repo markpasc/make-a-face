@@ -7,13 +7,9 @@
     <script type="text/javascript" src="{% url static path="makeaface/gridwall.js" %}"></script>
     <script type="text/javascript" src="{% url static path="makeaface/cameraman.js" %}"></script>
 
-    <script type="text/javascript">
-
-    {% block js_data %}{% endblock%}
-
-    </script>
-
-    <script type="text/javascript" src="{% url static path="makeaface/facething.js" %}"></script>
+    {% block htmlhead %}{% endblock %}
 </head><body>
+
+    {% block content %}{% endblock %}
 
 </body></html>

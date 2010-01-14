@@ -1,19 +1,29 @@
 {% extends "makeaface/base.html" %}
 {% load abs %}
 
-{% block js_data %}
+{% block htmlhead %}
+    <link rel="stylesheet" type="text/css" href="{% url static path="makeaface/gridwall.css" %}">
 
-    var faces = [
-    {% for event in events %}
-        "{{ event.object.links.rel__enclosure.maxwidth__458.href }}",
-    {% endfor %}
-        null
-    ].slice(0, -1);
+    <script type="text/javascript">
+    {% block js_data %}
+        var faces = [
+        {% for event in events %}
+            "{{ event.object.links.rel__enclosure.maxwidth__458.href }}",
+        {% endfor %}
+            null
+        ].slice(0, -1);
+    {% endblock%}
+    </script>
 
+    <script type="text/javascript" src="{% url static path="makeaface/facething.js" %}"></script>
 {% endblock %}
 
 {% block content %}
+    <div id="gridsizer"></div>
+    <div id="gridcontainer"></div>
+{% endblock %}
 
+{% block old_content %}
     {% if user.is_anonymous %}
         <p>Hi! <a href="{% url login %}">Sign in</a></p>
     {% else %}

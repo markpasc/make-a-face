@@ -158,36 +158,18 @@ cellMethods.undestroy = function () {
 };
 
 function initializeGrid() {
-
     bodyElem = $(document.body);
-    bodyElem.css("margin", "0");
-    bodyElem.css("padding", "0");
-    bodyElem.css("overflow", "hidden");
+    sizerElem = $('#gridsizer');
 
-    sizerElem = $('<div></div>');
-    $(document.body).append(sizerElem);
-    sizerElem.css("position", "fixed");
-    sizerElem.css("top", "0");
-    sizerElem.css("left", "0");
-    sizerElem.css("bottom", "0");
-    sizerElem.css("right", "0");
-
-    containerElem = $('<div></div>');
-    $(document.body).append(containerElem);
+    containerElem = $('#gridcontainer');
     containerElem.width(cellSize);
     containerElem.height(cellSize);
-    containerElem.css("position", "relative");
-    containerElem.css("overflow", "visible");
-    containerElem.css("margin", "0");
-    containerElem.css("padding", "0");
-    containerElem.css("margin", "0 auto");
 
     // The initial setup is actually implemented just be resizing
     // the grid from 0 by 0 to whatever the window actually requires.
     handleResize();
 
     $(window).resize(handleResize);
-
 }
 
 function handleResize() {
@@ -285,6 +267,7 @@ function addDestroyListener(func) {
 function makeElementForCell(cellX, cellY) {
 
     var elem = $("<div></div>");
+    elem.addClass('gridcell');
 
     elem.width(cellSize);
     elem.height(cellSize);
@@ -292,11 +275,8 @@ function makeElementForCell(cellX, cellY) {
     var realX = (cellX * (cellSize + cellSpacing)) + cellSpacing;
     var realY = (cellY * (cellSize + cellSpacing)) + cellSpacing;
 
-    elem.css("position", "absolute");
     elem.css("left", realX+"px");
     elem.css("top", realY+"px");
-    elem.css("background-color", "#222222");
-    elem.css("overflow", "hidden");
 
     containerElem.append(elem);
 
