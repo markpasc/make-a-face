@@ -15,9 +15,6 @@ var currentMaxX = 0;
 
 var cells = {};
 
-var cellCreateListeners = [];
-var cellDestroyListeners = [];
-
 // We put all of the cells into a centered container element so that
 // we don't need to shift everything when the browser resizes.
 var containerElem = null;
@@ -36,10 +33,8 @@ function Cell(x, y) {
     this.colspan = 1;
     this.rowspan = 1;
     this.obscuredBy = null;
-    for (var i = 0; i < cellCreateListeners.length; i++) {
-        var func = cellCreateListeners[i];
-        func(this);
-    }
+
+    $(document).trigger('createcell', [this]);
 }
 var cellMethods = {};
 Cell.prototype = cellMethods;
@@ -124,10 +119,8 @@ cellMethods.setBothspan = function (span) {
     this.setColspan(span);
 };
 cellMethods.destroy = function () {
-    for (var i = 0; i < cellDestroyListeners.length; i++) {
-        var func = cellDestroyListeners[i];
-        func(this);
-    }
+    $(document).trigger('destroycell', [this]);
+
     // If we're being obscured by something, force that thing
     // to be recreated as a 1x1 cell so we don't end up
     // with large cells hanging out of the grid.
@@ -151,10 +144,7 @@ cellMethods.undestroy = function () {
     if (! this.elem) {
         this.elem = makeElementForCell(this.x, this.y);
     }
-    for (var i = 0; i < cellCreateListeners.length; i++) {
-        var func = cellCreateListeners[i];
-        func(this);
-    }
+    $(document).trigger('createcell', [this]);
 };
 
 function initializeGrid() {
@@ -255,13 +245,6 @@ function handleResize() {
         currentMaxX = maxX;
     }
 
-}
-
-function addCreateListener(func) {
-    cellCreateListeners.push(func);
-}
-function addDestroyListener(func) {
-    cellDestroyListeners.push(func);
 }
 
 function makeElementForCell(cellX, cellY) {

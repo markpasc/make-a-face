@@ -8,7 +8,7 @@ var defaultPictures = [];
     }
 })();
 
-function onCellCreate(cell) {
+function onCellCreate(event, cell) {
 
     if (cell.x == -2) {
         if (cell.y < faces.length) {
@@ -38,10 +38,10 @@ function onCellCreate(cell) {
     }
 
 }
-addCreateListener(onCellCreate);
 
 $(document).ready(
     function () {
+        $(document).bind('createcell', onCellCreate);
         initializeGrid();
         cells[1][-1].setBothspan(3);
     }
