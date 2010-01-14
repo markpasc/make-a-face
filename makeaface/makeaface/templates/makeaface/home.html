@@ -1,6 +1,17 @@
 {% extends "makeaface/base.html" %}
 {% load abs %}
 
+{% block js_data %}
+
+    var faces = [
+    {% for event in events %}
+        "{{ event.object.links.rel__enclosure.maxwidth__458.href }}",
+    {% endfor %}
+        null
+    ].slice(0, -1);
+
+{% endblock %}
+
 {% block content %}
 
     {% if user.is_anonymous %}
