@@ -1,0 +1,8 @@
+*.pyc
+makeaface/makeaface/static/style.css
+makeaface/makeaface/static/.sass-cache/
+.env
+mafcom/mafcom.db
+makeaface/makeaface.egg-info/
+.DS_Store
+local_settings.py
