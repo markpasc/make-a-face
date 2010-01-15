@@ -5,6 +5,8 @@
     <link rel="stylesheet" type="text/css" href="{% url static path="makeaface/gridwall.css" %}">
 
     <script type="text/javascript">
+    var mycam;
+
     {% block js_data %}
         var faces = [
         {% for event in events %}
@@ -33,6 +35,28 @@
 
     <div id="gridsizer"></div>
     <div id="gridcontainer"></div>
+
+    {% if user.is_authenticated %}
+    <script type="text/javascript">
+        $(document).bind('initializedgrid', function (event) {
+            var cell = cells[0][-1];
+            cell.setBothspan(3);
+            cell.elem.attr("id", "camera");
+
+            cameraman.url = '{% url static path="makeaface/" %}';
+            mycam = cameraman.createCamera({
+                'id': 'camera',
+                'width': spanSize(3),
+                'height': spanSize(3),
+                'sendto': '{% absoluteurl %}{% url upload_photo %}{% endabsoluteurl %}',
+                'errorSending': function(cam, err) { alert('OOPS: ' + err) },
+                'tookPhoto': function(cam) { tookPhoto(cam) },
+                //'droppedPhoto': function(cam) { droppedPhoto(cam) },
+                'sentPhoto': function(cam, url) { sentPhoto(cam, url) }
+            });
+        });
+    </script>
+    {% endif %}
 {% endblock %}
 
 {% block old_content %}

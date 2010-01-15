@@ -160,6 +160,8 @@ function initializeGrid() {
     handleResize();
 
     $(window).resize(handleResize);
+
+    $(document).trigger('initializedgrid');
 }
 
 function handleResize() {
@@ -248,7 +250,6 @@ function handleResize() {
 }
 
 function makeElementForCell(cellX, cellY) {
-
     var elem = $("<div></div>");
     elem.addClass('gridcell');
 
@@ -264,10 +265,8 @@ function makeElementForCell(cellX, cellY) {
     containerElem.append(elem);
 
     return elem;
-
 }
 
 function spanSize(span) {
     return (span * cellSize) + ((span - 1) * cellSpacing);
 }
-

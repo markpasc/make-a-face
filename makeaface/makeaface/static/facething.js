@@ -28,29 +28,6 @@ function ensmallenCell(event) {
 }
 
 function onCellCreate(event, cell) {
-
-    if (cell.x == -1 && cell.y == 0) {
-        if (! createdCamera) {
-            cell.elem.attr("id", "camera");
-            cameraman.url = '{% url static path="makeaface/" %}';
-            window.setTimeout(function () {
-                    var mycam = cameraman.createCamera({
-                            'id': 'camera',
-                            'width': spanSize(3),
-                            'height': spanSize(3),
-                            'sendto': '{% absoluteurl %}{% url upload_photo %}{% endabsoluteurl %}',
-                            'errorSending': function(cam, err) { alert('OOPS: ' + err) },
-                            'tookPhoto': function(cam) { tookPhoto(cam) },
-                            //'droppedPhoto': function(cam) { droppedPhoto(cam) },
-                            'sentPhoto': function(cam, url) { sentPhoto(cam, url) }
-                        });
-                }, 2000);
-            createdCamera = true;
-        }
-
-        return;
-    }
-
     cell.elem.mouseover(embiggenCell);
     cell.elem.mouseout(ensmallenCell);
 
@@ -71,5 +48,4 @@ $(document).ready(function () {
     $(document).bind('createcell', onCellCreate);
 
     initializeGrid();
-    cells[0][-1].setBothspan(3);
 });
