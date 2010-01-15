@@ -1,12 +1,10 @@
 
 var createdCamera = false;
 
-var defaultPictures = [];
-(function() {
-    for (var i = 1; i <= 20; i++) {
-        defaultPictures.push("http://static.typepad.com/.shared/images/default-avatars/avatar-"+i+"-250x250.gif");
-    }
-})();
+var defaultPictures = $.map([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20], function (x) {
+    return "http://static.typepad.com/.shared/images/default-avatars/avatar-"
+        + (x < 10 ? "0" : "") + x + "-250x250.gif";
+});
 
 function onCellCreate(event, cell) {
 
@@ -15,9 +13,7 @@ function onCellCreate(event, cell) {
             var url = faces[cell.y];
             cell.elem.css("background-image", "url("+url+")");
         }
-    }
-
-    if (cell.x == -1 && cell.y == 1) {
+    } else if (cell.x == -1 && cell.y == 1) {
         if (! createdCamera) {
             cell.elem.attr("id", "camera");
             cameraman.url = '{% url static path="makeaface/" %}';
@@ -35,6 +31,9 @@ function onCellCreate(event, cell) {
                 }, 2000);
             createdCamera = true;
         }
+    } else {
+        var num = (Math.abs(cell.x) + Math.abs(cell.y)) % defaultPictures.length;
+        cell.elem.css("background-image", "url(" + defaultPictures[num] + "#" + num + ")");
     }
 
 }
