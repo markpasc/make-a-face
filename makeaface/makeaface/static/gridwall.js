@@ -27,6 +27,10 @@ var containerElem = null;
 var sizerElem = null;
 
 function Cell(x, y) {
+    if (cells[y] && cells[y][x]) {
+        throw "Cell " + x + "," + y + " already exists (" + arguments.callee.caller.toString() + ")";
+    }
+
     this.x = x;
     this.y = y;
     this.elem = makeElementForCell(x, y);
@@ -183,6 +187,8 @@ function handleResize() {
     var newRows = rows - currentRows;
     var newColumns = columns - currentColumns;
 
+    window.console.log('YAY resizing to add ' + newRows + ' rows and ' + newColumns + ' columns');
+
     if (newColumns < 0) {
         // We're shrinking, so we need to destroy some columns.
 
@@ -205,7 +211,7 @@ function handleResize() {
         // We're growing, so we need to add some new rows.
         for (var y = currentRows; y < rows; y++) {
             cells[y] = {};
-            for (var x = 0; x < maxX; x++) {
+            for (var x = 0; x < currentMaxX; x++) {
                 cells[y][x] = new Cell(x, y);
                 if (x > 0) {
                     cells[y][-x] = new Cell(-x, y);
