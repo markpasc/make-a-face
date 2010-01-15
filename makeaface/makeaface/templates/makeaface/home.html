@@ -41,7 +41,13 @@
         $(document).bind('initializedgrid', function (event) {
             var cell = cells[0][-1];
             cell.setBothspan(3);
-            cell.elem.attr("id", "camera");
+
+            var cellem = cell.elem;
+            cellem.attr("id", "camera")
+                .unbind('mouseover')
+                .unbind('mouseout');
+            cellem.find('img').hide();
+            cellem.append($('#camera-stuff').contents());
 
             cameraman.url = '{% url static path="makeaface/" %}';
             mycam = cameraman.createCamera({
@@ -54,21 +60,25 @@
                 //'droppedPhoto': function(cam) { droppedPhoto(cam) },
                 'sentPhoto': function(cam, url) { sentPhoto(cam, url) }
             });
+
+            cellem.find('.take-picture').click(pingPingSnap);
         });
-    </script>
 
-    <p><button id="take-picture">Take picture</button></p>
-
-    <script type="text/javascript">
-        $('#take-picture').click(function () {
+        function pingPingSnap () {
             mycam.takePhoto();
-        });
+        }
+
         function tookPhoto(cam) {
             cam.sendPhoto();
         }
+
         function sentPhoto(cam, url) {
             window.location.href = url;
         }
     </script>
+
+    <div id="camera-stuff">
+        <button class="take-picture">Take picture</button>
+    </div>
     {% endif %}
 {% endblock %}
