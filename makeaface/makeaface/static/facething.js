@@ -28,8 +28,8 @@ function ensmallenCell(event) {
 }
 
 function onCellCreate(event, cell) {
-    cell.elem.mouseover(embiggenCell);
-    cell.elem.mouseout(ensmallenCell);
+    //cell.elem.mouseover(embiggenCell);
+    //cell.elem.mouseout(ensmallenCell);
 
     var url;
     if (cell.x == -2 && cell.y < faces.length) {

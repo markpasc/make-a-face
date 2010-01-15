@@ -28,3 +28,15 @@ body {
     background-size: 100%;
     -moz-background-size: 100%;
 }
+
+.gridcell:hover {
+    overflow: visible;
+    z-index: 9;
+}
+
+.gridcell:hover img {
+    margin-top: -5%;
+    margin-left: -5%;
+    width: 110%;
+    height: 110%;
+}
