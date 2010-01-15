@@ -10,10 +10,10 @@
     {% block js_data %}
         var faces = [
         {% for event in events %}
-            "{{ event.object.links.rel__enclosure.maxwidth__458.href }}",
+            "{{ event.object.links.rel__enclosure.maxwidth__458.href }}"
+            {% if forloop.last %}{% else %},{% endif %}
         {% endfor %}
-            null
-        ].slice(0, -1);
+        ];
     {% endblock%}
     </script>
 
