@@ -7,7 +7,7 @@ var cellSize = 150;
 var cellSpacing = 4;
 
 var minColumns = 3;
-var minRows = 4;
+var minRows = 3;
 
 var currentColumns = 0;
 var currentRows = 0;

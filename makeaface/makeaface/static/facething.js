@@ -29,7 +29,7 @@ function ensmallenCell(event) {
 
 function onCellCreate(event, cell) {
 
-    if (cell.x == -1 && cell.y == 1) {
+    if (cell.x == -1 && cell.y == 0) {
         if (! createdCamera) {
             cell.elem.attr("id", "camera");
             cameraman.url = '{% url static path="makeaface/" %}';
@@ -71,5 +71,5 @@ $(document).ready(function () {
     $(document).bind('createcell', onCellCreate);
 
     initializeGrid();
-    cells[1][-1].setBothspan(3);
+    cells[0][-1].setBothspan(3);
 });
