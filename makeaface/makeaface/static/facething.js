@@ -6,14 +6,30 @@ var defaultPictures = $.map([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 
         + (x < 10 ? "0" : "") + x + "-250x250.gif";
 });
 
+function embiggenCell(event) {
+    var newsize = 1.1 * cellSize;
+    $(this).width(newsize)
+        .height(newsize)
+        .css({
+            "z-index": "9",
+            "margin-top": "-" + (0.05 * cellSize) + "px",
+            "margin-left": "-" + (0.05 * cellSize) + "px"
+        });
+}
+
+function ensmallenCell(event) {
+    $(this).width(cellSize)
+        .height(cellSize)
+        .css({
+            "z-index": "1",
+            "margin-top": "0",
+            "margin-left": "0"
+        });
+}
+
 function onCellCreate(event, cell) {
 
-    if (cell.x == -2) {
-        if (cell.y < faces.length) {
-            var url = faces[cell.y];
-            cell.elem.css("background-image", "url("+url+")");
-        }
-    } else if (cell.x == -1 && cell.y == 1) {
+    if (cell.x == -1 && cell.y == 1) {
         if (! createdCamera) {
             cell.elem.attr("id", "camera");
             cameraman.url = '{% url static path="makeaface/" %}';
@@ -31,17 +47,29 @@ function onCellCreate(event, cell) {
                 }, 2000);
             createdCamera = true;
         }
+
+        return;
+    }
+
+    cell.elem.mouseover(embiggenCell);
+    cell.elem.mouseout(ensmallenCell);
+
+    var url;
+    if (cell.x == -2 && cell.y < faces.length) {
+        url = faces[cell.y];
     } else {
         var num = (Math.abs(cell.x) + Math.abs(cell.y)) % defaultPictures.length;
-        cell.elem.css("background-image", "url(" + defaultPictures[num] + "#" + num + ")");
+        url = defaultPictures[num];
     }
 
+    var img = $('<img/>');
+    img.attr('src', url);
+    cell.elem.append(img);
 }
 
-$(document).ready(
-    function () {
-        $(document).bind('createcell', onCellCreate);
-        initializeGrid();
-        cells[1][-1].setBothspan(3);
-    }
-);
+$(document).ready(function () {
+    $(document).bind('createcell', onCellCreate);
+
+    initializeGrid();
+    cells[1][-1].setBothspan(3);
+});
