@@ -23,6 +23,29 @@ def oops(fn):
     return hoops
 
 
+CELL_WIDTH = 150
+CELL_PAD = 4
+
+
+def next_box_loc():
+    """Generate the placements of 1x1 boxes beyond the 3x3 box in the upper
+    left of the page."""
+    for row in xrange(0, 3):
+        for phile in xrange(0, 4):
+            yield {
+                'left': phile * (CELL_WIDTH + CELL_PAD),
+                'top': row * (CELL_WIDTH + CELL_PAD),
+            }
+    row = 3
+    while True:
+        for phile in xrange(-3, 4):
+            yield {
+                'left': phile * (CELL_WIDTH + CELL_PAD),
+                'top': row * (CELL_WIDTH + CELL_PAD),
+            }
+        row += 1
+
+
 def home(request):
     with typepad.client.batch_request():
         events = request.group.events
@@ -30,8 +53,10 @@ def home(request):
     import logging
     logging.debug(request.user)
 
-    return TemplateResponse(request, 'makeaface/home.html',
-        {'events': events})
+    return TemplateResponse(request, 'makeaface/home.html', {
+        'events': events,
+        'next_box_loc': next_box_loc(),
+    })
 
 
 @oops

@@ -1,6 +1,40 @@
 @import ply.sass
 
-#camera
+=borderradius(!whassa)
+    border-radius: #{!whassa}
+    -moz-border-radius: #{!whassa}
+    -webkit-border-radius: #{!whassa}
+
+div#camera, #howto
+    position: absolute
+    top: 0
+    left: -462px
+    width: 458px
+    height: 458px
+    background: #ff6
+
+#camera-throb
+    display: none
+
+    position: absolute
+    top: 0
+    left: 0
+
+    opacity: 0.5
+    z-index: 10
+
+    color: #fff
+    background-color: #000
+    font-size: 400px
+    line-height: 458px
+    text-align: center
+    width: 458px
+    height: 458px
+
+div#camera.sending #camera-throb
+    display: block
+
+div#camera
     padding: 0
 
 .gridcell img
@@ -14,3 +48,4 @@
     position: absolute
     top: 0
     left: 0
+

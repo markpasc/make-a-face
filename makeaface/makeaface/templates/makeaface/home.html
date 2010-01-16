@@ -16,8 +16,6 @@
         ];
     {% endblock%}
     </script>
-
-    <script type="text/javascript" src="{% url static path="makeaface/facething.js" %}"></script>
 {% endblock %}
 
 {% block content %}
@@ -34,51 +32,83 @@
     </div><br style="clear: both">
 
     <div id="gridsizer"></div>
-    <div id="gridcontainer"></div>
+    <div id="gridcontainer">
 
-    {% if user.is_authenticated %}
-    <script type="text/javascript">
-        $(document).bind('initializedgrid', function (event) {
-            var cell = cells[0][-1];
-            cell.setBothspan(3);
+        {% if user.is_authenticated %}
+            <div id="camera">
+                <button id="take-picture" class="take-picture">Take picture</button>
+                <div id="camera-throb">☃</div>
+            </div>
 
-            var cellem = cell.elem;
-            cellem.attr("id", "camera")
-                .unbind('mouseover')
-                .unbind('mouseout');
-            cellem.find('img').hide();
-            cellem.append($('#camera-stuff').contents());
+            <script type="text/javascript">
+                cameraman.url = '{% url static path="makeaface/" %}';
+                mycam = cameraman.createCamera({
+                    'id': 'camera',
+                    'width': spanSize(3),
+                    'height': spanSize(3),
+                    'sendto': '{% absoluteurl %}{% url upload_photo %}{% endabsoluteurl %}',
+                    'errorSending': function(cam, err) { alert('OOPS: ' + err) },
+                    'tookPhoto': function(cam) { tookPhoto(cam) },
+                    //'droppedPhoto': function(cam) { droppedPhoto(cam) },
+                    'sentPhoto': function(cam, url) { sentPhoto(cam, url) }
+                });
 
-            cameraman.url = '{% url static path="makeaface/" %}';
-            mycam = cameraman.createCamera({
-                'id': 'camera',
-                'width': spanSize(3),
-                'height': spanSize(3),
-                'sendto': '{% absoluteurl %}{% url upload_photo %}{% endabsoluteurl %}',
-                'errorSending': function(cam, err) { alert('OOPS: ' + err) },
-                'tookPhoto': function(cam) { tookPhoto(cam) },
-                //'droppedPhoto': function(cam) { droppedPhoto(cam) },
-                'sentPhoto': function(cam, url) { sentPhoto(cam, url) }
-            });
+                $('#take-picture').click(pingPingSnap);
 
-            cellem.find('.take-picture').click(pingPingSnap);
-        });
+                function pingPingSnap () {
+                    mycam.takePhoto();
+                }
 
-        function pingPingSnap () {
-            mycam.takePhoto();
-        }
+                function tookPhoto(cam) {
+                    $('#camera').addClass('sending');
+                    cam.sendPhoto();
+                }
 
-        function tookPhoto(cam) {
-            cam.sendPhoto();
-        }
+                function sentPhoto(cam, url) {
+                    cam.dropPhoto();
+                    $('#camera').removeClass('sending');
 
-        function sentPhoto(cam, url) {
-            window.location.href = url;
-        }
-    </script>
+                    // Make a new grid cell with this photo.
+                    var newphoto = $('<div/>').addClass('gridcell').css({'top': '0px', 'left': '-154px'});
+                    newphoto.append($('<img/>').attr('src', url));
+                    $('#gridcontainer').append(newphoto);
 
-    <div id="camera-stuff">
-        <button class="take-picture">Take picture</button>
+                    $('.gridcell').animate({"left": "+=154px"}, "slow");
+                }
+            </script>
+
+        {% else %}
+            <div id="howto">
+                <div style="margin: 20px">
+
+            <h1>Make a face. It's easy.</h1>
+
+            <h2><ol>
+            <li>Sign in.</li>
+            <li>Make a face at your web cam.</li>
+            <li>Click the button.</li>
+            </ol></h2>
+
+            <h1>Like someone's face? Say so!</h1>
+
+            <h2><ol>
+            <li>Click the face you like.</li>
+            <li>Click the <big style="color: rgb(204, 0, 0);">♥</big>.</li>
+            </ol></h2>
+
+            <h1>That's it!</h1>
+
+            </div></div>
+        {% endif %}
+
+        {% for event in events %}
+            {% with next_box_loc.next as boxloc %}
+            <div class="gridcell" style="left: {{ boxloc.left }}px; top: {{ boxloc.top }}px">
+                <img src="{{ event.object.links.rel__enclosure.maxwidth__458.href }}">
+            </div>
+            {% endwith %}
+        {% endfor %}
+
     </div>
-    {% endif %}
+
 {% endblock %}
