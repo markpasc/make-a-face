@@ -690,12 +690,12 @@ div.last {
   display: block; }
 
 div#camera, #howto {
-  position: absolute;
-  top: 0;
-  left: -462px;
+  position: relative;
+  float: left;
   width: 458px;
   height: 458px;
-  background: #ff6; }
+  background: #ff6;
+  margin: 0 0 4px 4px; }
 
 #camera-throb {
   display: none;
@@ -718,10 +718,6 @@ div#camera.sending #camera-throb {
 div#camera {
   padding: 0; }
 
-.gridcell img {
-  width: 100%;
-  height: 100%; }
-
 #toolbar h1 {
   text-align: center; }
 
@@ -729,3 +725,18 @@ div#camera {
   position: absolute;
   top: 0;
   left: 0; }
+
+#gridcontainer {
+  width: 924px;
+  margin: 0 auto; }
+
+.gridcell {
+  position: relative;
+  float: left;
+  width: 150px;
+  height: 150px;
+  margin: 0 0 4px 4px; }
+
+.gridcell img {
+  width: 100%;
+  height: 100%; }

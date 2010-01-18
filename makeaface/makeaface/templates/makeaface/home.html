@@ -2,20 +2,6 @@
 {% load abs %}
 
 {% block htmlhead %}
-    <link rel="stylesheet" type="text/css" href="{% url static path="makeaface/gridwall.css" %}">
-
-    <script type="text/javascript">
-    var mycam;
-
-    {% block js_data %}
-        var faces = [
-        {% for event in events %}
-            "{{ event.object.links.rel__enclosure.maxwidth__458.href }}"
-            {% if forloop.last %}{% else %},{% endif %}
-        {% endfor %}
-        ];
-    {% endblock%}
-    </script>
 {% endblock %}
 
 {% block content %}
@@ -31,7 +17,6 @@
         </div>
     </div><br style="clear: both">
 
-    <div id="gridsizer"></div>
     <div id="gridcontainer">
 
         {% if user.is_authenticated %}
@@ -65,15 +50,13 @@
                 }
 
                 function sentPhoto(cam, url) {
+                    // Make a new grid cell with this photo.
+                    var newphoto = $('<div/>').addClass('gridcell');
+                    newphoto.append($('<img/>').attr('src', url));
+                    newphoto.insertAfter('#camera');
+
                     cam.dropPhoto();
                     $('#camera').removeClass('sending');
-
-                    // Make a new grid cell with this photo.
-                    var newphoto = $('<div/>').addClass('gridcell').css({'top': '0px', 'left': '-154px'});
-                    newphoto.append($('<img/>').attr('src', url));
-                    $('#gridcontainer').append(newphoto);
-
-                    $('.gridcell').animate({"left": "+=154px"}, "slow");
                 }
             </script>
 
@@ -103,7 +86,7 @@
 
         {% for event in events %}
             {% with next_box_loc.next as boxloc %}
-            <div class="gridcell" style="left: {{ boxloc.left }}px; top: {{ boxloc.top }}px">
+            <div class="gridcell">
                 <img src="{{ event.object.links.rel__enclosure.maxwidth__458.href }}">
             </div>
             {% endwith %}
