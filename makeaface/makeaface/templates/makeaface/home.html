@@ -29,8 +29,8 @@
                 cameraman.url = '{% url static path="makeaface/" %}';
                 mycam = cameraman.createCamera({
                     'id': 'camera',
-                    'width': spanSize(3),
-                    'height': spanSize(3),
+                    'width': '458px',
+                    'height': '458px',
                     'sendto': '{% absoluteurl %}{% url upload_photo %}{% endabsoluteurl %}',
                     'errorSending': function(cam, err) { alert('OOPS: ' + err) },
                     'tookPhoto': function(cam) { tookPhoto(cam) },
