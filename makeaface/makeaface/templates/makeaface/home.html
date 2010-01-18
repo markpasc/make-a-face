@@ -51,12 +51,35 @@
 
                 function sentPhoto(cam, url) {
                     // Make a new grid cell with this photo.
-                    var newphoto = $('<div/>').addClass('gridcell');
+                    var newphoto = $('#firstcell');
                     newphoto.append($('<img/>').attr('src', url));
-                    newphoto.insertAfter('#camera');
 
-                    cam.dropPhoto();
-                    $('#camera').removeClass('sending');
+                    $('#gridsubstrate').animate({
+                        'left': '0px',
+                    }, 'slow', function () {
+                        // Replace all the old last cells with new first cells.
+                        $('#gridsubstrate .lastcell').each(function () {
+                            var $this = $(this);
+                            var newlast = $this.prev('.gridcell');
+                            var newfirst = newlast.clone();
+                            newfirst.insertBefore($this);
+                            newlast.addClass('lastcell');
+                            $this.remove();
+                        });
+
+                        // Add a new blank first cell to reflow everything.
+                        var $firstcell = $('#firstcell').attr('id', '');
+                        var newfirstcell = $('<div/>').addClass('gridcell');
+                        newfirstcell.attr('id', 'firstcell');
+                        newfirstcell.insertBefore($firstcell);
+
+                        // Snap the substrate back into place.
+                        $('#gridsubstrate').css('left', '-154px');
+
+                        // Turn the camera back on.
+                        cam.dropPhoto();
+                        $('#camera').removeClass('sending');
+                    });
                 }
             </script>
 
@@ -86,11 +109,10 @@
 
         <div id="gridsubstrate">
             <div id="camspace"></div>
-            <div class="gridcell">
-            </div>
+            <div id="firstcell" class="gridcell"></div>
         {% for event in events %}
             {% with next_box_loc.next as boxloc %}
-                <div class="gridcell">
+                <div class="gridcell {% if boxloc.rowlast %}lastcell{% endif %}">
                     <img src="{{ event.object.links.rel__enclosure.maxwidth__458.href }}">
                 </div>
                 {% if boxloc.rowlast %}
