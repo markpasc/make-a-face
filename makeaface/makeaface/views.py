@@ -80,7 +80,12 @@ def upload_photo(request):
         logging.debug('No Location in response, only %r', resp.keys())
     loc = resp['location']
     loc_parts = parse_qs(urlparse(loc).query)
-    loc = loc_parts['asset_url']
+    loc = loc_parts['asset_url'][0]
+
+    logging.critical('LOCATION IS A %s %r', type(loc).__name__, loc)
+    with typepad.client.batch_request():
+        asset = typepad.api.Asset.get(loc)
+    image_url = asset.links['maxwidth__548'].href
 
     # Flash doodad needs a 200, not a redirect.
-    return HttpResponse(loc, content_type='text/plain')
+    return HttpResponse(image_url, content_type='text/plain')
