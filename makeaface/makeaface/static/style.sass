@@ -5,13 +5,22 @@
     -moz-border-radius: #{!whassa}
     -webkit-border-radius: #{!whassa}
 
-div#camera, #howto
+#camspace
     position: relative
     float: left
     width: 458px
     height: 458px
+    margin: 0 0 4px 4px
+
+div#camera, #howto
+    position: absolute
+    width: 458px
+    height: 458px
+    top: 0
+    left: 0
     background: #ff6
     margin: 0 0 4px 4px
+    z-index: 10
 
 #camera-throb
     display: none
@@ -46,8 +55,15 @@ div#camera
     left: 0
 
 #gridcontainer
+    position: relative
     width: 924px
     margin: 0 auto
+    overflow: hidden
+
+#gridsubstrate
+    position: relative
+    width: 1078px
+    left: -154px
 
 .gridcell
     position: relative

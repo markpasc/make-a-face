@@ -31,17 +31,19 @@ def next_box_loc():
     """Generate the placements of 1x1 boxes beyond the 3x3 box in the upper
     left of the page."""
     for row in xrange(0, 3):
-        for phile in xrange(0, 4):
+        for phile in xrange(0, 3):
             yield {
-                'left': phile * (CELL_WIDTH + CELL_PAD),
-                'top': row * (CELL_WIDTH + CELL_PAD),
+                'row': row,
+                'file': phile,
+                'rowlast': True if phile == 2 else False,
             }
     row = 3
     while True:
-        for phile in xrange(-3, 4):
+        for phile in xrange(0, 6):
             yield {
-                'left': phile * (CELL_WIDTH + CELL_PAD),
-                'top': row * (CELL_WIDTH + CELL_PAD),
+                'row': row,
+                'file': phile,
+                'rowlast': True if phile == 5 else False,
             }
         row += 1
 
