@@ -4,6 +4,7 @@ from cgi import parse_qs
 from cStringIO import StringIO
 import functools
 import logging
+import re
 from urlparse import urlparse
 
 from django.http import HttpResponse, HttpResponseRedirect
@@ -99,8 +100,10 @@ def favorite(request):
         return HttpResponse('POST required at this url', status=400, content_type='text/plain')
 
     action = request.POST.get('action', 'favorite')
-    asset_id = request.POST.get('asset_id')
-    if not asset_id:
+    asset_id = request.POST.get('asset_id', '')
+    try:
+        (asset_id,) = re.findall('6a\w+', asset_id)
+    except TypeError:
         raise Http404
 
     if action == 'favorite':
