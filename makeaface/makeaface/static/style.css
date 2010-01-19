@@ -756,3 +756,26 @@ div#camera {
 .gridcell img {
   width: 100%;
   height: 100%; }
+
+.gridcell .heart, .gridcell .flag {
+  position: absolute;
+  display: none;
+  text-decoration: none;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 4px;
+  color: white;
+  bottom: 0;
+  font-size: 28px; }
+
+.gridcell .favorite {
+  display: block;
+  color: #f33; }
+
+.gridcell:hover .heart, .gridcell:hover .flag {
+  display: block; }
+
+.gridcell .heart {
+  left: 0; }
+
+.gridcell .flag {
+  right: 0; }

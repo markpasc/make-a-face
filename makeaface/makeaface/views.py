@@ -91,3 +91,27 @@ def upload_photo(request):
 
     # Flash doodad needs a 200, not a redirect.
     return HttpResponse(image_url, content_type='text/plain')
+
+
+@oops
+def favorite(request):
+    if request.method != 'POST':
+        return HttpResponse('POST required at this url', status=400, content_type='text/plain')
+
+    action = request.POST.get('action', 'favorite')
+    asset_id = request.POST.get('asset_id')
+    if not asset_id:
+        raise Http404
+
+    if action == 'favorite':
+        with typepad.client.batch_request():
+            asset = typepad.Asset.get_by_url_id(asset_id)
+        fav = typepad.Favorite()
+        fav.in_reply_to = asset.asset_ref
+        request.user.favorites.post(fav)
+    else:
+        with typepad.client.batch_request():
+            fav = typepad.Favorite.get_by_user_asset(request.user.xid, asset_id)
+        fav.delete()
+
+    return HttpResponse('OK', content_type='text/plain')

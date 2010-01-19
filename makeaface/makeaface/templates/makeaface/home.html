@@ -51,6 +51,7 @@
 
                 function sentPhoto(cam, url) {
                     // Make a new grid cell with this photo.
+                    // TODO: make this work
                     var newphoto = $('#firstcell');
                     newphoto.append($('<img/>').attr('src', url));
 
@@ -69,7 +70,7 @@
 
                         // Add a new blank first cell to reflow everything.
                         var $firstcell = $('#firstcell').attr('id', '');
-                        var newfirstcell = $('<div/>').addClass('gridcell');
+                        var newfirstcell = $firstcell.clone();
                         newfirstcell.attr('id', 'firstcell');
                         newfirstcell.insertBefore($firstcell);
 
@@ -81,6 +82,26 @@
                         $('#camera').removeClass('sending');
                     });
                 }
+
+                $('#gridsubstrate .gridcell .heart').live('click', function (evt) {
+                    $.post('{% url favorite %}', {
+                        'action': 'favorite',
+                        'asset_id': $(this).attr('href')
+                    }, function () {
+                        $(this).addClass('favorited');
+                    });
+                    return false;
+                });
+
+                $('#gridsubstrate .gridcell .flag').live('click', function (evt) {
+                    $.post('{% url favorite %}', {
+                        'action': 'flag',
+                        'asset_id': $(this).attr('href')
+                    }, function () {
+                        alert('YAY FLAG');
+                    });
+                    return false;
+                });
             </script>
 
         {% else %}
@@ -98,7 +119,7 @@
             <h1>Like someone's face? Say so!</h1>
 
             <h2><ol>
-            <li>Click the face you like.</li>
+            <li>Point at the face you like with the mouse.</li>
             <li>Click the <big style="color: rgb(204, 0, 0);">♥</big>.</li>
             </ol></h2>
 
@@ -114,10 +135,18 @@
             {% with next_box_loc.next as boxloc %}
                 <div class="gridcell {% if boxloc.rowlast %}lastcell{% endif %}">
                     <img src="{{ event.object.links.rel__enclosure.maxwidth__150.href|slice:":-6" }}-150si">
+                    {% if user.is_authenticated %}
+                    <a class="heart" href="{{ event.object.xid }}" title="I like this face">♥</a>
+                    <a class="flag" href="{{ event.object.xid }}" title="This is not a face">✘</a>
+                    {% endif %}
                 </div>
                 {% if boxloc.rowlast %}
                 <div class="gridcell">
                     <img src="{{ event.object.links.rel__enclosure.maxwidth__150.href|slice:":-6" }}-150si">
+                    {% if user.is_authenticated %}
+                    <a class="heart" href="{{ event.object.xid }}" title="I like this face">♥</a>
+                    <a class="flag" href="{{ event.object.xid }}" title="This is not a face">✘</a>
+                    {% endif %}
                 </div>
                 {% endif %}
             {% endwith %}
