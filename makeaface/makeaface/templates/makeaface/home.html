@@ -84,12 +84,14 @@
                 }
 
                 $('#gridsubstrate .gridcell .heart').live('click', function (evt) {
+                    var heart = $(this);
                     $.post('{% url favorite %}', {
                         'action': 'favorite',
-                        'asset_id': $(this).attr('href')
+                        'asset_id': heart.attr('href')
                     }, function () {
-                        $(this).addClass('favorited');
+                        heart.addClass('favorited');
                     });
+                    heart.blur();
                     return false;
                 });
 
