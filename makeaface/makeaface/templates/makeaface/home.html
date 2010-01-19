@@ -26,7 +26,7 @@
             </div>
 
             <script type="text/javascript">
-                cameraman.url = '{% url static path="makeaface/" %}';
+                cameraman.url = '{% absoluteurl %}{% url static path="makeaface/" %}{% endabsoluteurl %}';
                 mycam = cameraman.createCamera({
                     'id': 'camera',
                     'width': '458px',
