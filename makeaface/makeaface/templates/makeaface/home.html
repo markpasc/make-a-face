@@ -141,6 +141,7 @@
                 {% endif %}
             </div>
         {% for event in events %}
+            {% if event.object %}
             {% with next_box_loc.next as boxloc %}
                 <div class="gridcell {% if boxloc.rowlast %}lastcell{% endif %}">
                     <img src="{{ event.object.links.rel__enclosure.maxwidth__150.href|slice:":-6" }}-150si">
@@ -159,6 +160,7 @@
                 </div>
                 {% endif %}
             {% endwith %}
+            {% endif %}
         {% endfor %}
 
         </div>
