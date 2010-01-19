@@ -113,11 +113,11 @@
         {% for event in events %}
             {% with next_box_loc.next as boxloc %}
                 <div class="gridcell {% if boxloc.rowlast %}lastcell{% endif %}">
-                    <img src="{{ event.object.links.rel__enclosure.maxwidth__458.href }}">
+                    <img src="{{ event.object.links.rel__enclosure.maxwidth__150.href|slice:":-6" }}-150si">
                 </div>
                 {% if boxloc.rowlast %}
                 <div class="gridcell">
-                    <img src="{{ event.object.links.rel__enclosure.maxwidth__458.href }}">
+                    <img src="{{ event.object.links.rel__enclosure.maxwidth__150.href|slice:":-6" }}-150si">
                 </div>
                 {% endif %}
             {% endwith %}
