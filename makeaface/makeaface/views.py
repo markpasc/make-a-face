@@ -7,10 +7,14 @@ import logging
 import re
 from urlparse import urlparse
 
+from django.core.cache import cache
 from django.http import HttpResponse, HttpResponseRedirect
 from templateresponse import TemplateResponse
 import typepad
 import typepad.api
+
+
+log = logging.getLogger(__name__)
 
 
 def oops(fn):
@@ -19,7 +23,7 @@ def oops(fn):
         try:
             return fn(*args, **kwargs)
         except Exception, exc:
-            logging.exception(exc)
+            log.exception(exc)
             return HttpResponse('%s: %s' % (type(exc).__name__, str(exc)), status=400, content_type='text/plain')
     return hoops
 
@@ -53,9 +57,6 @@ def home(request):
     with typepad.client.batch_request():
         events = request.group.events
 
-    import logging
-    logging.debug(request.user)
-
     return TemplateResponse(request, 'makeaface/home.html', {
         'events': events,
         'next_box_loc': next_box_loc(),
@@ -76,16 +77,16 @@ def upload_photo(request):
         content_type=content_type, redirect_to='http://example.com/')
 
     if resp.status != 302:
-        logging.debug('%d response from typepad: %s', resp.status, content)
+        log.debug('%d response from typepad: %s', resp.status, content)
     assert resp.status == 302
 
     if 'location' not in resp:
-        logging.debug('No Location in response, only %r', resp.keys())
+        log.debug('No Location in response, only %r', resp.keys())
     loc = resp['location']
     loc_parts = parse_qs(urlparse(loc).query)
     loc = loc_parts['asset_url'][0]
 
-    logging.critical('LOCATION IS A %s %r', type(loc).__name__, loc)
+    log.debug('LOCATION IS A %s %r', type(loc).__name__, loc)
     with typepad.client.batch_request():
         asset = typepad.api.Asset.get(loc)
     image_url = asset.links['maxwidth__150'].href[:-6] + '-150si'
@@ -113,8 +114,49 @@ def favorite(request):
         fav.in_reply_to = asset.asset_ref
         request.user.favorites.post(fav)
     else:
+        # Getting the xid will do a batch, so don't do it inside our other batch.
+        xid = request.user.xid
         with typepad.client.batch_request():
-            fav = typepad.Favorite.get_by_user_asset(request.user.xid, asset_id)
+            fav = typepad.Favorite.get_by_user_asset(xid, asset_id)
         fav.delete()
 
+    return HttpResponse('OK', content_type='text/plain')
+
+
+@oops
+def flag(request):
+    if request.method != 'POST':
+        return HttpResponse('POST required at this url', status=400, content_type='text/plain')
+
+    action = request.POST.get('action', 'flag')
+    asset_id = request.POST.get('asset_id', '')
+    try:
+        (asset_id,) = re.findall('6a\w+', asset_id)
+    except TypeError:
+        raise Http404
+
+    cache_key = 'flag:%s' % asset_id
+
+    if action != 'flag':
+        return HttpResponse('Only flag action is supported at this url', status=400, content_type='text/plain')
+
+    # YAY UNATOMIC OPERATIONS
+    flaggers = cache.get(cache_key)
+    if not flaggers:
+        log.debug('No flaggers for %r yet, making a new list', asset_id)
+        flaggers = []
+    elif request.user.xid in flaggers:
+        log.debug('%r re-flagged %r (ignored)', request.user.xid, asset_id)
+        return HttpResponse('OK (though you already flagged it)', content_type='text/plain')
+
+    flaggers.append(request.user.xid)
+    if len(flaggers) >= 3:
+        log.debug('%r was the last straw for %r! Deleting!', request.user.xid, asset_id)
+        with typepad.client.batch_request():
+            asset = typepad.Asset.get_by_url_id(asset_id)
+            asset.delete()
+            log.debug('BALEETED')
+
+    cache.set(cache_key, flaggers)
+    log.debug('Flaggers for %r are now %r', asset_id, flaggers)
     return HttpResponse('OK', content_type='text/plain')

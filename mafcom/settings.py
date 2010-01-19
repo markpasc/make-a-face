@@ -1,5 +1,6 @@
 # Django settings for mafcom project.
 
+import logging
 from motion.settings import *
 
 DEBUG = True
@@ -103,5 +104,7 @@ INSTALLED_APPS = (
     'typepadapp',
     'makeaface',
 )
+
+LOG_LEVELS.update({'makeaface': logging.DEBUG})
 
 from local_settings import *

@@ -96,12 +96,14 @@
                 });
 
                 $('#gridsubstrate .gridcell .flag').live('click', function (evt) {
-                    $.post('{% url favorite %}', {
+                    var flag = $(this);
+                    $.post('{% url flag %}', {
                         'action': 'flag',
-                        'asset_id': $(this).attr('href')
+                        'asset_id': flag.attr('href')
                     }, function () {
-                        alert('YAY FLAG');
+                        flag.addClass('flagged');
                     });
+                    flag.blur();
                     return false;
                 });
             </script>
