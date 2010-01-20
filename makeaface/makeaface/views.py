@@ -73,6 +73,7 @@ def upload_photo(request):
     bodyfile = StringIO(request.raw_post_data)
 
     asset = typepad.api.Asset()
+    asset.title = "a face"
     resp, content = typepad.api.browser_upload.upload(asset, bodyfile,
         content_type=content_type, redirect_to='http://example.com/')
 
