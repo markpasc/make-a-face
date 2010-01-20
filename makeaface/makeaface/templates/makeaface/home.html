@@ -140,6 +140,7 @@
             <div id="camspace"></div>
             <div id="firstcell" class="gridcell">
                 <img src="#">
+                <a class="link action" href="" title="Permalink">↪</a>
                 {% if user.is_authenticated %}
                 <a class="heart action" href="" title="I like this face">♥</a>
                 <a class="flag action" href="" title="This is not a face">✘</a>
@@ -150,6 +151,7 @@
             {% with next_box_loc.next as boxloc %}
                 <div class="gridcell {% if boxloc.rowlast %}lastcell{% endif %}">
                     <img src="{{ event.object.links.rel__enclosure.maxwidth__150.href|slice:":-6" }}-150si">
+                    <a class="link action" href="{% url photo xid=event.object.xid %}" title="Permalink">↪</a>
                     {% if user.is_authenticated %}
                     <a class="heart action" href="{{ event.object.xid }}" title="I like this face">♥</a>
                     <a class="flag action" href="{{ event.object.xid }}" title="This is not a face">✘</a>
@@ -158,6 +160,7 @@
                 {% if boxloc.rowlast %}
                 <div class="gridcell">
                     <img src="{{ event.object.links.rel__enclosure.maxwidth__150.href|slice:":-6" }}-150si">
+                    <a class="link action" href="{% url photo xid=event.object.xid %}" title="Permalink">↪</a>
                     {% if user.is_authenticated %}
                     <a class="heart action" href="{{ event.object.xid }}" title="I like this face">♥</a>
                     <a class="flag action" href="{{ event.object.xid }}" title="This is not a face">✘</a>
