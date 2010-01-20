@@ -1,0 +1,31 @@
+{% extends "makeaface/base.html" %}
+{% load abs %}
+
+{% block htmlhead %}
+{% endblock %}
+
+{% block content %}
+    <div id="photo">
+        <p><img src="{{ photo.links.maxwidth__451.href }}"></p>
+        <p><big>
+            <a href="{{ photo.author.typepad_url }}"><img src="{{ photo.author.links.rel__avatar.maxwidth__50.href }}"></a>
+            <a href="{{ photo.author.typepad_url }}">{{ photo.author.display_name }}</a>
+        </big></p>
+    </div>
+
+    {% if favorites %}
+    <div id="photo-favorites">
+        <h2>Facers who liked this face</h2>
+
+        {% for fav in favorites %}
+            <div class="favorite">
+                <big>
+                    <a href="{{ fav.author.typepad_url }}"><img src="{{ fav.author.links.rel__avatar.maxwidth__50.href }}"></a>
+                    <a href="{{ fav.author.typepad_url }}">{{ fav.author.display_name }}</a>
+                </big>
+            </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+{% endblock %}

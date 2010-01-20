@@ -9,6 +9,19 @@
     {% block htmlhead %}{% endblock %}
 </head><body>
 
+    {% block toolbar %}
+    <div id="toolbar" class="grid">
+        <div class="span-6"></div>
+        <div class="span-12"><h1>make a face</h1></div>
+        <div class="span-6 last">
+            {% if user.is_anonymous %}
+                <p>Hi! <a href="{% url login %}">Sign in</a> to face</p>
+            {% else %}
+                <p>Hi, {{ user.display_name }}! <a href="{% url logout %}">Sign out</a></p>
+            {% endif %}
+        </div>
+    </div><br style="clear: both">
+    {% endblock %}
     {% block content %}{% endblock %}
 
 </body></html>

@@ -67,6 +67,17 @@ def home(request):
     })
 
 
+def photo(request, xid):
+    with typepad.client.batch_request():
+        photo = Asset.get_by_url_id(xid)
+        favs = photo.favorites
+
+    return TemplateResponse(request, 'makeaface/photo.html', {
+        'photo': photo,
+        'favorites': favs,
+    })
+
+
 @oops
 def upload_photo(request):
     if request.method != 'POST':
