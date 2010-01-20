@@ -168,6 +168,7 @@ def flag(request):
 
             asset = typepad.Asset.get_by_url_id(asset_id)
             asset.delete()
+            del asset  # lose our reference to it
 
             log.debug('BALEETED')
 
