@@ -84,6 +84,10 @@ def upload_photo(request):
         log.debug('No Location in response, only %r', resp.keys())
     loc = resp['location']
     loc_parts = parse_qs(urlparse(loc).query)
+
+    if 'asset_url' not in loc_parts:
+        log.warning('New location was %r', loc)
+        log.warning('Original response/content were %r, %r', resp, content)
     loc = loc_parts['asset_url'][0]
 
     log.debug('LOCATION IS A %s %r', type(loc).__name__, loc)
