@@ -174,6 +174,6 @@ def flag(request):
 
             log.debug('BALEETED')
 
-    cache.set(cache_key, flaggers)
+    cache.set(cache_key, flaggers, 86400)  # 1 day
     log.debug('Flaggers for %r are now %r', asset_id, flaggers)
     return HttpResponse('OK', content_type='text/plain')
