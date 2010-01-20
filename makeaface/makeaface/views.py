@@ -14,6 +14,8 @@ from oauth.oauth import OAuthConsumer, OAuthToken
 from templateresponse import TemplateResponse
 import typepad
 import typepad.api
+import typepadapp.signals
+from typepadapp.models import Asset, Favorite
 
 
 log = logging.getLogger(__name__)
@@ -74,7 +76,7 @@ def upload_photo(request):
     assert content_type.startswith('image/')
     bodyfile = StringIO(request.raw_post_data)
 
-    asset = typepad.api.Asset()
+    asset = Asset()
     asset.title = "a face"
     resp, content = typepad.api.browser_upload.upload(asset, bodyfile,
         content_type=content_type, redirect_to='http://example.com/')
@@ -82,6 +84,9 @@ def upload_photo(request):
     if resp.status != 302:
         log.debug('%d response from typepad: %s', resp.status, content)
     assert resp.status == 302
+
+    typepadapp.signals.asset_created.send(sender=asset, instance=asset,
+        group=request.group, parent=request.group.photo_assets)
 
     if 'location' not in resp:
         log.debug('No Location in response, only %r', resp.keys())
@@ -95,7 +100,7 @@ def upload_photo(request):
 
     log.debug('LOCATION IS A %s %r', type(loc).__name__, loc)
     with typepad.client.batch_request():
-        asset = typepad.api.Asset.get(loc)
+        asset = Asset.get(loc)
     image_url = asset.links['maxwidth__150'].href[:-6] + '-150si'
 
     # Flash doodad needs a 200, not a redirect.
@@ -116,15 +121,15 @@ def favorite(request):
 
     if action == 'favorite':
         with typepad.client.batch_request():
-            asset = typepad.Asset.get_by_url_id(asset_id)
-        fav = typepad.Favorite()
+            asset = Asset.get_by_url_id(asset_id)
+        fav = Favorite()
         fav.in_reply_to = asset.asset_ref
         request.user.favorites.post(fav)
     else:
         # Getting the xid will do a batch, so don't do it inside our other batch.
         xid = request.user.xid
         with typepad.client.batch_request():
-            fav = typepad.Favorite.get_by_user_asset(xid, asset_id)
+            fav = Favorite.get_by_user_asset(xid, asset_id)
         fav.delete()
 
     return HttpResponse('OK', content_type='text/plain')
@@ -168,7 +173,7 @@ def flag(request):
             token = OAuthToken(settings.OAUTH_SUPERUSER_KEY, settings.OAUTH_SUPERUSER_SECRET)
             typepad.client.add_credentials(csr, token, domain=backend[1])
 
-            asset = typepad.Asset.get_by_url_id(asset_id)
+            asset = Asset.get_by_url_id(asset_id)
             asset.delete()
             del asset  # lose our reference to it
 
