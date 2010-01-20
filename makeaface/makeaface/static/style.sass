@@ -78,7 +78,6 @@ div#camera
 
 .gridcell .heart, .gridcell .flag
     position: absolute
-    display: none
     text-decoration: none
     background-color: rgba(0, 0, 0, 0.5)
     padding: 4px
@@ -94,7 +93,10 @@ div#camera
     display: block
     color: #ff3
 
-.gridcell:hover .heart, .gridcell:hover .flag
+.gridcell .action
+    display: none
+
+.gridcell:hover .action, .gridcell-hover .action
     display: block
 
 .gridcell .heart

@@ -39,6 +39,12 @@
                 });
 
                 $('#take-picture').click(pingPingSnap);
+                $('.gridcell').live('click', function () {
+                    $(this).toggleClass('gridcell-hover');
+                });
+                $('.gridcell').live('mouseout', function () {
+                    $(this).removeClass('gridcell-hover');
+                });
 
                 function pingPingSnap () {
                     mycam.takePhoto();
@@ -136,8 +142,8 @@
             <div id="camspace"></div>
             <div id="firstcell" class="gridcell">
                 {% if user.is_authenticated %}
-                <a class="heart" href="" title="I like this face">♥</a>
-                <a class="flag" href="" title="This is not a face">✘</a>
+                <a class="heart action" href="" title="I like this face">♥</a>
+                <a class="flag action" href="" title="This is not a face">✘</a>
                 {% endif %}
             </div>
         {% for event in events %}
@@ -146,16 +152,16 @@
                 <div class="gridcell {% if boxloc.rowlast %}lastcell{% endif %}">
                     <img src="{{ event.object.links.rel__enclosure.maxwidth__150.href|slice:":-6" }}-150si">
                     {% if user.is_authenticated %}
-                    <a class="heart" href="{{ event.object.xid }}" title="I like this face">♥</a>
-                    <a class="flag" href="{{ event.object.xid }}" title="This is not a face">✘</a>
+                    <a class="heart action" href="{{ event.object.xid }}" title="I like this face">♥</a>
+                    <a class="flag action" href="{{ event.object.xid }}" title="This is not a face">✘</a>
                     {% endif %}
                 </div>
                 {% if boxloc.rowlast %}
                 <div class="gridcell">
                     <img src="{{ event.object.links.rel__enclosure.maxwidth__150.href|slice:":-6" }}-150si">
                     {% if user.is_authenticated %}
-                    <a class="heart" href="{{ event.object.xid }}" title="I like this face">♥</a>
-                    <a class="flag" href="{{ event.object.xid }}" title="This is not a face">✘</a>
+                    <a class="heart action" href="{{ event.object.xid }}" title="I like this face">♥</a>
+                    <a class="flag action" href="{{ event.object.xid }}" title="This is not a face">✘</a>
                     {% endif %}
                 </div>
                 {% endif %}
