@@ -158,8 +158,17 @@ def flag(request):
     if len(flaggers) >= 3:
         log.debug('%r was the last straw for %r! Deleting!', request.user.xid, asset_id)
         with typepad.client.batch_request():
+
+            # Re-authenticate the client with the superuser credentials that can delete that.
+            typepad.client.clear_credentials()
+            backend = urlparse(settings.BACKEND_URL)
+            csr = OAuthConsumer(settings.OAUTH_CONSUMER_KEY, settings.OAUTH_CONSUMER_SECRET)
+            token = OAuthToken(settings.OAUTH_SUPERUSER_KEY, settings.OAUTH_SUPERUSER_SECRET)
+            typepad.client.add_credentials(csr, token, domain=backend[1])
+
             asset = typepad.Asset.get_by_url_id(asset_id)
             asset.delete()
+
             log.debug('BALEETED')
 
     cache.set(cache_key, flaggers)
