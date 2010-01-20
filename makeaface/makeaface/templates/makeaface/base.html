@@ -12,7 +12,7 @@
     {% block toolbar %}
     <div id="toolbar" class="grid">
         <div class="span-6"></div>
-        <div class="span-12"><h1>make a face</h1></div>
+        <div class="span-12"><h1><a href="{% url home %}">make a face</a></h1></div>
         <div class="span-6 last">
             {% if user.is_anonymous %}
                 <p>Hi! <a href="{% url login %}">Sign in</a> to face</p>

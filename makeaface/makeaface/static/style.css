@@ -690,6 +690,13 @@ div.last {
   margin-right: 0;
   display: block; }
 
+#toolbar h1 a {
+  color: black;
+  text-decoration: none; }
+
+#toolbar h1 a:hover {
+  text-decoration: underline; }
+
 #camspace {
   position: relative;
   float: left;
