@@ -9,7 +9,8 @@ from urlparse import urlparse
 
 from django.conf import settings
 from django.core.cache import cache
-from django.http import HttpResponse, HttpResponseRedirect
+from django.core.urlresolvers import reverse
+from django.http import HttpResponse, HttpResponseRedirect, Http404
 from oauth.oauth import OAuthConsumer, OAuthToken
 from templateresponse import TemplateResponse
 import typepad
@@ -65,6 +66,21 @@ def home(request):
         'events': events,
         'next_box_loc': next_box_loc(),
     })
+
+
+def photo_for(request):
+    try:
+        photo_url = request.GET['url']
+    except KeyError:
+        raise Http404
+
+    # Get the XID out of the photo url.
+    try:
+        (asset_id,) = re.findall('6a\w+', photo_url)
+    except TypeError:
+        raise Http404
+
+    return HttpResponseRedirect(reverse('photo', kwargs={'xid': asset_id}))
 
 
 def photo(request, xid):

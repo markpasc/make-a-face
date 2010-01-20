@@ -7,6 +7,7 @@ urlpatterns = patterns('',
     url(r'^entry/(?P<id>\w+)$', 'django.views.generic.simple.redirect_to',
         {'url': r'/photo/%(id)s'}),
     url(r'^photo/(?P<xid>\w+)$', 'makeaface.views.photo', name='photo'),
+    url(r'^photo$', 'makeaface.views.photo_for', name='photo_for'),
 
     url(r'^upload$', 'makeaface.views.upload_photo', name='upload_photo'),
     url(r'^favorite$', 'makeaface.views.favorite', name='favorite'),

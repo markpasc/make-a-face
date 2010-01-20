@@ -58,6 +58,7 @@
                     var newphoto = $('#firstcell');
                     newphoto.find('img').attr('src', url);
                     newphoto.find('a').attr('href', url);
+                    newphoto.find('a.link').attr('href', '{% url photo_for %}?url=' + url)
 
                     $('#gridsubstrate').animate({
                         'left': '0px',
