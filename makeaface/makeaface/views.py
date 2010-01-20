@@ -7,8 +7,10 @@ import logging
 import re
 from urlparse import urlparse
 
+from django.conf import settings
 from django.core.cache import cache
 from django.http import HttpResponse, HttpResponseRedirect
+from oauth.oauth import OAuthConsumer, OAuthToken
 from templateresponse import TemplateResponse
 import typepad
 import typepad.api
