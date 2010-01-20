@@ -68,7 +68,7 @@
                 function sentPhoto(cam, url) {
                     // Make a new grid cell with this photo.
                     var newphoto = $('#firstcell');
-                    newphoto.append($('<img/>').attr('src', url));
+                    newphoto.find('img').attr('src', url);
                     newphoto.find('a').attr('href', url);
 
                     $('#gridsubstrate').animate({
@@ -151,6 +151,7 @@
         <div id="gridsubstrate">
             <div id="camspace"></div>
             <div id="firstcell" class="gridcell">
+                <img src="#">
                 {% if user.is_authenticated %}
                 <a class="heart action" href="" title="I like this face">♥</a>
                 <a class="flag action" href="" title="This is not a face">✘</a>
