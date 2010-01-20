@@ -746,8 +746,9 @@ div#camera {
 #camerabox.sending #camera-throb {
   display: block; }
 
-#camera {
-  padding: 0; }
+#camera, embed, object {
+  padding: 0;
+  margin: 0; }
 
 #toolbar h1 {
   text-align: center; }
