@@ -20,8 +20,15 @@
     <div id="gridcontainer">
 
         {% if user.is_authenticated %}
-            <div id="camera">
-                <button id="take-picture" class="take-picture">Take picture</button>
+            <div id="camerabox">
+                <div id="camera"></div>
+                <div id="take-picture-box">
+                    <span class="tp-button">
+                        <span class="button button-green button-xl">
+                            <a id="take-picture" href="#">Take picture</a>
+                        </span>
+                    </span>
+                </div>
                 <div id="camera-throb">☃</div>
             </div>
 
@@ -29,8 +36,8 @@
                 cameraman.url = '{% absoluteurl %}{% url static path="makeaface/" %}{% endabsoluteurl %}';
                 mycam = cameraman.createCamera({
                     'id': 'camera',
-                    'width': '458px',
-                    'height': '458px',
+                    'width': $('#camera').width(),
+                    'height': $('#camera').height(),
                     'sendto': '{% absoluteurl %}{% url upload_photo %}{% endabsoluteurl %}',
                     'errorSending': function(cam, err) { alert('OOPS: ' + err) },
                     'tookPhoto': function(cam) { tookPhoto(cam) },
@@ -38,7 +45,10 @@
                     'sentPhoto': function(cam, url) { sentPhoto(cam, url) }
                 });
 
-                $('#take-picture').click(pingPingSnap);
+                $('#take-picture').click(function () {
+                    pingPingSnap();
+                    return false;
+                });
                 $('.gridcell').live('click', function () {
                     $(this).toggleClass('gridcell-hover');
                 });
@@ -51,7 +61,7 @@
                 }
 
                 function tookPhoto(cam) {
-                    $('#camera').addClass('sending');
+                    $('#camerabox').addClass('sending');
                     cam.sendPhoto();
                 }
 
@@ -85,7 +95,7 @@
 
                         // Turn the camera back on.
                         cam.dropPhoto();
-                        $('#camera').removeClass('sending');
+                        $('#camerabox').removeClass('sending');
                     });
                 }
 

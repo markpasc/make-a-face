@@ -1,3 +1,4 @@
+@import http://static.typepad.com/.shared:typepad:en_us/css/app/modules/app-buttons.css
 @import ply.sass
 
 =borderradius(!whassa)
@@ -12,15 +13,26 @@
     height: 458px
     margin: 0 0 4px 4px
 
-div#camera, #howto
+#camerabox, #howto
     position: absolute
     width: 458px
     height: 458px
     top: 0
     left: 0
-    background: #ff6
     margin: 0 0 4px 4px
     z-index: 10
+
+#camerabox
+    background: #ccc
+
+#howto
+    background: #ffg
+
+div#camera
+    position: absolute
+    width: 400px
+    height: 400px
+    margin: 29px
 
 #camera-throb
     display: none
@@ -40,19 +52,24 @@ div#camera, #howto
     width: 458px
     height: 458px
 
-div#camera.sending #camera-throb
+#take-picture-box
+    position: absolute
+    bottom: 4px
+    width: 100%
+    text-align: center
+
+#take-picture-box .tp-button
+    float: none
+    display: inline-block
+
+#camerabox.sending #camera-throb
     display: block
 
-div#camera
+#camera
     padding: 0
 
 #toolbar h1
     text-align: center
-
-#camera .take-picture
-    position: absolute
-    top: 0
-    left: 0
 
 #gridcontainer
     position: relative
