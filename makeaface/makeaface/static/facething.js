@@ -98,12 +98,23 @@ function onGridResize(event) {
     }
 }
 
+function switchOne() {
+    var cell = getNextCell();
+    var faceUrl = getNextFace();
+    var cellElem = cell.elem;
+    var imgElem = cellElem.find('img');
+    imgElem.attr('src',  faceUrl);
+    cell.populated = true;
+}
+
 $(document).ready(function () {
     $(document).bind('createcell', onCellCreate);
     $(document).bind('initializedgrid', onGridComplete);
     $(document).bind('gridresized', onGridResize);
 
     initializeGrid();
+
+    setInterval(switchOne, 2000);
 });
 
 function shuffle(list) {
