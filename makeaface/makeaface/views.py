@@ -16,7 +16,7 @@ from templateresponse import TemplateResponse
 import typepad
 import typepad.api
 import typepadapp.signals
-from typepadapp.models import Asset, Favorite
+from typepadapp.models import Asset, Favorite, Photo
 
 
 log = logging.getLogger(__name__)
@@ -209,3 +209,18 @@ def flag(request):
     cache.set(cache_key, flaggers, 86400)  # 1 day
     log.debug('Flaggers for %r are now %r', asset_id, flaggers)
     return HttpResponse('OK', content_type='text/plain')
+
+
+def facegrid(request):
+    with typepad.client.batch_request():
+        events = request.group.events
+
+    photos = []
+    for event in events:
+        if event.object is not None:
+            if type(event.object) is Photo:
+                photos.append(event.object)
+
+    return TemplateResponse(request, 'makeaface/grid.html', {
+        'photos': photos,
+    })

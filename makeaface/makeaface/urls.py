@@ -12,4 +12,6 @@ urlpatterns = patterns('',
     url(r'^upload$', 'makeaface.views.upload_photo', name='upload_photo'),
     url(r'^favorite$', 'makeaface.views.favorite', name='favorite'),
     url(r'^flag$', 'makeaface.views.flag', name='flag'),
+
+    url(r'^grid$', 'makeaface.views.facegrid', name='facegrid'),
 )
