@@ -104,6 +104,10 @@ function switchOne() {
     var cellElem = cell.elem;
     var imgElem = cellElem.find('img');
     imgElem.attr('src',  faceUrl);
+    imgElem.css("display", "none");
+    imgElem.fadeIn(200, function () {
+        switchOne();
+    });
     cell.populated = true;
 }
 
@@ -114,7 +118,7 @@ $(document).ready(function () {
 
     initializeGrid();
 
-    setInterval(switchOne, 2000);
+    setTimeout(switchOne, 500);
 });
 
 function shuffle(list) {
