@@ -10,17 +10,21 @@
 </head><body>
 
     {% block toolbar %}
-    <div id="toolbar" class="grid">
-        <div class="span-6"></div>
-        <div class="span-12"><h1><a href="{% url home %}">make a face</a></h1></div>
-        <div class="span-6 last">
+    <div id="toolbar">
+        <div id="title">
+            <h1><a href="{% url home %}"><img src="{% url static path="makeaface/banner.png" %}" width="458" height="68" alt="Make A Face"></a></h1>
+        </div>
+        <div id="hi">
             {% if user.is_anonymous %}
-                <p>Hi! <a href="{% url login %}">Sign in</a> to face</p>
+                <p>Hi! <span class="tp-button"><span class="button button-signin"><a href="{% url login %}">Sign in</a></span></span> to face</p>
             {% else %}
-                <p>Hi, {{ user.display_name }}! <a href="{% url logout %}">Sign out</a></p>
+                <p>
+                    <span class="hi">Hi, {{ user.display_name }}!</span>
+                    <span class="tp-button"><span class="button button-signout"><a href="{% url logout %}">Sign out</a></span></span>
+                </p>
             {% endif %}
         </div>
-    </div><br style="clear: both">
+    </div>
     {% endblock %}
     {% block content %}{% endblock %}
 

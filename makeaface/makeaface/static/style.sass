@@ -1,13 +1,42 @@
 @import http://static.typepad.com/.shared:typepad:en_us/css/app/modules/app-buttons.css
 @import ply.sass
 
+body
+    background: #333
+    color: white
+
 =borderradius(!whassa)
     border-radius: #{!whassa}
     -moz-border-radius: #{!whassa}
     -webkit-border-radius: #{!whassa}
 
+=boxshadow(!whassa)
+    box-shadow: #{!whassa}
+    -moz-box-shadow: #{!whassa}
+    -webkit-box-shadow: #{!whassa}
+
+=buttongradient(!top, !bottom)
+    border-color: #{!bottom}
+    background-color: #{!bottom}
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#{!top}), to(#{!bottom}))
+    background-image: -moz-linear-gradient(left, right, from(#{!top}), to(#{!bottom}))
+    filter: progid:DXImageTransform.Microsoft.gradient(enabled='true', startColorstr=#{!top}, endColorstr=#{!bottom}, GradientType=0)
+
+#toolbar
+    padding: 10px 0
+
+#toolbar #title
+    float: left
+    padding-left: 4px
+
+#toolbar #hi
+    float: right
+
+#toolbar h1
+    margin: 0
+
 #toolbar h1 a
-    color: black
+    color: white
     text-decoration: none
 
 #toolbar h1 a:hover
@@ -30,10 +59,11 @@
     z-index: 10
 
 #camerabox
-    background: #ccc
+    background: #262626
 
 #howto
-    background: #ff6
+    background: #262626
+    color: white
 
 div#camera
     position: absolute
@@ -61,11 +91,11 @@ div#camera
 
 #take-picture-box
     position: absolute
-    bottom: 4px
+    bottom: 17px
     width: 100%
     text-align: center
 
-#take-picture-box .tp-button
+.tp-button
     float: none
     display: inline-block
 
@@ -76,10 +106,7 @@ div#camera
     padding: 0
     margin: 0
 
-#toolbar h1
-    text-align: center
-
-#gridcontainer
+#gridcontainer, #toolbar
     position: relative
     width: 924px
     margin: 0 auto
@@ -96,6 +123,7 @@ div#camera
     width: 150px
     height: 150px
     margin: 0 0 4px 4px
+    +boxshadow(#000 0 1px 2px)
 
 .gridcell img
     width: 100%
@@ -152,3 +180,26 @@ big img
     width: 616px
     margin: 0 auto
     overflow: hidden
+
+.tp-button .button-makeface a, .tp-button .button-signin a
+    color: #300
+    text-shadow: #ffd400 0 1px 1px
+    +buttongradient(#fc0, #f90)
+    +boxshadow(#000 0 1px 2px)
+
+    &:hover
+        +buttongradient(#da0, #d70)
+
+.tp-button .button-makeface a
+    padding: 6px 6px 2px
+    font-size: 12px
+    line-height: 12px
+
+.tp-button .button-signout a
+    color: #999
+    text-shadow: #000 0 1px 1px
+    +buttongradient(#292929, #242424)
+    +boxshadow(#000 0 1px 2px)
+
+    &:hover
+        +buttongradient(#181818, #131313)
