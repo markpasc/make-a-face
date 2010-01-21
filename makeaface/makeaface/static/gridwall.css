@@ -1,6 +1,7 @@
 body {
     margin: 0;
     padding: 0;
+    overflow: hidden;
 }
 
 #gridsizer {
@@ -18,7 +19,6 @@ body {
     padding: 0;
     margin: 0 auto;
 
-    background: #f6f;
     width: 150px;
     height: 150px;
 }
@@ -34,7 +34,7 @@ body {
     height: 150px;
 }
 
-.gridcell:hover {
+/*.gridcell:hover {
     overflow: visible;
     z-index: 9;
 }
@@ -44,4 +44,6 @@ body {
     margin-left: -5%;
     width: 110%;
     height: 110%;
-}
+    -moz-box-shadow: #000 0 0 20px;
+    -webkit-box-shadow: #000 0 0 20px;
+}*/

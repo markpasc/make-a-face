@@ -6,8 +6,8 @@
 var cellSize = 150;
 var cellSpacing = 4;
 
-var minColumns = 3;
-var minRows = 3;
+var minColumns = 7;
+var minRows = 4;
 
 var currentColumns = 0;
 var currentRows = 0;
@@ -187,7 +187,10 @@ function handleResize() {
     var newRows = rows - currentRows;
     var newColumns = columns - currentColumns;
 
-    window.console.log('YAY resizing to add ' + newRows + ' rows and ' + newColumns + ' columns');
+    var changed = false;
+    if (columns != currentColumns || rows != currentRows) {
+        changed = true;
+    }
 
     if (newColumns < 0) {
         // We're shrinking, so we need to destroy some columns.
@@ -253,6 +256,9 @@ function handleResize() {
         currentMaxX = maxX;
     }
 
+    if (changed) {
+        $(document).trigger('gridresized', [this]);
+    }
 }
 
 function makeElementForCell(cellX, cellY) {
