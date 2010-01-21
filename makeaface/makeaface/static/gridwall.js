@@ -187,6 +187,11 @@ function handleResize() {
     var newRows = rows - currentRows;
     var newColumns = columns - currentColumns;
 
+    var changed = false;
+    if (columns != currentColumns || rows != currentRows) {
+        changed = true;
+    }
+
     if (newColumns < 0) {
         // We're shrinking, so we need to destroy some columns.
 
@@ -251,6 +256,9 @@ function handleResize() {
         currentMaxX = maxX;
     }
 
+    if (changed) {
+        $(document).trigger('gridresized', [this]);
+    }
 }
 
 function makeElementForCell(cellX, cellY) {

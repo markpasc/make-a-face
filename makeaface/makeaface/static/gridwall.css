@@ -34,7 +34,7 @@ body {
     height: 150px;
 }
 
-.gridcell:hover {
+/*.gridcell:hover {
     overflow: visible;
     z-index: 9;
 }
@@ -46,4 +46,4 @@ body {
     height: 110%;
     -moz-box-shadow: #000 0 0 20px;
     -webkit-box-shadow: #000 0 0 20px;
-}
+}*/
