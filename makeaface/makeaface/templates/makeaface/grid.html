@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html><head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>{% block htmltitle %}make-a-face{% endblock %}</title>
+    <link rel="stylesheet" type="text/css" href="{% url static path="makeaface/style.css" %}">
+    <link rel="stylesheet" type="text/css" href="{% url static path="makeaface/gridwall.css" %}">
+    <script type="text/javascript" src="{% url static path="makeaface/jquery.js" %}"></script>
+    <script type="text/javascript" src="{% url static path="makeaface/cameraman.js" %}"></script>
+    <script type="text/javascript" src="{% url static path="makeaface/gridwall.js" %}"></script>
+    <script type="text/javascript">
+
+        var faces = [
+        {% for photo in photos %}
+            "{{ photo.links.rel__enclosure.maxwidth__458.href }}"{% if forloop.last %}{% else %},{% endif %}
+        {% endfor %}
+        ];
+
+    </script>
+    <script type="text/javascript" src="{% url static path="makeaface/facething.js" %}"></script>
+
+</head><body><div id="gridsizer"></div><div id="gridcontainer"></div></body></html>
