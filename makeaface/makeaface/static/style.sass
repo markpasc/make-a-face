@@ -5,6 +5,12 @@ body
     background: #333
     color: white
 
+a, a:link, a:hover, a:visited, a:active
+    color: #f90
+
+a:visited
+    color: #d70
+
 =borderradius(!whassa)
     border-radius: #{!whassa}
     -moz-border-radius: #{!whassa}
@@ -49,23 +55,28 @@ body
     height: 458px
     margin: 0 0 4px 4px
 
-#camerabox, #howto
+#camerabox, #howto, #photobox
     position: absolute
     width: 458px
     height: 458px
     top: 0
     left: 0
     margin: 0 0 4px 4px
-    z-index: 10
 
 #camerabox
     background: #262626
+    z-index: 10
+
+#photobox
+    background: #262626
+    position: relative
 
 #howto
     background: #262626
     color: white
+    z-index: 10
 
-div#camera
+div#camera, #photo
     position: absolute
     width: 400px
     height: 400px
@@ -163,8 +174,14 @@ div#camera
     left: 62px
     text-align: center
 
+#photobox
+    width: 612px
+    height: 612px
+
 #photo
     text-align: center
+    margin: 106px
+    z-index: 10
 
 #photo img
     display: inline-block
@@ -175,11 +192,16 @@ div#camera
 big img
     vertical-align: middle
 
-#photo-favorites
-    position: relative
-    width: 616px
+#photo-data
+    position: absolute
+    width: 304px
     margin: 0 auto
-    overflow: hidden
+    top: 0
+    right: 0
+    background: #262626
+
+#photo-data-inner
+    margin: 4px
 
 .tp-button .button-makeface a, .tp-button .button-signin a
     color: #300

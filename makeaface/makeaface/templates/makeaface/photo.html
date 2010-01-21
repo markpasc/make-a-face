@@ -5,27 +5,38 @@
 {% endblock %}
 
 {% block content %}
-    <div id="photo">
-        <p><img src="{{ photo.links.maxwidth__451.href }}"></p>
-        <p><big>
-            <a href="{{ photo.author.typepad_url }}"><img src="{{ photo.author.links.rel__avatar.maxwidth__50.href }}"></a>
-            <a href="{{ photo.author.typepad_url }}">{{ photo.author.display_name }}</a>
-        </big></p>
-    </div>
-
-    {% if favorites %}
-    <div id="photo-favorites">
-        <h2>Facers who liked this face</h2>
-
-        {% for fav in favorites %}
-            <div class="favorite">
-                <big>
-                    <a href="{{ fav.author.typepad_url }}"><img src="{{ fav.author.links.rel__avatar.maxwidth__50.href }}"></a>
-                    <a href="{{ fav.author.typepad_url }}">{{ fav.author.display_name }}</a>
-                </big>
+    <div id="gridcontainer">
+        <div id="photobox">
+            <div id="photo">
+                <img src="{{ photo.links.maxwidth__500.href }}">
             </div>
-        {% endfor %}
+        </div>
+
+        {% if favorites %}
+        <div id="photo-data">
+            <div id="photo-data-inner">
+            <div id="photo-by">
+                <p><big>
+                    <a href="{{ photo.author.typepad_url }}"><img src="{{ photo.author.links.rel__avatar.maxwidth__50.href }}"></a>
+                    <a href="{{ photo.author.typepad_url }}">{{ photo.author.display_name }}</a>'s face
+                </big></p>
+            </div>
+
+            <div id="photo-favorites">
+                <h2>Facers who liked this face</h2>
+
+                {% for fav in favorites %}
+                    <div class="favorite">
+                        <big>
+                            <a href="{{ fav.author.typepad_url }}"><img src="{{ fav.author.links.rel__avatar.maxwidth__50.href }}"></a>
+                            <a href="{{ fav.author.typepad_url }}">{{ fav.author.display_name }}</a>
+                        </big>
+                    </div>
+                {% endfor %}
+            </div>
+            </div>
+        </div>
+        {% endif %}
     </div>
-    {% endif %}
 
 {% endblock %}
