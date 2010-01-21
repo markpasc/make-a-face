@@ -12,7 +12,6 @@
             </div>
         </div>
 
-        {% if favorites %}
         <div id="photo-data">
             <div id="photo-data-inner">
             <div id="photo-by">
@@ -22,6 +21,7 @@
                 </big></p>
             </div>
 
+            {% if favorites %}
             <div id="photo-favorites">
                 <h2>Facers who liked this face</h2>
 
@@ -34,9 +34,9 @@
                     </div>
                 {% endfor %}
             </div>
+            {% endif %}
             </div>
         </div>
-        {% endif %}
     </div>
 
 {% endblock %}
