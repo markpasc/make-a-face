@@ -882,7 +882,7 @@ big img {
   border-color: #ff9900;
   background-color: #ff9900;
   background-image: -webkit-gradient(linear, left top, left bottom, from(#ffcc00), to(#ff9900));
-  background-image: -moz-linear-gradient(left, right, from(#ffcc00), to(#ff9900));
+  background-image: -moz-linear-gradient(#ffcc00, #ff9900);
   filter: progid:DXImageTransform.Microsoft.gradient(enabled='true', startColorstr=#ffcc00, endColorstr=#ff9900, GradientType=0);
   box-shadow: black 0 1px 2px;
   -moz-box-shadow: black 0 1px 2px;
@@ -891,7 +891,7 @@ big img {
     border-color: #dd7700;
     background-color: #dd7700;
     background-image: -webkit-gradient(linear, left top, left bottom, from(#ddaa00), to(#dd7700));
-    background-image: -moz-linear-gradient(left, right, from(#ddaa00), to(#dd7700));
+    background-image: -moz-linear-gradient(#ddaa00, #dd7700);
     filter: progid:DXImageTransform.Microsoft.gradient(enabled='true', startColorstr=#ddaa00, endColorstr=#dd7700, GradientType=0); }
 
 .tp-button .button-makeface a {
@@ -905,7 +905,7 @@ big img {
   border-color: #242424;
   background-color: #242424;
   background-image: -webkit-gradient(linear, left top, left bottom, from(#292929), to(#242424));
-  background-image: -moz-linear-gradient(left, right, from(#292929), to(#242424));
+  background-image: -moz-linear-gradient(#292929, #242424);
   filter: progid:DXImageTransform.Microsoft.gradient(enabled='true', startColorstr=#292929, endColorstr=#242424, GradientType=0);
   box-shadow: black 0 1px 2px;
   -moz-box-shadow: black 0 1px 2px;
@@ -914,5 +914,5 @@ big img {
     border-color: #131313;
     background-color: #131313;
     background-image: -webkit-gradient(linear, left top, left bottom, from(#181818), to(#131313));
-    background-image: -moz-linear-gradient(left, right, from(#181818), to(#131313));
+    background-image: -moz-linear-gradient(#181818, #131313);
     filter: progid:DXImageTransform.Microsoft.gradient(enabled='true', startColorstr=#181818, endColorstr=#131313, GradientType=0); }
