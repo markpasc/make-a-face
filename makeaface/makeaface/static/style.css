@@ -1,4 +1,4 @@
-@import url(http://static.typepad.com/.shared:typepad:en_us/css/app/modules/app-buttons.css);
+@import url(buttons.css);
 * {
   margin: 0;
   padding: 0; }

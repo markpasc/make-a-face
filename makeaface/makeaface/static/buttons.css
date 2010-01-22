@@ -1,0 +1,310 @@
+/*
+
+TypePad App: Buttons
+Six Apart
+http://www.sixapart.com/
+
+*/
+
+
+/* ------------------------------------------------------------------------ */
+
+/* Simple Buttons */
+
+.tp-button {
+    float: left;
+    position: relative;
+}
+
+.tp-button .button a {
+    display: block;
+    margin: 0 2px;
+    border: 1px solid #d9d9d9;
+    padding: 0 9px;
+    color: #333;
+    font-size: 12px;
+    line-height: 18px;
+    text-decoration: none;
+    text-shadow: #fff 0 1px 0;
+    background-color: #f2f2f2;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#f2f2f2), to(#e5e5e5));
+    background-image: -moz-linear-gradient(left, right, from(#f2f2f2), to(#e5e5e5));
+    filter: progid:DXImageTransform.Microsoft.gradient(enabled='true', startColorstr=#f2f2f2, endColorstr=#e5e5e5, GradientType=0);
+    background-repeat: repeat-x;
+    background-position: left top;
+    -webkit-border-radius: 9px;
+    -moz-border-radius: 9px;
+    border-radius: 9px;
+    -webkit-box-shadow: 0 1px 0 #fff;
+    -moz-box-shadow: 0 1px 0 #fff;
+    box-shadow: 0 1px 0 #fff;
+}
+
+.tp-button .button a:hover {
+    text-decoration: none;
+}
+
+.tp-button .button a:hover,
+.tp-button .button a:active,
+.tp-button .flyout-focus .button a {
+    border-color: #ccc;
+    background-color: #e5e5e5;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#e5e5e5), to(#d9d9d9));
+    background-image: -moz-linear-gradient(left, right, from(#e5e5e5), to(#d9d9d9));
+    filter: progid:DXImageTransform.Microsoft.gradient(enabled='true', startColorstr=#e5e5e5, endColorstr=#d9d9d9, GradientType=0);
+}
+
+.tp-button .button a span {
+    padding: 0 10px 0 0;
+    background-image: url(../../../images/app/design/buttons/down.png);
+    background-repeat: no-repeat;
+    background-position: right center;
+}
+
+.tp-button .menu {
+    display: none;
+    position: absolute;
+    top: 20px;
+    left: 2px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #e5e5e5 #ccc #ccc #e5e5e5;
+    background-color: #fff;
+    z-index: 10;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    -webkit-box-shadow: #e5e5e5 0 0 2px;
+}
+
+.tp-button .flyout-focus .menu {
+    display: block;
+}
+
+.tp-button .menu ul {
+    padding: 5px 0;
+}
+
+.tp-button .menu a {
+    display: block;
+    padding: 0 14px;
+    font-size: 12px;
+    line-height: 18px;
+    white-space: nowrap;
+}
+
+.tp-button .menu a:hover {
+    color: #fff;
+    text-decoration: none;
+    background-color: #287098;
+}
+
+/* Colors */
+
+.tp-button .button-green a {
+    border-color: #7fbd32;
+    color: #fff;
+    text-shadow: #4c8a00 0 -1px 0;
+    background-color: #7fbd32;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#8fce43), to(#7fbd32));
+    background-image: -moz-linear-gradient(left, right, from(#8fce43), to(#7fbd32));
+    filter: progid:DXImageTransform.Microsoft.gradient(enabled='true', startColorstr=#8fce43, endColorstr=#7fbd32, GradientType=0);
+}
+
+.tp-button .button-green a:hover,
+.tp-button .button-green a:active,
+.tp-button .flyout-focus .button-green a {
+    border-color: #6eac21;
+    text-shadow: #3b7900 0 -1px 0;
+    background-color: #6eac21;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#7fbd32), to(#6eac21));
+    background-image: -moz-linear-gradient(left, right, from(#7fbd32), to(#6eac21));
+    filter: progid:DXImageTransform.Microsoft.gradient(enabled='true', startColorstr=#7fbd32, endColorstr=#6eac21, GradientType=0);
+}
+
+.tp-button .button-orange a {
+    border-color: #f90;
+    color: #420;
+    font-weight: bold;
+    text-shadow: #ff0 0 1px 1px;
+    background-color: #f90;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#fc0), to(#f90));
+    background-image: -moz-linear-gradient(left, right, from(#fc0), to(#f90));
+    filter: progid:DXImageTransform.Microsoft.gradient(enabled='true', startColorstr=#ffcc00, endColorstr=#ff9900, GradientType=0);
+    -webkit-box-shadow: 0 0 0 transparent;
+    -moz-box-shadow: 0 0 0 transparent;
+    box-shadow: 0 0 0 transparent;
+}
+
+.tp-button .button-orange a:hover,
+.tp-button .button-orange a:active,
+.tp-button .flyout-focus .button-orange a {
+    border-color: #e80;
+    color: #210;
+    background-color: #e80;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#eb0), to(#e80));
+    background-image: -moz-linear-gradient(left, right, from(#eb0), to(#e80));
+    filter: progid:DXImageTransform.Microsoft.gradient(enabled='true', startColorstr=#eebb00, endColorstr=#ee8800, GradientType=0);
+}
+
+.tp-button .button-dark a {
+    border-color: #bfbfbf;
+    color: #000;
+    background-color: #d9d9d9;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#d9d9d9), to(#ccc));
+    background-image: -moz-linear-gradient(left, right, from(#d9d9d9), to(#ccc));
+    filter: progid:DXImageTransform.Microsoft.gradient(enabled='true', startColorstr=#d9d9d9, endColorstr=#cccccc, GradientType=0);
+}
+
+.tp-button .button-dark a:hover,
+.tp-button .button-dark a:active,
+.tp-button .flyout-focus .button-dark a {
+    border-color: #b3b3b3;
+    background-color: #ccc;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#ccc), to(#bfbfbf));
+    background-image: -moz-linear-gradient(left, right, from(#ccc), to(#bfbfbf));
+    filter: progid:DXImageTransform.Microsoft.gradient(enabled='true', startColorstr=#cccccc, endColorstr=#bfbfbf, GradientType=0);
+}
+
+.tp-button .button-darkest a {
+    border-color: #222;
+    color: #ccc;
+    text-shadow: #000 0 -1px 0;
+    background-color: #444;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#444), to(#333));
+    background-image: -moz-linear-gradient(left, right, from(#444), to(#333));
+    filter: progid:DXImageTransform.Microsoft.gradient(enabled='true', startColorstr=#444444, endColorstr=#333333, GradientType=0);
+}
+
+.tp-button .button-darkest a:hover,
+.tp-button .button-darkest a:active,
+.tp-button .flyout-focus .button-darkest a {
+    border-color: #111;
+    background-color: #333;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#333), to(#222));
+    background-image: -moz-linear-gradient(left, right, from(#333), to(#222));
+    filter: progid:DXImageTransform.Microsoft.gradient(enabled='true', startColorstr=#333333, endColorstr=#222222, GradientType=0);
+}
+
+/* Sizes */
+
+.tp-button .button-l a {
+    padding-top: 4px;
+    padding-bottom: 4px;
+    font-size: 13px;
+}
+
+.tp-button .button-xl a {
+    padding-top: 4px;
+    padding-bottom: 4px;
+    font-size: 18px;
+    line-height: 22px;
+}
+
+/* Bar */
+
+.tp-button-bar {
+    margin: 0 -2px;
+}
+
+/* Alignment */
+
+.tp-button-bar-center {
+    text-align: center;
+}
+
+.tp-button-bar-center .tp-button {
+    display: inline-block;
+    float: none;
+}
+
+
+/* ------------------------------------------------------------------------ */
+
+/* Compose Buttons */
+
+.compose-button a {
+    display: block;
+    padding: 4px;
+    color: #533215;
+    font-weight: bold;
+    text-align: center;
+    background-color: #fedb62;
+    background-image: url(../../../images/app/global/blog-nav-compose-bg.png);
+    background-repeat: repeat-x;
+    background-position: left bottom;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    -webkit-box-shadow: 1px 1px 2px #666;
+    -moz-box-shadow: 1px 1px 2px #666;
+    box-shadow: 1px 1px 2px #666;
+}
+
+
+/* ------------------------------------------------------------------------ */
+
+/* Menu Buttons */
+
+.menu-button .button a {
+    display: block;
+    border-width: 0 1px 1px 0;
+    border-style: solid;
+    border-color: #d6d6d6;
+    padding: 3px 5px 2px 8px;
+    font-size: 0.85em;
+    background-color: #f5f5f5;
+    background-image: url(../../../images/app/buttons/button-menu-more-bg.png);
+    background-repeat: repeat-x;
+    background-position: left bottom;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    -webkit-box-shadow: 1px 1px 2px #e0e0e0;
+    -moz-box-shadow: 1px 1px 2px #e0e0e0;
+    box-shadow: 1px 1px 2px #e0e0e0;
+}
+
+.menu-button .button a span {
+    display: block;
+    background-image: url(../../../images/app/buttons/button-menu-more-arrows.png);
+    background-repeat: no-repeat;
+    background-position: right center;
+}
+
+.menu-button .menu {
+    display: none;
+    position: absolute;
+    width: 200px;
+    margin-top: 1px;
+    border-width: 0 1px 1px 0;
+    border-style: solid;
+    border-color: #d6d6d6;
+    padding: 5px 0;
+    background-color: #f5f5f5;
+    z-index: 10;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    -webkit-box-shadow: 1px 1px 2px #e0e0e0;
+    -moz-box-shadow: 1px 1px 2px #e0e0e0;
+    box-shadow: 1px 1px 2px #e0e0e0;
+}
+
+.flyout-focus-blog-actions .menu-button .menu,
+.flyout-focus-album-actions .menu-button .menu,
+.flyout-focus-typelist-actions .menu-button .menu {
+    display: block;
+}
+
+.menu-button .menu a {
+    display: block;
+    padding: 2px 10px;
+}
+
+.menu-button .menu a:hover,
+.menu-button .menu a:active {
+    color: #fff;
+    text-decoration: none;
+    background-color: #287098;
+}
