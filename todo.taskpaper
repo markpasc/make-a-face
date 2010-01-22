@@ -14,3 +14,5 @@
 - link to grid view
 - click action in grid view
 - update button CSS link
+- fix visible shadows of invisible grid cells
+- show when a flag action deletes a photo
