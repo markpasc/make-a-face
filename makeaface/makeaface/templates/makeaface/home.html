@@ -17,7 +17,9 @@
                         </span>
                     </span>
                 </div>
-                <div id="camera-throb">☃</div>
+                <div id="camera-three" class="camera-throb">3</div>
+                <div id="camera-two" class="camera-throb">2</div>
+                <div id="camera-one" class="camera-throb">☃</div>
             </div>
 
             <script type="text/javascript">
@@ -45,7 +47,16 @@
                 });
 
                 function pingPingSnap () {
-                    mycam.takePhoto();
+                    $('#camera-three').show('fast').delay(800).queue(function (next) {
+                        $('#camera-two').show('fast').delay(800).queue(function (next) {
+                            $('#camera-one').show('fast').delay(800).queue(function (next) {
+                                mycam.takePhoto();
+                                next();
+                            }).hide('fast');
+                            next();
+                        }).hide('fast');
+                        next();
+                    }).hide('fast');
                 }
 
                 function tookPhoto(cam) {
