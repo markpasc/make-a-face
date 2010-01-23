@@ -21,6 +21,16 @@
                 </big></p>
             </div>
 
+            <div>
+                <p>
+                    <span class="tp-button">
+                        <span class="button button-heart button-xl">
+                            <a id="photo-action-heart" href="{{ photo.xid }}"><span class="heart">♥</span>I like this face</a>
+                        </span>
+                    </span>
+                </p>
+            </div>
+
             {% if favorites %}
             <div id="photo-favorites">
                 <h2>Facers who liked this face</h2>
@@ -35,6 +45,43 @@
                 {% endfor %}
             </div>
             {% endif %}
+
+            <div class="photo-action-flag">
+                <p>
+                    <span class="tp-button">
+                        <span class="button button-flag">
+                            <a id="photo-action-flag" href="{{ photo.xid }}"><span class="flag">⚑</span>This is not a face</a>
+                        </span>
+                    </span>
+                </p>
+            </div>
+
+            <script type="text/javascript">
+            $('#photo-action-heart').click(function (evt) {
+                var heart = $(this);
+                $.post('{% absoluteurl %}{% url favorite %}{% endabsoluteurl %}', {
+                    'action': 'favorite',
+                    'asset_id': heart.attr('href')
+                }, function () {
+                    heart.addClass('favorited');
+                });
+                heart.blur();
+                return false;
+            });
+
+            $('#photo-action-flag').click(function (evt) {
+                var flag = $(this);
+                $.post('{% absoluteurl %}{% url flag %}{% endabsoluteurl %}', {
+                    'action': 'flag',
+                    'asset_id': flag.attr('href')
+                }, function () {
+                    flag.addClass('flagged');
+                });
+                flag.blur();
+                return false;
+            });
+            </script>
+
             </div>
         </div>
     </div>
