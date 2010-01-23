@@ -26,7 +26,7 @@
                 <p>
                     <span class="tp-button">
                         <span class="button button-heart button-xl">
-                            <a id="photo-action-heart" href="{{ photo.xid }}"><span class="heart">♥</span><span class="text">I like this face</span></a>
+                            <a id="photo-action-heart" {% if user_favorite %}class="favorited"{% endif %} href="{{ photo.xid }}"><span class="heart">♥</span><span class="text">{% if user_favorite %}You like this face!{% else %}I like this face{% endif %}</span></a>
                         </span>
                     </span>
                 </p>
@@ -46,12 +46,14 @@
                 {% endfor %}
 
                 {% if user.is_authenticated %}
+                {% if user_favorite %}{% else %}
                 <div id="new-favorite" class="favorite {% if favorites %}hidden{% endif %}">
                     <big>
                         <a href="{{ user.typepad_url }}"><img src="{{ user.links.rel__avatar.maxwidth__50.href }}"></a>
                         <a href="{{ user.typepad_url }}">{{ user.display_name }}</a>
                     </big>
                 </div>
+                {% endif %}
                 {% endif %}
             </div>
 
@@ -70,16 +72,20 @@
             <script type="text/javascript">
             $('#photo-action-heart').click(function (evt) {
                 var heart = $(this);
-                $.post('{% absoluteurl %}{% url favorite %}{% endabsoluteurl %}', {
-                    'action': 'favorite',
-                    'asset_id': heart.attr('href')
-                }, function () {
-                    heart.addClass('favorited');
-                    heart.find('.text').text('You like this face!');
 
-                    $('#new-favorite').show();
-                    $('#photo-favorites').show();
-                });
+                if (!heart.hasClass('favorited')) {
+                    $.post('{% absoluteurl %}{% url favorite %}{% endabsoluteurl %}', {
+                        'action': 'favorite',
+                        'asset_id': heart.attr('href')
+                    }, function () {
+                        heart.addClass('favorited');
+                        heart.find('.text').text('You like this face!');
+
+                        $('#new-favorite').show();
+                        $('#photo-favorites').show();
+                    });
+                }
+
                 heart.blur();
                 return false;
             });

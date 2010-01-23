@@ -84,13 +84,21 @@ def photo_for(request):
 
 
 def photo(request, xid):
+    user_xid = request.user.xid
     with typepad.client.batch_request():
         photo = Asset.get_by_url_id(xid)
         favs = photo.favorites
 
+    try:
+        with typepad.client.batch_request():
+            userfav = Favorite.get_by_user_asset(user_xid, xid)
+    except Favorite.NotFound:
+        userfav = None
+
     return TemplateResponse(request, 'makeaface/photo.html', {
         'photo': photo,
         'favorites': favs,
+        'user_favorite': userfav,
     })
 
 
