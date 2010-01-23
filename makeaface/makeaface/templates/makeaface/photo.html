@@ -33,8 +33,7 @@
             </div>
             {% endif %}
 
-            {% if favorites %}
-            <div id="photo-favorites">
+            <div id="photo-favorites" class="{% if favorites %}{% else %}hidden{% endif %}">
                 <h2>Facers who liked this face</h2>
 
                 {% for fav in favorites %}
@@ -45,8 +44,16 @@
                         </big>
                     </div>
                 {% endfor %}
+
+                {% if user.is_authenticated %}
+                <div id="new-favorite" class="favorite {% if favorites %}hidden{% endif %}">
+                    <big>
+                        <a href="{{ user.typepad_url }}"><img src="{{ user.links.rel__avatar.maxwidth__50.href }}"></a>
+                        <a href="{{ user.typepad_url }}">{{ user.display_name }}</a>
+                    </big>
+                </div>
+                {% endif %}
             </div>
-            {% endif %}
 
             {% if user.is_authenticated %}
             <div class="photo-action-flag">
@@ -69,6 +76,9 @@
                 }, function () {
                     heart.addClass('favorited');
                     heart.find('.text').text('You like this face!');
+
+                    $('#new-favorite').show();
+                    $('#photo-favorites').show();
                 });
                 heart.blur();
                 return false;

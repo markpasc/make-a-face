@@ -970,3 +970,6 @@ big img {
   color: #933;
   text-shadow: #600 0 1px 1px;
   font-size: 22px; }
+
+.hidden {
+  display: none; }
