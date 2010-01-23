@@ -850,11 +850,6 @@ div#camera, #photo {
 .gridcell .flag {
   right: 0; }
 
-.gridcell .link {
-  width: 26px;
-  left: 62px;
-  text-align: center; }
-
 #photobox {
   width: 612px;
   height: 612px; }
