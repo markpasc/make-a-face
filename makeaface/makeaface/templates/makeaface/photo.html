@@ -21,6 +21,7 @@
                 </big></p>
             </div>
 
+            {% if user.is_authenticated %}
             <div>
                 <p>
                     <span class="tp-button">
@@ -30,6 +31,7 @@
                     </span>
                 </p>
             </div>
+            {% endif %}
 
             {% if favorites %}
             <div id="photo-favorites">
@@ -46,6 +48,7 @@
             </div>
             {% endif %}
 
+            {% if user.is_authenticated %}
             <div class="photo-action-flag">
                 <p>
                     <span class="tp-button">
@@ -55,6 +58,7 @@
                     </span>
                 </p>
             </div>
+            {% endif %}
 
             <script type="text/javascript">
             $('#photo-action-heart').click(function (evt) {
