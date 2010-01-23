@@ -25,7 +25,7 @@
                 <p>
                     <span class="tp-button">
                         <span class="button button-heart button-xl">
-                            <a id="photo-action-heart" href="{{ photo.xid }}"><span class="heart">♥</span>I like this face</a>
+                            <a id="photo-action-heart" href="{{ photo.xid }}"><span class="heart">♥</span><span class="text">I like this face</span></a>
                         </span>
                     </span>
                 </p>
@@ -50,7 +50,7 @@
                 <p>
                     <span class="tp-button">
                         <span class="button button-flag">
-                            <a id="photo-action-flag" href="{{ photo.xid }}"><span class="flag">⚑</span>This is not a face</a>
+                            <a id="photo-action-flag" href="{{ photo.xid }}"><span class="flag">⚑</span><span class="text">This is not a face</span></a>
                         </span>
                     </span>
                 </p>
@@ -64,6 +64,7 @@
                     'asset_id': heart.attr('href')
                 }, function () {
                     heart.addClass('favorited');
+                    heart.find('.text').text('You like this face!');
                 });
                 heart.blur();
                 return false;
@@ -76,6 +77,7 @@
                     'asset_id': flag.attr('href')
                 }, function () {
                     flag.addClass('flagged');
+                    flag.find('.text').text('Flagged!');
                 });
                 flag.blur();
                 return false;
