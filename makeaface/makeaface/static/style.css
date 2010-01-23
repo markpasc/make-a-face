@@ -710,14 +710,18 @@ a:visited {
 #toolbar #hi {
   float: right; }
 
+#hi .hi img {
+  vertical-align: middle;
+  width: 2em; }
+
 #toolbar h1 {
   margin: 0; }
 
-#toolbar h1 a {
+#toolbar a {
   color: white;
   text-decoration: none; }
 
-#toolbar h1 a:hover {
+#toolbar a:hover {
   text-decoration: underline; }
 
 #camspace {

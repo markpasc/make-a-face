@@ -19,7 +19,7 @@
                 <p>Hi! <span class="tp-button"><span class="button button-signin"><a href="{% url login %}">Sign in</a></span></span> to face</p>
             {% else %}
                 <p>
-                    <span class="hi">Hi, {{ user.display_name }}!</span>
+                    <span class="hi">Hi, <a href="{{ user.typepad_url }}"><img src="{{ user.links.rel__avatar.maxwidth__50.href }}"></a> <a href="{{ user.typepad_url }}">{{ user.display_name }}</a>!</span>
                     <span class="tp-button"><span class="button button-signout"><a href="{% url logout %}">Sign out</a></span></span>
                 </p>
             {% endif %}
