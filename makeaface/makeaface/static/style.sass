@@ -45,12 +45,12 @@ a:visited
 #toolbar h1
     margin: 0
 
-#toolbar a
+#toolbar a, #colophon .typepad-link
     color: white
     text-decoration: none
 
-#toolbar a:hover
-    text-decoration: underline
+    &:hover
+        text-decoration: underline
 
 #camspace
     position: relative
@@ -138,12 +138,13 @@ div#camera, #photo
     width: 1078px
     left: -156px
 
-.gridcell
+.gridcell, #colophon
     position: relative
     float: left
     width: 150px
     height: 150px
     margin: 0 0 4px 4px
+    background: #262626
     +boxshadow(#000 0 1px 2px)
 
 .gridcell img
@@ -178,6 +179,19 @@ div#camera, #photo
 
 .gridcell .flag
     right: 0
+
+#colophon
+    position: absolute
+    bottom: 0
+    right: 2px
+    z-index: 40
+    text-align: center
+
+#colophon p
+    margin: 2em 0 0 0
+
+#colophon img
+    vertical-align: middle
 
 #photobox
     width: 612px

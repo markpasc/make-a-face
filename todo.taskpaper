@@ -5,7 +5,7 @@
 - replace navitorial with progressive disclosure 
 - live updating
 - short IDN domain name
-- link to grid view
+- link to grid view @done
 - click action in grid view @mart
 - show when a flag action deletes a photo
 - fix ie7 action bug? (it thinks they're regular links)
