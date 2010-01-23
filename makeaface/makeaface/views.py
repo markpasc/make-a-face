@@ -152,12 +152,17 @@ def favorite(request):
         fav = Favorite()
         fav.in_reply_to = asset.asset_ref
         request.user.favorites.post(fav)
+        typepadapp.signals.favorite_created.send(sender=fav, instance=fav, parent=asset,
+            group=request.group)
     else:
         # Getting the xid will do a batch, so don't do it inside our other batch.
         xid = request.user.xid
         with typepad.client.batch_request():
+            asset = Asset.get_by_url_id(asset_id)
             fav = Favorite.get_by_user_asset(xid, asset_id)
         fav.delete()
+        typepadapp.signals.favorite_deleted.send(sender=fav, instance=fav,
+            parent=asset, group=request.group)
 
     return HttpResponse('OK', content_type='text/plain')
 
