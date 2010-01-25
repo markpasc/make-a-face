@@ -1,11 +1,15 @@
 - show your favorites when viewing page
-- change permalink template to use /photo/ url @mart
-- record faces of favoriters, and display them in "Faces who favorited" lists
-- picture frames
+- remember faces of favoriters, and display them in "Faces who favorited" lists
 - replace navitorial with progressive disclosure 
 - live updating
-- short IDN domain name
-- link to grid view @done
-- click action in grid view @mart
+- sharing
 - show when a flag action deletes a photo
+- let folks delete their last photo
+- disable photo-making until cameraman reports the camera is available
 - fix ie7 action bug? (it thinks they're regular links)
+- change permalink template to use /photo/ url @mart
+- click action in grid view @mart
+
+backlog:
+- picture frames
+- short IDN domain name
