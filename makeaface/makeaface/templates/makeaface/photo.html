@@ -34,27 +34,30 @@
             {% endif %}
 
             <div id="photo-favorites" class="{% if favorites %}{% else %}hidden{% endif %}">
-                <h2>Facers who liked this face</h2>
+                <h2>Faces who liked this face</h2>
 
                 {% for fav in favorites %}
-                    <div class="favorite">
-                        <big>
-                            <a href="{{ fav.author.typepad_url }}"><img src="{{ fav.author.links.rel__avatar.maxwidth__50.href }}"></a>
-                            <a href="{{ fav.author.typepad_url }}">{{ fav.author.display_name }}</a>
-                        </big>
+                    <div class="gridcell">
+                        {% if fav.lastface %}
+                            <a href="{% url photo xid=fav.lastface.xid %}"><img src="{{ fav.lastface.links.rel__enclosure.maxwidth__150.href }}"></a>
+                        {% else %}
+                            <a href="{{ fav.author.typepad_url }}"><img src="{{ fav.author.links.rel__avatar.maxwidth__150.href }}"></a>
+                        {% endif %}
                     </div>
                 {% endfor %}
 
                 {% if user.is_authenticated %}
                 {% if user_favorite %}{% else %}
-                <div id="new-favorite" class="favorite {% if favorites %}hidden{% endif %}">
-                    <big>
-                        <a href="{{ user.typepad_url }}"><img src="{{ user.links.rel__avatar.maxwidth__50.href }}"></a>
-                        <a href="{{ user.typepad_url }}">{{ user.display_name }}</a>
-                    </big>
+                <div id="new-favorite" class="gridcell {% if favorites %}hidden{% endif %}">
+                    {% if lastface %}
+                        <a href="{% url photo xid=lastface.xid %}"><img src="{{ lastface.links.rel__enclosure.maxwidth__150.href }}"></a>
+                    {% else %}
+                        <a href="{{ user.typepad_url }}"><img src="{{ user.links.rel__avatar.maxwidth__150.href }}"></a>
+                    {% endif %}
                 </div>
                 {% endif %}
                 {% endif %}
+                <br style="clear: both">
             </div>
 
             {% if user.is_authenticated %}

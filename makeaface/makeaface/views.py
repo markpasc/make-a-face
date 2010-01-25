@@ -18,6 +18,8 @@ import typepad.api
 import typepadapp.signals
 from typepadapp.models import Asset, Favorite, Photo
 
+from makeaface.models import Lastface, Favoriteface
+
 
 log = logging.getLogger(__name__)
 
@@ -84,23 +86,47 @@ def photo_for(request):
 
 
 def photo(request, xid):
+    # Ask this up front to get the user object outside of batches.
+    authed = request.user.is_authenticated()
+
+    lastface = None
     with typepad.client.batch_request():
         photo = Asset.get_by_url_id(xid)
         favs = photo.favorites
 
+        favfaces = dict()
+        for face in Favoriteface.objects.all().filter(favorited=xid):
+            favfaces[face.favoriter] = Asset.get_by_url_id(face.lastface)
+
+        if authed:
+            try:
+                lastface_mod = Lastface.objects.get(owner=request.user.xid)
+            except Lastface.DoesNotExist:
+                pass
+            else:
+                lastface = Asset.get_by_url_id(lastface_mod.face)
+
     userfav = None
-    if request.user.is_authenticated():
-        user_xid = request.user.xid
+    if authed:
+        # Get the Favorite in a separate batch so we can handle if it fails.
         try:
             with typepad.client.batch_request():
-                userfav = Favorite.get_by_user_asset(user_xid, xid)
+                userfav = Favorite.get_by_user_asset(request.user.xid, xid)
         except Favorite.NotFound:
+            userfav = None
+
+    # Annotate the favorites with the last faces, so we get them naturally in their loop.
+    for fav in favs:
+        try:
+            fav.lastface = favfaces[fav.author.xid]
+        except KeyError:
             pass
 
     return TemplateResponse(request, 'makeaface/photo.html', {
         'photo': photo,
         'favorites': favs,
         'user_favorite': userfav,
+        'lastface': lastface,
     })
 
 
@@ -140,6 +166,9 @@ def upload_photo(request):
         asset = Asset.get(loc)
     image_url = asset.links['maxwidth__150'].href[:-6] + '-150si'
 
+    # Save the photo as a new last face for the poster.
+    Lastface(owner=request.user.xid, face=asset.xid).save()
+
     # Flash doodad needs a 200, not a redirect.
     return HttpResponse(image_url, content_type='text/plain')
 
@@ -164,6 +193,11 @@ def favorite(request):
         request.user.favorites.post(fav)
         typepadapp.signals.favorite_created.send(sender=fav, instance=fav, parent=asset,
             group=request.group)
+
+        # Save the user's last face when favorited.
+        last = Lastface.objects.get(owner=request.user.xid)
+        Favoriteface(favoriter=request.user.xid, favorited=asset_id,
+            lastface=last.face).save()
     else:
         # Getting the xid will do a batch, so don't do it inside our other batch.
         xid = request.user.xid
