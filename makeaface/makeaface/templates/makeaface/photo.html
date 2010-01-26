@@ -1,6 +1,8 @@
 {% extends "makeaface/base.html" %}
 {% load abs %}
 
+{% block htmltitle %}{{ photo.author.display_name }}'s face &middot; {{ block.super }}{% endblock %}
+
 {% block htmlhead %}
 {% endblock %}
 
