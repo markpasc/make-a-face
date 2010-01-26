@@ -31,6 +31,7 @@
                     'height': $('#camera').height(),
                     'sendto': '{% absoluteurl %}{% url upload_photo %}{% endabsoluteurl %}',
                     'cameraReady': function(cam) { $('#take-picture').removeClass('disabled') },
+                    'cameraNotReady': function(cam) { $('#take-picture').addClass('camera-not-ready') },
                     'errorSending': function(cam, err) { alert('OOPS: ' + err) },
                     'tookPhoto': function(cam) { tookPhoto(cam) },
                     //'droppedPhoto': function(cam) { droppedPhoto(cam) },
