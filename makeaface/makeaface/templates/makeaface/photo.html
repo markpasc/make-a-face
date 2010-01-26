@@ -41,9 +41,9 @@
                 {% for fav in favorites %}
                     <div class="gridcell">
                         {% if fav.lastface %}
-                            <a href="{% url photo xid=fav.lastface.xid %}"><img src="{{ fav.lastface.links.rel__enclosure.maxwidth__150.href }}"></a>
+                            <a href="{% url photo xid=fav.lastface.xid %}"><img src="{{ fav.lastface.links.rel__enclosure.maxwidth__150.href|slice:":-6" }}-150si"></a>
                         {% else %}
-                            <a href="{{ fav.author.typepad_url }}"><img src="{{ fav.author.links.rel__avatar.maxwidth__150.href }}"></a>
+                            <a href="{{ fav.author.typepad_url }}"><img src="{{ fav.author.links.rel__avatar.maxwidth__200.href }}"></a>
                         {% endif %}
                     </div>
                 {% endfor %}
@@ -52,9 +52,9 @@
                 {% if user_favorite %}{% else %}
                 <div id="new-favorite" class="gridcell {% if favorites %}hidden{% endif %}">
                     {% if lastface %}
-                        <a href="{% url photo xid=lastface.xid %}"><img src="{{ lastface.links.rel__enclosure.maxwidth__150.href }}"></a>
+                        <a href="{% url photo xid=lastface.xid %}"><img src="{{ lastface.links.rel__enclosure.maxwidth__150.href|slice:":-6" }}-150si"></a>
                     {% else %}
-                        <a href="{{ user.typepad_url }}"><img src="{{ user.links.rel__avatar.maxwidth__150.href }}"></a>
+                        <a href="{{ user.typepad_url }}"><img src="{{ user.links.rel__avatar.maxwidth__200.href }}"></a>
                     {% endif %}
                 </div>
                 {% endif %}

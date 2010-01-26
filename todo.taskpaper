@@ -5,10 +5,13 @@
 - sharing
 - show when a flag action deletes a photo
 - let folks delete their last photo
-- disable photo-making until cameraman reports the camera is available
+- disable photo-making until cameraman reports the camera is available @done
 - fix ie7 action bug? (it thinks they're regular links)
+- feed
+- deeplink to last face
 - change permalink template to use /photo/ url @mart
 - click action in grid view @mart
+- use multiple pages of photos in grid view @mart
 
 backlog:
 - picture frames
