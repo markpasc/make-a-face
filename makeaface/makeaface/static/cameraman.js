@@ -94,6 +94,11 @@ function CameraCamera(opts) {
             _self.options.cameraReady.apply(null, [_self]);
         }
     }
+    this._cameraNotReady = function () {
+        if (_self.options.cameraNotReady) {
+            _self.options.cameraNotReady.apply(null, [_self]);
+        }
+    }
     this._tookPhoto = function () {
         if (_self.options.tookPhoto) {
             _self.options.tookPhoto.apply(null, [_self]);
