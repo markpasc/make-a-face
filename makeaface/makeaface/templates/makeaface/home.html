@@ -2,6 +2,7 @@
 {% load abs %}
 
 {% block htmlhead %}
+<link rel="alternate" type="application/rss+xml" href="{% url feeds url='faces' %}" title="Latest faces">
 {% endblock %}
 
 {% block content %}

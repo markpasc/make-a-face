@@ -7,7 +7,7 @@
 - let folks delete their last photo
 - disable photo-making until cameraman reports the camera is available
 - fix ie7 action bug? (it thinks they're regular links)
-- feed
+- feed @done
 - change permalink template to use /photo/ url @mart
 - click action in grid view @mart
 - use multiple pages of photos in grid view @mart
