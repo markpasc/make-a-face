@@ -190,6 +190,7 @@ div#camera, #photo
 
 #photobox
     position: relative
+    float: left
 
 #photo
     text-align: center
@@ -206,12 +207,13 @@ big img
     vertical-align: middle
 
 #photo-data
-    position: absolute
-    width: 312px
-    margin: 0 auto
-    top: 0
-    right: 0
+    position: relative
+    float: left
+    width: 458px
     background: #262626
+
+#photo-data img
+    width: auto
 
 #photo-data-inner, #photo-favorites h2
     margin: 4px
@@ -254,8 +256,11 @@ big img
     &:hover
         +buttongradient(#ad0, #7d0)
 
-.photo-action-flag
-    margin-top: 8em
+div.photo-action-heart
+    float: left
+
+div.photo-action-flag
+    float: right
 
 .tp-button .button-flag a
     color: #300

@@ -7,14 +7,14 @@
 {% endblock %}
 
 {% block content %}
-    <div id="gridcontainer">
+    <div id="gridcontainer" class="photogrid">
         <div id="photobox">
             <div id="photo">
                 <img src="{{ photo.links.maxwidth__500.href }}">
             </div>
         </div>
 
-        <div id="photo-data">
+        <div id="photo-data" class="gridcell">
             <div id="photo-data-inner">
             <div id="photo-by">
                 <p><big>
@@ -24,7 +24,7 @@
             </div>
 
             {% if user.is_authenticated %}
-            <div>
+            <div class="photo-action-heart">
                 <p>
                     <span class="tp-button">
                         <span class="button button-heart button-xl">
@@ -33,36 +33,7 @@
                     </span>
                 </p>
             </div>
-            {% endif %}
 
-            <div id="photo-favorites" class="{% if favorites %}{% else %}hidden{% endif %}">
-                <h2>Faces who liked this face</h2>
-
-                {% for fav in favorites %}
-                    <div class="gridcell">
-                        {% if fav.lastface %}
-                            <a href="{% url photo xid=fav.lastface.xid %}"><img src="{{ fav.lastface.links.rel__enclosure.maxwidth__150.href|slice:":-6" }}-150si"></a>
-                        {% else %}
-                            <a href="{{ fav.author.typepad_url }}"><img src="{{ fav.author.links.rel__avatar.maxwidth__200.href }}"></a>
-                        {% endif %}
-                    </div>
-                {% endfor %}
-
-                {% if user.is_authenticated %}
-                {% if user_favorite %}{% else %}
-                <div id="new-favorite" class="gridcell {% if favorites %}hidden{% endif %}">
-                    {% if lastface %}
-                        <a href="{% url photo xid=lastface.xid %}"><img src="{{ lastface.links.rel__enclosure.maxwidth__150.href|slice:":-6" }}-150si"></a>
-                    {% else %}
-                        <a href="{{ user.typepad_url }}"><img src="{{ user.links.rel__avatar.maxwidth__200.href }}"></a>
-                    {% endif %}
-                </div>
-                {% endif %}
-                {% endif %}
-                <br style="clear: both">
-            </div>
-
-            {% if user.is_authenticated %}
             <div class="photo-action-flag">
                 <p>
                     <span class="tp-button">
@@ -87,7 +58,6 @@
                         heart.find('.text').text('You like this face!');
 
                         $('#new-favorite').show();
-                        $('#photo-favorites').show();
                     });
                 }
 
@@ -110,6 +80,30 @@
             </script>
 
             </div>
+        </div>
+
+        {% for fav in favorites %}
+        <div class="gridcell">
+            {% if fav.lastface %}
+                <a href="{% url photo xid=fav.lastface.xid %}" title="{{ fav.author.display_name }} liked this face"><img src="{{ fav.lastface.links.rel__enclosure.maxwidth__150.href|slice:":-6" }}-150si"></a>
+            {% else %}
+                <a href="{{ fav.author.typepad_url }}" title="{{ fav.author.display_name }} liked this face"><img src="{{ fav.author.links.rel__avatar.maxwidth__200.href }}"></a>
+            {% endif %}
+        </div>
+        {% endfor %}
+
+        {% if user.is_authenticated %}
+        {% if user_favorite %}{% else %}
+        <div id="new-favorite" class="gridcell hidden">
+            {% if lastface %}
+                <a href="{% url photo xid=lastface.xid %}" title="{{ user.display_name }} liked this face"><img src="{{ lastface.links.rel__enclosure.maxwidth__150.href|slice:":-6" }}-150si"></a>
+            {% else %}
+                <a href="{{ user.typepad_url }}" title="{{ user.display_name }} liked this face"><img src="{{ user.links.rel__avatar.maxwidth__200.href }}"></a>
+            {% endif %}
+        </div>
+        {% endif %}
+        {% endif %}
+
         </div>
     </div>
 
