@@ -13,7 +13,7 @@
                 <div id="take-picture-box">
                     <span class="tp-button">
                         <span class="button button-makeface button-l">
-                            <a id="take-picture" href="#"><img src="{% url static path="makeaface/make_a_face.png" %}" width="99" height="12" alt="Make A Face"></a>
+                            <a id="take-picture" class="disabled" href="#"><img src="{% url static path="makeaface/make_a_face.png" %}" width="99" height="12" alt="Make A Face"></a>
                         </span>
                     </span>
                 </div>
@@ -29,6 +29,7 @@
                     'width': $('#camera').width(),
                     'height': $('#camera').height(),
                     'sendto': '{% absoluteurl %}{% url upload_photo %}{% endabsoluteurl %}',
+                    'cameraReady': function(cam) { $('#take-picture').removeClass('disabled') },
                     'errorSending': function(cam, err) { alert('OOPS: ' + err) },
                     'tookPhoto': function(cam) { tookPhoto(cam) },
                     //'droppedPhoto': function(cam) { droppedPhoto(cam) },
@@ -39,14 +40,11 @@
                     pingPingSnap();
                     return false;
                 });
-                $('.gridcell').live('click', function () {
-                    $(this).toggleClass('gridcell-hover');
-                });
-                $('.gridcell').live('mouseout', function () {
-                    $(this).removeClass('gridcell-hover');
-                });
 
                 function pingPingSnap () {
+                    if ($(this).hasClass('disabled'))
+                        return;
+
                     $('#camera-three').show('fast').delay(800).queue(function (next) {
                         $('#camera-two').show('fast').delay(800).queue(function (next) {
                             $('#camera-one').show('fast').delay(800).queue(function (next) {

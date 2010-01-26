@@ -89,6 +89,11 @@ function CameraCamera(opts) {
         _self.getApp().sendPhoto();
     };
 
+    this._cameraReady = function () {
+        if (_self.options.cameraReady) {
+            _self.options.cameraReady.apply(null, [_self]);
+        }
+    }
     this._tookPhoto = function () {
         if (_self.options.tookPhoto) {
             _self.options.tookPhoto.apply(null, [_self]);

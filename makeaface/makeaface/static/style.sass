@@ -233,7 +233,7 @@ big img
     font-size: 12px
     line-height: 12px
 
-.tp-button .button-signout a, .tp-button .button-heart a.favorited, .tp-button .button-flag a.flagged
+.tp-button .button-signout a, .tp-button .button-heart a.favorited, .tp-button .button-flag a.flagged, .tp-button .button-makeface a.disabled
     color: #999
     text-shadow: #000 0 1px 1px
     +buttongradient(#3a3a3a, #242424)
@@ -241,6 +241,9 @@ big img
 
     &:hover
         +buttongradient(#292929, #131313)
+
+.tp-button .button-makeface a.disabled img
+    visibility: hidden
 
 .tp-button .button-heart a
     color: #030
