@@ -37,14 +37,12 @@
                 });
 
                 $('#take-picture').click(function () {
-                    pingPingSnap();
+                    if (!$(this).hasClass('disabled'))
+                        pingPingSnap();
                     return false;
                 });
 
                 function pingPingSnap () {
-                    if ($(this).hasClass('disabled'))
-                        return;
-
                     $('#camera-three').show('fast').delay(800).queue(function (next) {
                         $('#camera-two').show('fast').delay(800).queue(function (next) {
                             $('#camera-one').show('fast').delay(800).queue(function (next) {
