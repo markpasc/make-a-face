@@ -122,6 +122,29 @@
                     flag.blur();
                     return false;
                 });
+
+                var asset_ids = [null {% for event in events %}
+                    {% if event.object %},'asset-{{ event.object.xid }}'{% endif %}
+                {% endfor %} ];
+                asset_ids.splice(0, 1);
+                $(document).ready(function () {
+                    $.ajax({
+                        url: '{% url asset_meta %}',
+                        type: "POST",
+                        data: {"asset_id": asset_ids},
+                        dataType: "json",
+                        traditional: true,
+                        success: function(data) {
+                            $.each(data, function (key, val) {
+                                if (val.favorite) {
+                                    key = key.replace(/^asset-/, '');
+                                    $('#gridsubstrate .heart-' + key).addClass('favorited');
+                                }
+                                // TODO: frob cells the viewer can delete
+                            });
+                        },
+                    });
+                });
             </script>
 
         {% else %}
@@ -169,7 +192,7 @@
                 <div class="gridcell {% if boxloc.rowlast %}lastcell{% endif %}">
                     <a class="link" href="{% url photo xid=event.object.xid %}" title="View this face"><img src="{{ event.object.links.rel__enclosure.maxwidth__150.href|slice:":-6" }}-150si"></a>
                     {% if user.is_authenticated %}
-                    <a class="heart action" href="{{ event.object.xid }}" title="I like this face">♥</a>
+                    <a class="heart action heart-{{ event.object.xid }}" href="{{ event.object.xid }}" title="I like this face">♥</a>
                     <a class="flag action" href="{{ event.object.xid }}" title="This is not a face">⚑</a>
                     {% endif %}
                 </div>
@@ -177,7 +200,7 @@
                 <div class="gridcell">
                     <a class="link" href="{% url photo xid=event.object.xid %}" title="View this face"><img src="{{ event.object.links.rel__enclosure.maxwidth__150.href|slice:":-6" }}-150si"></a>
                     {% if user.is_authenticated %}
-                    <a class="heart action" href="{{ event.object.xid }}" title="I like this face">♥</a>
+                    <a class="heart action heart-{{ event.object.xid }}" href="{{ event.object.xid }}" title="I like this face">♥</a>
                     <a class="flag action" href="{{ event.object.xid }}" title="This is not a face">⚑</a>
                     {% endif %}
                 </div>

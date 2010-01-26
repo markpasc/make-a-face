@@ -14,4 +14,6 @@ urlpatterns = patterns('',
     url(r'^flag$', 'makeaface.views.flag', name='flag'),
 
     url(r'^grid$', 'makeaface.views.facegrid', name='facegrid'),
+
+    url(r'^asset_meta$', 'motion.ajax.asset_meta', name='asset_meta'),
 )
