@@ -5,7 +5,7 @@
 - sharing
 - show when a flag action deletes a photo
 - let folks delete their last photo
-- disable photo-making until cameraman reports the camera is available @done
+- disable photo-making until cameraman reports the camera is available
 - fix ie7 action bug? (it thinks they're regular links)
 - feed
 - change permalink template to use /photo/ url @mart
