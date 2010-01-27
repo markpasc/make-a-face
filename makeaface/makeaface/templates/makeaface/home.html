@@ -205,7 +205,7 @@
             {% if event.object %}
             {% with next_box_loc.next as boxloc %}
                 <div class="gridcell {% if boxloc.rowlast %}lastcell{% endif %}">
-                    <a class="link" href="{% url photo xid=event.object.xid %}" title="View this face"><img src="{{ event.object.links.rel__enclosure.maxwidth__150.href|slice:":-6" }}-150si"></a>
+                    <a class="link" href="{% url photo xid=event.object.xid %}" title="View {{ event.object.author.display_name }}'s face"><img src="{{ event.object.links.rel__enclosure.maxwidth__150.href|slice:":-6" }}-150si"></a>
                     {% if user.is_authenticated %}
                         {% ifequal user.xid event.object.author.xid %}
                             <a class="share action" href="{% absoluteurl %}{% url photo xid=event.object.xid %}{% endabsoluteurl %}" title="Share this face on {{ share }}"><span class="share-{{ share.lower }}">&nbsp;</span></a>
@@ -217,7 +217,7 @@
                 </div>
                 {% if boxloc.rowlast %}
                 <div class="gridcell">
-                    <a class="link" href="{% url photo xid=event.object.xid %}" title="View this face"><img src="{{ event.object.links.rel__enclosure.maxwidth__150.href|slice:":-6" }}-150si"></a>
+                    <a class="link" href="{% url photo xid=event.object.xid %}" title="View {{ event.object.author.display_name }}'s face"><img src="{{ event.object.links.rel__enclosure.maxwidth__150.href|slice:":-6" }}-150si"></a>
                     {% if user.is_authenticated %}
                         {% ifequal user.xid event.object.author.xid %}
                             <a class="share action" href="{% absoluteurl %}{% url photo xid=event.object.xid %}{% endabsoluteurl %}" title="Share this face on {{ share }}"><span class="share-{{ share.lower }}">&nbsp;</span></a>
