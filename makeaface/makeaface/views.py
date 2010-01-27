@@ -79,21 +79,6 @@ def home(request):
     })
 
 
-def photo_for(request):
-    try:
-        photo_url = request.GET['url']
-    except KeyError:
-        raise Http404
-
-    # Get the XID out of the photo url.
-    try:
-        (asset_id,) = re.findall('6a\w+', photo_url)
-    except TypeError:
-        raise Http404
-
-    return HttpResponseRedirect(reverse('photo', kwargs={'xid': asset_id}))
-
-
 def sharing_for_elsewhere(ew):
     twitter, facebook = None, None
     for account in ew:

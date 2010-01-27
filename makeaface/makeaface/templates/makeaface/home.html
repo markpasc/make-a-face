@@ -67,8 +67,11 @@
                     // Make a new grid cell with this photo.
                     var newphoto = $('#firstcell');
                     newphoto.find('img').attr('src', url);
-                    newphoto.find('a').attr('href', url);
-                    newphoto.find('a.link').attr('href', '{% url photo_for %}?url=' + url)
+
+                    // Pull out the XID and build the maf.org link to it.
+                    var match = url.match(/6a\w+/);
+                    var html_url = "{% absoluteurl %}{% url photo xid='XIDXIDXID' %}{% endabsoluteurl %}".replace('XIDXIDXID', match);
+                    newphoto.find('a').attr('href', html_url);
 
                     $('#gridsubstrate').animate({
                         'left': '0px',
