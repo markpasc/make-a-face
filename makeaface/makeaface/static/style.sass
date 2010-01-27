@@ -169,11 +169,18 @@ div#camera, #photo
 .gridcell:hover .action, .gridcell-hover .action
     display: block
 
-.gridcell .heart
+.gridcell .heart, .gridcell .share
     left: 0
 
 .gridcell .flag
     right: 0
+
+.gridcell .share
+    .share-twitter, .share-typepad, .share-facebook
+        display: inline-block
+        width: 16px
+        height: 16px
+        background: no-repeat center center
 
 #colophon
     position: absolute
@@ -266,13 +273,13 @@ div.photo-action-heart, div.photo-action-share
     background: no-repeat 0 2px
     margin: 0
 
-#photo-action-share .twitter
+#photo-action-share .twitter, .gridcell .share .share-twitter
     background-image: url(http://static.typepad.com/.shared:v45.03:typepad:en_us/images/profile/service_icons/twitter.png)
 
-#photo-action-share .facebook
+#photo-action-share .facebook, .gridcell .share .share-facebook
     background-image: url(http://static.typepad.com/.shared:v45.03:typepad:en_us/images/profile/service_icons/facebook.png)
 
-#photo-action-share .typepad
+#photo-action-share .typepad, .gridcell .share .share-typepad
     background-image: url(http://static.typepad.com/.shared:v45.03:typepad:en_us/images/profile/service_icons/typepad.png)
 
 div.photo-action-flag

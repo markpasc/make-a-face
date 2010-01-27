@@ -61,12 +61,21 @@ def next_box_loc():
 
 
 def home(request):
+    authed = request.user.is_authenticated()
+
+    elsewhere = None
     with typepad.client.batch_request():
         events = request.group.events
+        if authed:
+            elsewhere = request.user.elsewhere_accounts
+
+    if authed:
+        elsewhere = sharing_for_elsewhere(elsewhere)
 
     return TemplateResponse(request, 'makeaface/home.html', {
         'events': events,
         'next_box_loc': next_box_loc(),
+        'share': elsewhere,
     })
 
 
