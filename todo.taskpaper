@@ -2,9 +2,9 @@
 - let folks delete their own photos @done
 - fix ie7 action bug? (it thinks they're regular links)
 - fix firefox click over bug? 3.6 sadface :(
-- change permalink template to use /photo/ url @mart
-- click action in grid view @mart
-- use multiple pages of photos in grid view @mart
+- change permalink template to use /photo/ url @mart @done
+- click action in grid view @mart @done
+- use multiple pages of photos in grid view @mart @done
 
 backlog:
 - replace navitorial with progressive disclosure 
