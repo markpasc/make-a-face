@@ -120,7 +120,7 @@
                     var here = share.attr('href');
 
                     {% ifequal share "Facebook" %}
-                        frame("http://www.facebook.com/sharer.php?u=" + here + "&t=" + encodeURIComponent(document.title));
+                        $('#facebook-share-link').attr('share_url', here).trigger('click');
                     {% else %}{% ifequal share "Twitter" %}
                         window.location.href = "http://twitter.com/?status=I+made+a+face:+" + here;
                     {% else %}

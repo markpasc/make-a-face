@@ -28,9 +28,25 @@
     {% endblock %}
     {% block content %}{% endblock %}
 
+    {% ifequal share "Facebook" %}
     <div id="share">
-        <iframe id="shareframe"></iframe>
+        <a id="facebook-share-link" name="fb_share" type="icon_link" href="http://www.facebook.com/sharer.php">Share</a>
+        <script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript"></script>
     </div>
+    {% else %}{% ifequal share "Twitter" %}
+    {% else %}
+        <script type="text/javascript">
+        function () {}
+        var b=document.body;
+        var TYPEPAD___bookmarklet_domain='http://www.typepad.com';
+        if(b&&!document.xmlVersion){
+            void(z=document.createElement('script'));
+            void(z.type='text/javascript');
+            void(z.src='http://static.typepad.com/.shared/js/qp/loader-combined-min.js');
+            void(b.appendChild(z));
+        }
+        </script>
+    {% endifequal %}{% endifequal %}
 
 {% if ganalytics_code %}
 <script type="text/javascript">

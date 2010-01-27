@@ -4,6 +4,7 @@
 {% block htmltitle %}{{ photo.author.display_name }}'s face &middot; {{ block.super }}{% endblock %}
 
 {% block htmlhead %}
+<meta name="title" title="{{ photo.author.display_name }}'s face &middot; Make A Face">
 {% endblock %}
 
 {% block content %}
@@ -98,7 +99,7 @@
                 var here = "{% absoluteurl %}{% url photo xid=photo.xid %}{% endabsoluteurl %}";
 
                 {% ifequal share "Facebook" %}
-                    frame("http://www.facebook.com/sharer.php?u=" + here + "&t=" + encodeURIComponent(document.title));
+                    $('#facebook-share-link').attr('share_url', here).trigger('click');
                 {% else %}{% ifequal share "Twitter" %}
                     window.location.href = "http://twitter.com/?status=I+made+a+face:+" + here;
                 {% else %}

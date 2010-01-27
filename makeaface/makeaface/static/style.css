@@ -1009,28 +1009,4 @@ div.photo-action-flag {
   display: none; }
 
 #share {
-  display: none;
-  position: fixed;
-  top: 10px;
-  right: 10px;
-  width: 590px;
-  height: 610px;
-  border: 1px solid #aaa;
-  border-color: #d4d4d4 #aaa #aaa #d4d4d4;
-  background: #fff;
-  box-shadow: #aaaaaa 1px 1px 2px;
-  -moz-box-shadow: #aaaaaa 1px 1px 2px;
-  -webkit-box-shadow: #aaaaaa 1px 1px 2px;
-  -moz-background-clip: -moz-initial;
-  -moz-background-origin: -moz-initial;
-  -moz-background-inline-policy: -moz-initial;
-  z-index: 2147483646; }
-
-#shareframe {
-  border: 0;
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  height: 100%;
-  opacity: 1;
-  overflow-x: hidden; }
+  display: none; }
