@@ -26,36 +26,46 @@
 
             {% if user.is_authenticated %}
             {% ifequal user.xid photo.author.xid %}
-            <div class="photo-action-share">
-                <p>
-                    <span class="tp-button">
-                        <span class="button button-share button-xl">
-                            <a id="photo-action-share" href="{{ photo.xid }}"><span class="icon {{ share|lower }}">&nbsp;</span><span class="text">Share on {{ share }}</span></a>
+                <div class="photo-action-share">
+                    <p>
+                        <span class="tp-button">
+                            <span class="button button-share button-xl">
+                                <a id="photo-action-share" href="{{ photo.xid }}"><span class="icon {{ share|lower }}">&nbsp;</span><span class="text">Share on {{ share }}</span></a>
+                            </span>
                         </span>
-                    </span>
-                </p>
-            </div>
-            {% else %}
-            <div class="photo-action-heart">
-                <p>
-                    <span class="tp-button">
-                        <span class="button button-heart button-xl">
-                            <a id="photo-action-heart" {% if user_favorite %}class="favorited"{% endif %} href="{{ photo.xid }}"><span class="heart">♥</span><span class="text">{% if user_favorite %}You like this face!{% else %}I like this face{% endif %}</span></a>
-                        </span>
-                    </span>
-                </p>
-            </div>
-            {% endifequal %}
+                    </p>
+                </div>
 
-            <div class="photo-action-flag">
-                <p>
-                    <span class="tp-button">
-                        <span class="button button-flag">
-                            <a id="photo-action-flag" href="{{ photo.xid }}"><span class="flag">⚑</span><span class="text">This is not a face</span></a>
+                <div class="photo-action-delete">
+                    <p>
+                        <span class="tp-button">
+                            <span class="button button-delete">
+                                <a id="photo-action-delete" href="{{ photo.xid }}"><span class="ex">✗</span><span class="text">Delete your face</span></a>
+                            </span>
                         </span>
-                    </span>
-                </p>
-            </div>
+                    </p>
+                </div>
+            {% else %}
+                <div class="photo-action-heart">
+                    <p>
+                        <span class="tp-button">
+                            <span class="button button-heart button-xl">
+                                <a id="photo-action-heart" {% if user_favorite %}class="favorited"{% endif %} href="{{ photo.xid }}"><span class="heart">♥</span><span class="text">{% if user_favorite %}You like this face!{% else %}I like this face{% endif %}</span></a>
+                            </span>
+                        </span>
+                    </p>
+                </div>
+
+                <div class="photo-action-flag">
+                    <p>
+                        <span class="tp-button">
+                            <span class="button button-flag">
+                                <a id="photo-action-flag" href="{{ photo.xid }}"><span class="flag">⚑</span><span class="text">This is not a face</span></a>
+                            </span>
+                        </span>
+                    </p>
+                </div>
+            {% endifequal %}
 
             <script type="text/javascript">
             $('#photo-action-heart').click(function () {
@@ -101,6 +111,25 @@
                     sharetypepad();
                 {% endifequal %}{% endifequal %};
 
+                return false;
+            });
+
+            $('#photo-action-delete').click(function () {
+                var del = $(this);
+
+                if (del.hasClass('really-delete')) {
+                    $.post('{% absoluteurl %}{% url delete %}{% endabsoluteurl %}', {
+                        'action': 'delete',
+                        'asset_id': del.attr('href')
+                    }, function () {
+                        window.location.href = "{% url home %}";
+                    });
+                }
+                else {
+                    del.addClass('really-delete');
+                    del.find('.text').html('<em>Really</em> delete?');
+                }
+                del.blur();
                 return false;
             });
             </script>

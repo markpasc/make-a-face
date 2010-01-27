@@ -270,6 +270,30 @@ def flag(request):
     return HttpResponse('OK', content_type='text/plain')
 
 
+@oops
+def delete(request):
+    if request.method != 'POST':
+        return HttpResponse('POST required at this url', status=400, content_type='text/plain')
+
+    action = request.POST.get('action', 'delete')
+    asset_id = request.POST.get('asset_id', '')
+    try:
+        (asset_id,) = re.findall('6a\w+', asset_id)
+    except TypeError:
+        raise Http404
+
+    if action == 'delete':
+        # Getting the xid will do a batch, so don't do it inside our other batch.
+        xid = request.user.xid
+        with typepad.client.batch_request():
+            asset = Asset.get_by_url_id(asset_id)
+        asset.delete()
+        typepadapp.signals.asset_deleted.send(sender=asset, instance=asset,
+            group=request.group)
+
+    return HttpResponse('', status=204)
+
+
 def facegrid(request):
     with typepad.client.batch_request():
         events = request.group.events

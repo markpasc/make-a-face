@@ -158,7 +158,10 @@
                                     key = key.replace(/^asset-/, '');
                                     $('#gridsubstrate .heart-' + key).addClass('favorited');
                                 }
-                                // TODO: frob cells the viewer can delete
+                                if (val.can_delete) {
+                                    key = key.replace(/^asset-/, '');
+                                    $('#gridsubstrate .flag-' + key).addClass('hidden');
+                                }
                             });
                         },
                     });
@@ -201,7 +204,6 @@
                 <a href="#" class="link" title="View this face"><img src="#"></a>
                 {% if user.is_authenticated %}
                 <a class="share action" href="" title="Share this face on {{ share }}"><span class="share-{{ share|lower }}">&nbsp;</span></a>
-                <a class="flag action" href="" title="This is not a face">⚑</a>
                 {% endif %}
             </div>
         {% for event in events %}
@@ -214,8 +216,8 @@
                             <a class="share action" href="{% absoluteurl %}{% url photo xid=event.object.xid %}{% endabsoluteurl %}" title="Share this face on {{ share }}"><span class="share-{{ share.lower }}">&nbsp;</span></a>
                         {% else %}
                             <a class="heart action heart-{{ event.object.xid }}" href="{{ event.object.xid }}" title="I like this face">♥</a>
+                            <a class="flag action flag-{{ event.object.xid }}" href="{{ event.object.xid }}" title="This is not a face">⚑</a>
                         {% endifequal %}
-                        <a class="flag action" href="{{ event.object.xid }}" title="This is not a face">⚑</a>
                     {% endif %}
                 </div>
                 {% if boxloc.rowlast %}
@@ -226,8 +228,8 @@
                             <a class="share action" href="{% absoluteurl %}{% url photo xid=event.object.xid %}{% endabsoluteurl %}" title="Share this face on {{ share }}"><span class="share-{{ share.lower }}">&nbsp;</span></a>
                         {% else %}
                             <a class="heart action heart-{{ event.object.xid }}" href="{{ event.object.xid }}" title="I like this face">♥</a>
+                            <a class="flag action flag-{{ event.object.xid }}" href="{{ event.object.xid }}" title="This is not a face">⚑</a>
                         {% endifequal %}
-                        <a class="flag action" href="{{ event.object.xid }}" title="This is not a face">⚑</a>
                     {% endif %}
                 </div>
                 {% endif %}

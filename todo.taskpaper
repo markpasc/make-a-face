@@ -1,5 +1,5 @@
 - show when a flag action deletes a photo
-- let folks delete their last photo
+- let folks delete their own photos @done
 - fix ie7 action bug? (it thinks they're regular links)
 - fix firefox click over bug? 3.6 sadface :(
 - change permalink template to use /photo/ url @mart

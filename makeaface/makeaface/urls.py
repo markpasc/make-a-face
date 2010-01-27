@@ -14,6 +14,7 @@ urlpatterns = patterns('',
     url(r'^upload$', 'makeaface.views.upload_photo', name='upload_photo'),
     url(r'^favorite$', 'makeaface.views.favorite', name='favorite'),
     url(r'^flag$', 'makeaface.views.flag', name='flag'),
+    url(r'^delete$', 'makeaface.views.delete', name='delete'),
     url(r'^asset_meta$', 'motion.ajax.asset_meta', name='asset_meta'),
 
     url(r'^grid$', 'makeaface.views.facegrid', name='facegrid'),

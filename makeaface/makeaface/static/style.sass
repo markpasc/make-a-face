@@ -169,6 +169,9 @@ div#camera, #photo
 .gridcell:hover .action, .gridcell-hover .action
     display: block
 
+.gridcell .hidden, .gridcell:hover .hidden
+    display: none
+
 .gridcell .heart, .gridcell .share
     left: 0
 
@@ -283,10 +286,10 @@ div.photo-action-heart, div.photo-action-share
 #photo-action-share .typepad, .gridcell .share .share-typepad
     background-image: url(typepad.png)
 
-div.photo-action-flag
+div.photo-action-flag, div.photo-action-delete
     float: right
 
-.tp-button .button-flag a
+.tp-button .button-flag a, .tp-button .button-delete a
     color: #300
     text-shadow: #ff8400 0 1px 1px
     +buttongradient(#f60, #f30)
