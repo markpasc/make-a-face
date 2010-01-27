@@ -32,21 +32,27 @@ function ensmallenCell(event) {
         });
 }
 
+function permalinkForImage(imageUrl) {
+    var match = imageUrl.match(/6a\w+/);
+    if (match) {
+	   	return permalinkTemplate.replace(/XID/, match);
+	}
+}
+
 function onCellCreate(event, cell) {
     //cell.elem.mouseover(embiggenCell);
     //cell.elem.mouseout(ensmallenCell);
 
-    var url;
-    if (cell.x == -2 && cell.y < faces.length) {
-        url = faces[cell.y];
-    } else {
-        var num = (Math.abs(cell.x) + Math.abs(cell.y)) % defaultPictures.length;
-        url = defaultPictures[num];
-    }
-
+	var link = $('<a href="#" target="_blank"></a>');
     var img = $('<img/>');
+
+    var num = (Math.abs(cell.x) + Math.abs(cell.y)) % defaultPictures.length;
+    var url = defaultPictures[num];
+
+    link.append(img);
     img.attr('src', url);
-    cell.elem.append(img);
+    link.attr('href', permalinkForImage(url));
+    cell.elem.append(link);
 }
 
 function getNextCell() {
@@ -92,9 +98,13 @@ function onGridResize(event) {
         if (cell.populated) continue;
         var faceUrl = getNextFace();
         var cellElem = cell.elem;
-        var imgElem = cellElem.find('img');
-        imgElem.attr('src',  faceUrl);
-        cell.populated = true;
+        if (cellElem) {
+            var imgElem = cellElem.find('img');
+            var linkElem = cellElem.find('a');
+            imgElem.attr('src',  faceUrl);
+            linkElem.attr('href', permalinkForImage(faceUrl));
+            cell.populated = true;
+        }
     }
 }
 
@@ -103,7 +113,9 @@ function switchOne() {
     var faceUrl = getNextFace();
     var cellElem = cell.elem;
     var imgElem = cellElem.find('img');
+    var linkElem = cellElem.find('a');
     imgElem.attr('src',  faceUrl);
+    linkElem.attr('href', permalinkForImage(faceUrl));
     imgElem.css("display", "none");
     imgElem.fadeIn(200, function () {
         switchOne();
@@ -118,7 +130,7 @@ $(document).ready(function () {
 
     initializeGrid();
 
-    setTimeout(switchOne, 500);
+    setTimeout(switchOne, 1000);
 });
 
 function shuffle(list) {
