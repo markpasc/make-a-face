@@ -261,13 +261,19 @@ def flag(request):
 
             asset = Asset.get_by_url_id(asset_id)
             asset.delete()
+            typepadapp.signals.asset_deleted.send(sender=asset, instance=asset,
+                group=request.group)
             del asset  # lose our reference to it
 
             log.debug('BALEETED')
 
-    cache.set(cache_key, flaggers, 86400)  # 1 day
-    log.debug('Flaggers for %r are now %r', asset_id, flaggers)
-    return HttpResponse('OK', content_type='text/plain')
+        cache.delete(cache_key)
+        log.debug('Emptied flaggers for %r now that it is deleted', asset_id)
+        return HttpResponse('BALEETED', content_type='text/plain')
+    else:
+        cache.set(cache_key, flaggers, 86400)  # 1 day
+        log.debug('Flaggers for %r are now %r', asset_id, flaggers)
+        return HttpResponse('OK', content_type='text/plain')
 
 
 @oops

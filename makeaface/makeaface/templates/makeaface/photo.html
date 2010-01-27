@@ -92,9 +92,12 @@
                 $.post('{% absoluteurl %}{% url flag %}{% endabsoluteurl %}', {
                     'action': 'flag',
                     'asset_id': flag.attr('href')
-                }, function () {
+                }, function (data, textStatus) {
                     flag.addClass('flagged');
                     flag.find('.text').text('Flagged!');
+                    if (data == 'BALEETED') {
+                        window.location.href = "{% url home %}";
+                    }
                 });
                 flag.blur();
                 return false;

@@ -131,12 +131,19 @@
 
                 $('#gridsubstrate .gridcell .flag').live('click', function (evt) {
                     var flag = $(this);
+                    var asset_id = flag.attr('href').match(/6a\w+/)[0];
+                    var flags = $('#gridsubstrate .flag-' + asset_id);
+
                     $.post('{% url flag %}', {
                         'action': 'flag',
-                        'asset_id': flag.attr('href')
-                    }, function () {
-                        flag.addClass('flagged');
+                        'asset_id': asset_id
+                    }, function (data, textStatus) {
+                        flags.addClass('flagged');
+                        if (data == 'BALEETED') {
+                            flags.parents('.gridcell').find('img').animate({'opacity': 0.25}, 'slow');
+                        }
                     });
+
                     flag.blur();
                     return false;
                 });
