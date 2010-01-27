@@ -970,13 +970,13 @@ div.photo-action-heart, div.photo-action-share {
   margin: 0; }
 
 #photo-action-share .twitter, .gridcell .share .share-twitter {
-  background-image: url(http://static.typepad.com/.shared:v45.03:typepad:en_us/images/profile/service_icons/twitter.png); }
+  background-image: url(twitter.png); }
 
 #photo-action-share .facebook, .gridcell .share .share-facebook {
-  background-image: url(http://static.typepad.com/.shared:v45.03:typepad:en_us/images/profile/service_icons/facebook.png); }
+  background-image: url(facebook.png); }
 
 #photo-action-share .typepad, .gridcell .share .share-typepad {
-  background-image: url(http://static.typepad.com/.shared:v45.03:typepad:en_us/images/profile/service_icons/typepad.png); }
+  background-image: url(typepad.png); }
 
 div.photo-action-flag {
   float: right; }
