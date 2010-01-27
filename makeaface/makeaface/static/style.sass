@@ -247,7 +247,7 @@ big img
 .tp-button .button-makeface a.disabled img
     visibility: hidden
 
-.tp-button .button-heart a
+.tp-button .button-heart a, .tp-button .button-share a
     color: #030
     text-shadow: #d4ff00 0 1px 1px
     +buttongradient(#cf0, #9f0)
@@ -256,8 +256,24 @@ big img
     &:hover
         +buttongradient(#ad0, #7d0)
 
-div.photo-action-heart
+div.photo-action-heart, div.photo-action-share
     float: left
+
+#photo-action-share .icon
+    display: inline-block
+    width: 16px
+    height: 18px
+    background: no-repeat 0 2px
+    margin: 0
+
+#photo-action-share .twitter
+    background-image: url(http://static.typepad.com/.shared:v45.03:typepad:en_us/images/profile/service_icons/twitter.png)
+
+#photo-action-share .facebook
+    background-image: url(http://static.typepad.com/.shared:v45.03:typepad:en_us/images/profile/service_icons/facebook.png)
+
+#photo-action-share .typepad
+    background-image: url(http://static.typepad.com/.shared:v45.03:typepad:en_us/images/profile/service_icons/typepad.png)
 
 div.photo-action-flag
     float: right
@@ -278,3 +294,28 @@ div.photo-action-flag
 
 .hidden
     display: none
+
+#share
+    display: none
+    position: fixed
+    top: 10px
+    right: 10px
+    width: 590px
+    height: 610px
+    border: 1px solid #aaa
+    border-color: #d4d4d4 #aaa #aaa #d4d4d4
+    background: #fff
+    +boxshadow(#aaa 1px 1px 2px)
+    -moz-background-clip: -moz-initial
+    -moz-background-origin: -moz-initial
+    -moz-background-inline-policy: -moz-initial
+    z-index: 2147483646
+
+#shareframe
+    border: 0
+    margin: 0
+    padding: 0
+    width: 100%
+    height: 100%
+    opacity: 1
+    overflow-x: hidden

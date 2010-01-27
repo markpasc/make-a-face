@@ -85,11 +85,24 @@ def photo_for(request):
     return HttpResponseRedirect(reverse('photo', kwargs={'xid': asset_id}))
 
 
+def sharing_for_elsewhere(ew):
+    twitter, facebook = None, None
+    for account in ew:
+        if account.domain == 'twitter.com':
+            twitter = account
+        elif account.domain == 'facebook.com':
+            facebook = account
+
+    return ('Facebook' if facebook is not None
+        else 'Twitter' if twitter is not None
+        else 'TypePad')
+
+
 def photo(request, xid):
     # Ask this up front to get the user object outside of batches.
     authed = request.user.is_authenticated()
 
-    lastface = None
+    lastface, elsewhere = None, None
     with typepad.client.batch_request():
         photo = Asset.get_by_url_id(xid)
         favs = photo.favorites
@@ -99,6 +112,7 @@ def photo(request, xid):
             favfaces[face.favoriter] = Asset.get_by_url_id(face.lastface)
 
         if authed:
+            elsewhere = request.user.elsewhere_accounts
             try:
                 lastface_mod = Lastface.objects.get(owner=request.user.xid)
             except Lastface.DoesNotExist:
@@ -108,6 +122,7 @@ def photo(request, xid):
 
     userfav = None
     if authed:
+        elsewhere = sharing_for_elsewhere(elsewhere)
         # Get the Favorite in a separate batch so we can handle if it fails.
         try:
             with typepad.client.batch_request():
@@ -127,6 +142,7 @@ def photo(request, xid):
         'favorites': favs,
         'user_favorite': userfav,
         'lastface': lastface,
+        'share': elsewhere,
     })
 
 

@@ -24,6 +24,17 @@
             </div>
 
             {% if user.is_authenticated %}
+            {% ifequal user.xid photo.author.xid %}
+            <div class="photo-action-share">
+                <p>
+                    <span class="tp-button">
+                        <span class="button button-share button-xl">
+                            <a id="photo-action-share" href="{{ photo.xid }}"><span class="icon {{ share|lower }}">&nbsp;</span><span class="text">Share on {{ share }}</span></a>
+                        </span>
+                    </span>
+                </p>
+            </div>
+            {% else %}
             <div class="photo-action-heart">
                 <p>
                     <span class="tp-button">
@@ -33,6 +44,7 @@
                     </span>
                 </p>
             </div>
+            {% endifequal %}
 
             <div class="photo-action-flag">
                 <p>
@@ -43,10 +55,9 @@
                     </span>
                 </p>
             </div>
-            {% endif %}
 
             <script type="text/javascript">
-            $('#photo-action-heart').click(function (evt) {
+            $('#photo-action-heart').click(function () {
                 var heart = $(this);
 
                 if (!heart.hasClass('favorited')) {
@@ -65,7 +76,7 @@
                 return false;
             });
 
-            $('#photo-action-flag').click(function (evt) {
+            $('#photo-action-flag').click(function () {
                 var flag = $(this);
                 $.post('{% absoluteurl %}{% url flag %}{% endabsoluteurl %}', {
                     'action': 'flag',
@@ -77,7 +88,27 @@
                 flag.blur();
                 return false;
             });
+
+            function frame(url) {
+                $('#shareframe').attr('src', url);
+                $('#share').show();
+            }
+
+            $('#photo-action-share').click(function () {
+                var here = "{% absoluteurl %}{% url photo xid=photo.xid %}{% endabsoluteurl %}";
+
+                {% ifequal share "Facebook" %}
+                    frame("http://www.facebook.com/sharer.php?u=" + here + "&t=" + encodeURIComponent(document.title));
+                {% else %}{% ifequal share "Twitter" %}
+                    window.location.href = "http://twitter.com/?status=I+made+a+face:+" + here;
+                {% else %}
+                    frame("http://www.typepad.com/services/quickerpost/iframe?linkto=" + here + "&title=" + encodeURIComponent(document.title));
+                {% endifequal %}{% endifequal %};
+
+                return false;
+            });
             </script>
+            {% endif %}
 
             </div>
         </div>
