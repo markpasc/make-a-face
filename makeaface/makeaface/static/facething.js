@@ -112,6 +112,10 @@ function switchOne() {
     var cell = getNextCell();
     var faceUrl = getNextFace();
     var cellElem = cell.elem;
+    if (cellElem == null) {
+        setTimeout(function () { switchOne() }, 200);
+        return;
+    }
     var imgElem = cellElem.find('img');
     var linkElem = cellElem.find('a');
     imgElem.attr('src',  faceUrl);
