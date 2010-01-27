@@ -110,11 +110,6 @@
                     return false;
                 });
 
-                function frame(url) {
-                    $('#shareframe').attr('src', url);
-                    $('#share').show();
-                }
-
                 $('#gridsubstrate .gridcell .share').live('click', function (evt) {
                     var share = $(this);
                     var here = share.attr('href');
@@ -124,7 +119,7 @@
                     {% else %}{% ifequal share "Twitter" %}
                         window.location.href = "http://twitter.com/?status=I+made+a+face:+" + here;
                     {% else %}
-                        frame("http://www.typepad.com/services/quickerpost/iframe?linkto=" + here + "&title=" + encodeURIComponent(document.title));
+                        window.location.href = here + "#share";
                     {% endifequal %}{% endifequal %};
 
                     share.blur();

@@ -36,15 +36,23 @@
     {% else %}{% ifequal share "Twitter" %}
     {% else %}
         <script type="text/javascript">
-        function () {}
-        var b=document.body;
         var TYPEPAD___bookmarklet_domain='http://www.typepad.com';
-        if(b&&!document.xmlVersion){
-            void(z=document.createElement('script'));
-            void(z.type='text/javascript');
-            void(z.src='http://static.typepad.com/.shared/js/qp/loader-combined-min.js');
-            void(b.appendChild(z));
+        function sharetypepad () {
+            var b=document.body;
+            if(b&&!document.xmlVersion){
+                void(z=document.createElement('script'));
+                void(z.type='text/javascript');
+                void(z.src='http://static.typepad.com/.shared/js/qp/loader-combined-min.js');
+                void(b.appendChild(z));
+            }
         }
+
+        $(document).ready(function () {
+            var href = document.location.href;
+            if (href.substring(href.length - 6) == '#share') {
+                sharetypepad();
+            }
+        });
         </script>
     {% endifequal %}{% endifequal %}
 

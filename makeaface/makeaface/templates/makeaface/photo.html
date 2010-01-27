@@ -90,11 +90,6 @@
                 return false;
             });
 
-            function frame(url) {
-                $('#shareframe').attr('src', url);
-                $('#share').show();
-            }
-
             $('#photo-action-share').click(function () {
                 var here = "{% absoluteurl %}{% url photo xid=photo.xid %}{% endabsoluteurl %}";
 
@@ -103,7 +98,7 @@
                 {% else %}{% ifequal share "Twitter" %}
                     window.location.href = "http://twitter.com/?status=I+made+a+face:+" + here;
                 {% else %}
-                    frame("http://www.typepad.com/services/quickerpost/iframe?linkto=" + here + "&title=" + encodeURIComponent(document.title));
+                    sharetypepad();
                 {% endifequal %}{% endifequal %};
 
                 return false;
