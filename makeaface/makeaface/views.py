@@ -302,13 +302,16 @@ def delete(request):
 
 def facegrid(request):
     with typepad.client.batch_request():
-        events = request.group.events
+        events1 = request.group.events
+        events2 = request.group.events.filter(start_index=51, max_results=50)
+        events3 = request.group.events.filter(start_index=101, max_results=50)
 
     photos = []
-    for event in events:
-        if event.object is not None:
-            if type(event.object) is Photo:
-                photos.append(event.object)
+    for events in (events1, events2, events3):
+        for event in events:
+            if event.object is not None:
+                if type(event.object) is Photo:
+                    photos.append(event.object)
 
     return TemplateResponse(request, 'makeaface/grid.html', {
         'photos': photos,
