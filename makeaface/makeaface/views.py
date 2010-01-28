@@ -205,9 +205,13 @@ def favorite(request):
             group=request.group)
 
         # Save the user's last face when favorited.
-        last = Lastface.objects.get(owner=request.user.xid)
-        Favoriteface(favoriter=request.user.xid, favorited=asset_id,
-            lastface=last.face).save()
+        try:
+            last = Lastface.objects.get(owner=request.user.xid)
+        except Lastface.DoesNotExist:
+            pass
+        else:
+            Favoriteface(favoriter=request.user.xid, favorited=asset_id,
+                lastface=last.face).save()
     else:
         # Getting the xid will do a batch, so don't do it inside our other batch.
         xid = request.user.xid
@@ -274,6 +278,14 @@ def flag(request):
         cache.set(cache_key, flaggers, 86400)  # 1 day
         log.debug('Flaggers for %r are now %r', asset_id, flaggers)
         return HttpResponse('OK', content_type='text/plain')
+
+
+def cull_old_lastfavfaces(sender, instance, group, **kwargs):
+    Lastface.objects.filter(face=instance.xid).delete()
+    Favoriteface.objects.filter(lastface=instance.xid).delete()
+
+
+typepadapp.signals.asset_deleted.connect(cull_old_lastfavfaces)
 
 
 @oops
