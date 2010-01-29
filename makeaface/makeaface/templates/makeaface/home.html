@@ -98,6 +98,8 @@
                         // Turn the camera back on.
                         cam.dropPhoto();
                         $('#camerabox').removeClass('sending');
+
+                        $(document).trigger('madeaface');
                     });
                 }
 
@@ -116,6 +118,8 @@
                 $('#gridsubstrate .gridcell .share').live('click', function (evt) {
                     var share = $(this);
                     var here = share.attr('href');
+
+                    $(document).trigger('sharedaface');
 
                     {% ifequal share "Facebook" %}
                         $('#facebook-share-link').attr('share_url', here).trigger('click');
@@ -247,4 +251,16 @@
         </div>
     </div>
 
+{% endblock %}
+
+{% block ganalytics_callbacks %}
+{% if flash.signedin %}
+pageTracker._trackPageview('/index/signedin');
+{% endif %}
+$(document).bind('madeaface', function () {
+    pageTracker._trackPageview('/index/made-a-face');
+});
+$(document).bind('sharedaface', function () {
+    pageTracker._trackPageview('/index/shared-a-face');
+});
 {% endblock %}

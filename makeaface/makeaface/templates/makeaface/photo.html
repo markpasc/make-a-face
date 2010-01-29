@@ -109,6 +109,8 @@
             $('#photo-action-share').click(function () {
                 var here = "{% absoluteurl %}{% url photo xid=photo.xid %}{% endabsoluteurl %}";
 
+                $(document).trigger('sharedaface');
+
                 {% ifequal share "Facebook" %}
                     $('#facebook-share-link').attr('share_url', here).trigger('click');
                 {% else %}{% ifequal share "Twitter" %}
@@ -169,4 +171,10 @@
         </div>
     </div>
 
+{% endblock %}
+
+{% block ganalytics_callbacks %}
+$(document).bind('sharedaface', function () {
+    pageTracker._trackPageview('/index/shared-a-face');
+});
 {% endblock %}

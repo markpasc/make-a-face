@@ -79,6 +79,13 @@ def home(request):
     })
 
 
+def authorize(request):
+    resp = typepadapp.views.auth.authorize(request)
+    if isinstance(resp, HttpResponseRedirect):
+        request.flash['signedin'] = True
+    return resp
+
+
 def sharing_for_elsewhere(ew):
     twitter, facebook = None, None
     for account in ew:
