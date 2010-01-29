@@ -12,6 +12,7 @@ from django.core.cache import cache
 from django.core.urlresolvers import reverse
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from oauth.oauth import OAuthConsumer, OAuthToken
+import simplejson as json
 from templateresponse import TemplateResponse
 import typepad
 import typepad.api
@@ -22,6 +23,8 @@ from makeaface.models import Lastface, Favoriteface
 
 
 log = logging.getLogger(__name__)
+
+ONE_DAY = 86400
 
 
 def oops(fn):
@@ -77,6 +80,37 @@ def home(request):
         'next_box_loc': next_box_loc(),
         'share': elsewhere,
     })
+
+
+@oops
+def asset_meta(request):
+    if not request.user.is_authenticated():
+        return HttpResponse('silly rabbit, asset_meta is for authenticated users',
+            status=400, content_type='text/plain')
+
+    user_id = request.user.xid
+    cache_key = 'favorites:%s' % user_id
+    favs = cache.get(cache_key)
+
+    if favs is None:
+        log.debug("Oops, going to server for %s's asset_meta", request.user.preferred_username)
+
+        fav_objs = {}
+        html_ids = request.POST.getlist('asset_id')
+        with typepad.client.batch_request():
+            for html_id in html_ids:
+                assert html_id.startswith('asset-')
+                xid = html_id[6:]
+                fav_objs[html_id] = Favorite.head_by_user_asset(user_id, xid)
+
+        favs = list(html_id for html_id, fav_obj in fav_objs.items()
+            if fav_obj.found())
+        cache.set(cache_key, favs, ONE_DAY)
+    else:
+        log.debug('Yay, returning asset_meta for %s from cache', request.user.preferred_username)
+
+    favs = dict((html_id, {"favorite": True}) for html_id in favs)
+    return HttpResponse(json.dumps(favs), content_type='application/json')
 
 
 def authorize(request):
@@ -232,6 +266,15 @@ def favorite(request):
     return HttpResponse('OK', content_type='text/plain')
 
 
+def uncache_favorites(sender, instance, **kwargs):
+    cache_key = 'favorites:%s' % instance.author.xid
+    cache.delete(cache_key)
+
+
+typepadapp.signals.favorite_created.connect(uncache_favorites)
+typepadapp.signals.favorite_deleted.connect(uncache_favorites)
+
+
 @oops
 def flag(request):
     if request.method != 'POST':
@@ -282,7 +325,7 @@ def flag(request):
         log.debug('Emptied flaggers for %r now that it is deleted', asset_id)
         return HttpResponse('BALEETED', content_type='text/plain')
     else:
-        cache.set(cache_key, flaggers, 86400)  # 1 day
+        cache.set(cache_key, flaggers, ONE_DAY)
         log.debug('Flaggers for %r are now %r', asset_id, flaggers)
         return HttpResponse('OK', content_type='text/plain')
 
