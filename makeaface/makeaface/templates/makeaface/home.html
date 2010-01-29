@@ -152,6 +152,12 @@
                     return false;
                 });
 
+                {% if firefox36 %}
+                $(document).ready(function () {
+                    setTimeout(function () { if ($('#take-picture').hasClass('disabled')) $('#oops-firefox36').show() }, 2000);
+                });
+                {% endif %}
+
                 var asset_ids = [null {% for event in events %}
                     {% if event.object %},'asset-{{ event.object.xid }}'{% endif %}
                 {% endfor %} ];
@@ -208,6 +214,26 @@
             <p><a href="http://developer.typepad.com/" class="typepad-link">made with</a> <a href="http://developer.typepad.com/"><img src="{% url static path="makeaface/typepad.gif" %}" alt="TypePad"></a></p>
             <p><a href="{% url facegrid %}">See grid view</a></p>
         </div>
+
+        {% if firefox36 %}
+        <div id="oops-firefox36" class="oops hidden">
+            <div class="oops-inner">
+                <h2>Oops!</h2>
+                <p>
+                    Can't allow Flash the camera access, can you? That's because
+                    <strong>Flash is extra buggy in Firefox 3.6.</strong>
+                </p>
+                <p>
+                    You can turn on the camera if you go to
+                    <a href="http://www.macromedia.com/support/documentation/en/flashplayer/help/settings_manager06.html" target="_new">Adobe's Website Privacy Settings Panel</a>
+                    and <em>“Always Allow”</em> camera access for <em>make-a-face.org</em>.
+                </p>
+                <p>
+                    Sorry. ☹
+                </p>
+            </div>
+        </div>
+        {% endif %}
 
         <div id="gridsubstrate">
             <div id="camspace"></div>

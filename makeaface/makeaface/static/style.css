@@ -1013,3 +1013,47 @@ div.photo-action-flag, div.photo-action-delete {
 
 #share {
   display: none; }
+
+.oops {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 418px;
+  background: #333;
+  border-radius: 20px;
+  -moz-border-radius: 20px;
+  -webkit-border-radius: 20px;
+  box-shadow: black 0 10px 20px;
+  -moz-box-shadow: black 0 10px 20px;
+  -webkit-box-shadow: black 0 10px 20px;
+  z-index: 9003;
+  font-size: 2em;
+  line-height: 1em; }
+  .oops .oops-inner {
+    margin: 5px;
+    padding: 10px;
+    background: #333;
+    border: 5px solid #fc0;
+    border-radius: 20px;
+    -moz-border-radius: 20px;
+    -webkit-border-radius: 20px; }
+  .oops h2 {
+    font-size: 1.5em;
+    line-height: 1.5em;
+    margin: 0;
+    padding: 0;
+    font-weight: normal;
+    font-style: italic; }
+  .oops p {
+    margin: 0;
+    padding: 0; }
+  .oops p+p {
+    margin-top: 1em; }
+  .oops strong {
+    font-size: 1.1em;
+    line-height: 1em;
+    font-style: normal;
+    font-weight: bold; }
+  .oops em {
+    font-style: normal;
+    font-weight: bold; }

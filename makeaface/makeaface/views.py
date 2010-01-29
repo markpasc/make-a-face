@@ -75,10 +75,15 @@ def home(request):
     if authed:
         elsewhere = sharing_for_elsewhere(elsewhere)
 
+    user_agent = request.META['HTTP_USER_AGENT']
+    log.debug('User agent is %r', user_agent)
+    firefox36 = True if 'Firefox/3.6' in user_agent else False
+
     return TemplateResponse(request, 'makeaface/home.html', {
         'events': events,
         'next_box_loc': next_box_loc(),
         'share': elsewhere,
+        'firefox36': firefox36,
     })
 
 

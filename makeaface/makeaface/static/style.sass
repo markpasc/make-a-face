@@ -308,3 +308,47 @@ div.photo-action-flag, div.photo-action-delete
 
 #share
     display: none
+
+.oops
+    position: absolute
+    top: 20px
+    right: 20px
+    width: 418px
+    background: #333
+    +borderradius(20px)
+    +boxshadow(#000 0 10px 20px)
+    z-index: 9003
+    font-size: 2em
+    line-height: 1em
+
+    .oops-inner
+        margin: 5px
+        padding: 10px
+        background: #333
+        border: 5px solid #fc0
+        +borderradius(20px)
+
+    h2
+        font-size: 1.5em
+        line-height: 1.5em
+        margin: 0
+        padding: 0
+        font-weight: normal
+        font-style: italic
+
+    p
+        margin: 0
+        padding: 0
+
+    p+p
+        margin-top: 1em
+
+    strong
+        font-size: 1.1em
+        line-height: 1em
+        font-style: normal
+        font-weight: bold
+
+    em
+        font-style: normal
+        font-weight: bold
