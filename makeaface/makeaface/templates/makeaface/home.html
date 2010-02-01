@@ -31,12 +31,16 @@
                     'height': $('#camera').height(),
                     'wmode': 'window',
                     'sendto': '{% absoluteurl %}{% url upload_photo %}{% endabsoluteurl %}',
-                    'cameraReady': function(cam) { $('#take-picture').removeClass('disabled') },
+                    'cameraReady': function(cam) { $(document).trigger('cameraReady'); },
                     'cameraNotReady': function(cam) { $('#take-picture').addClass('disabled') },
                     'errorSending': function(cam, err) { alert('OOPS: ' + err) },
                     'tookPhoto': function(cam) { tookPhoto(cam) },
                     //'droppedPhoto': function(cam) { droppedPhoto(cam) },
                     'sentPhoto': function(cam, url) { sentPhoto(cam, url) }
+                });
+
+                $(document).bind('cameraReady', function () {
+                    $('#take-picture').removeClass('disabled');
                 });
 
                 $('#take-picture').click(function () {
@@ -154,7 +158,13 @@
 
                 {% if firefox36 %}
                 $(document).ready(function () {
-                    setTimeout(function () { if ($('#take-picture').hasClass('disabled')) $('#oops-firefox36').show() }, 2000);
+                    setTimeout(function () {
+                        if ($('#take-picture').hasClass('disabled'))
+                            $('#oops-firefox36').show()
+                    }, 3000);
+                });
+                $(document).bind('cameraReady', function () {
+                    $('#oops-firefox36').hide();
                 });
                 {% endif %}
 
@@ -229,10 +239,16 @@
                     and <em>“Always Allow”</em> camera access for <em>make-a-face.org</em>.
                 </p>
                 <p>
-                    Sorry. ☹
+                    Sorry. ☹ <small>Click me to close me.</small>
                 </p>
             </div>
         </div>
+
+        <script type="text/javascript">
+        $('#oops-firefox36').click(function () {
+            $('#oops-firefox36').hide();
+        });
+        </script>
         {% endif %}
 
         <div id="gridsubstrate">
