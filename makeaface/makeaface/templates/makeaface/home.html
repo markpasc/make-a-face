@@ -295,9 +295,22 @@
 
 {% endblock %}
 
+<script>
 {% block ganalytics_callbacks %}
-{% if flash.signedin %}
-pageTracker._trackPageview('/index/signedin');
+{% if user.is_authenticated %}
+    {% if flash.signedin %}
+        pageTracker._trackPageview('/index/signedin');
+
+        $.ajax({
+            url: 'http://api.typepad.com/users/{{ user.xid }}/events.js?max-results=2&start-index=1',
+            dataType: 'jsonp',
+            success: function (data) {
+                if (data['entries'].length < 2) {
+                    pageTracker._trackPageview('/index/signed-in-new');
+                }
+            }
+        });
+    {% endif %}
 {% endif %}
 $(document).bind('madeaface', function () {
     pageTracker._trackPageview('/index/made-a-face');
@@ -306,3 +319,4 @@ $(document).bind('sharedaface', function () {
     pageTracker._trackPageview('/index/shared-a-face');
 });
 {% endblock %}
+</script>
