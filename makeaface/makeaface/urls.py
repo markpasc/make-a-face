@@ -19,6 +19,8 @@ urlpatterns = patterns('',
     url(r'^delete$', 'makeaface.views.delete', name='delete'),
     url(r'^asset_meta$', 'makeaface.views.asset_meta', name='asset_meta'),
 
+    url(r'^faq$', 'makeaface.views.faq', name='faq'),
+
     url(r'^grid$', 'makeaface.views.facegrid', name='facegrid'),
     url(r'^grid\.$', 'django.views.generic.simple.redirect_to',
         {'url': r'/grid'}),

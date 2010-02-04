@@ -1,0 +1,54 @@
+{% extends "makeaface/base.html" %}
+{% load abs %}
+
+{% block htmltitle %}Help &amp; FAQ &middot; {{ block.super }}{% endblock %}
+
+{% block htmlhead %}
+{% endblock %}
+
+{% block content %}
+
+<div id="gridcontainer">
+    <div id="faq" 
+
+    <div class="span-14 suffix-10 last">
+
+<h1>Oops! Something probably went wrong. Sorry. ☹</h1>
+
+<h2>I can't take a picture. Where is the button? Why do I only see a “no” symbol?</h2>
+
+<p>When the camera is all working, it looks like <em>Figure 1</em>. If Make-A-Face can't turn on the camera, though, you get something like <em>Figure 2</em>.</p>
+
+<p class="figure"><img src="{% url static path="makeaface/faq/figure-1.jpg" %}"><br>Figure 1: How the camera should look</p>
+
+<p class="figure"><img src="{% url static path="makeaface/faq/figure-2.jpg" %}"><br>Figure 2: When the camera didn't load</p>
+
+<p>There are several reasons you might get Figure 2:</p>
+
+<ul>
+    <li>Is your webcam plugged in?</li>
+    <li>Is some other program besides your web browser already using the webcam?</li>
+    <li>
+        <p>If Flash asks you to “Allow” camera access, as in <em>Figure 3</em>, did you click “Allow?”</p>
+        <p class="figure"><img src="{% url static path="makeaface/faq/figure-3.jpg" %}"><br>Figure 3: Allowing camera access</p>
+    </li>
+    <li>
+        <p>Right-click in the camera and pick “Settings...” Choose the “Privacy” tab of the Flash settings (as in <em>Figure 4</em>). Is it set to “Deny?” Change it to “Allow.” (You can also tick the “Remember” box to never be asked again on Make-A-Face.)</p>
+        <p class="figure"><img src="{% url static path="makeaface/faq/figure-4.jpg" %}"><br>Figure 4: Not denying camera access</p>
+    </li>
+</ul>
+
+
+<h2>Why can't I approve the camera? The “Allow” button doesn't do anything. (I'm using Firefox 3.6.)</h2>
+
+<p>Try going to 
+    <a href="http://www.macromedia.com/support/documentation/en/flashplayer/help/settings_manager06.html" target="_new">Adobe's Website Privacy Settings Panel</a>
+    and choosing to <em>“Always Allow”</em> camera access for <em>make-a-face.org</em>.</p>
+
+<p>Firefox 3.6 seems to have some new exciting problems with Flash. One of these is that the buttons in the pop-up box to approve camera access don't work. The global settings panel works, though, so try granting permission through there.</p>
+
+
+    </div>
+</div>
+
+{% endblock %}

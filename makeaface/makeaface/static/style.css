@@ -742,7 +742,8 @@ a:visited {
 #camerabox {
   border: 0 solid #333;
   border-width: 0 2px 2px 0;
-  z-index: 10; }
+  z-index: 10;
+  overflow: hidden; }
 
 #howto {
   color: white;
@@ -753,6 +754,19 @@ div#camera, #photo {
   width: 400px;
   height: 400px;
   margin: 29px; }
+
+#need-help {
+  position: absolute;
+  display: none;
+  width: 458px;
+  padding: 10px;
+  z-index: 30;
+  font-size: 2em;
+  line-height: 1em;
+  background: #000000;
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  text-align: center; }
 
 .camera-throb {
   display: none;
@@ -789,6 +803,20 @@ div#camera, #photo {
 #camera, embed, object {
   padding: 0;
   margin: 0; }
+
+#faq {
+  font-size: 1.2em;
+  line-height: 1.5em; }
+  #faq h1 {
+    color: #f90;
+    text-shadow: #000 0 1px 1px; }
+  #faq .figure {
+    text-align: center;
+    font-style: italic; }
+    #faq .figure img {
+      box-shadow: 0 2px 4px black;
+      -moz-box-shadow: 0 2px 4px black;
+      -webkit-box-shadow: 0 2px 4px black; }
 
 #gridcontainer, #toolbar {
   position: relative;

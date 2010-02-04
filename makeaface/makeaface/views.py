@@ -383,3 +383,8 @@ def facegrid(request):
     return TemplateResponse(request, 'makeaface/grid.html', {
         'photos': photos,
     })
+
+
+def faq(request):
+    return TemplateResponse(request, 'makeaface/faq.html', {
+    })
