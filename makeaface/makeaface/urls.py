@@ -20,6 +20,8 @@ urlpatterns = patterns('',
     url(r'^asset_meta$', 'makeaface.views.asset_meta', name='asset_meta'),
 
     url(r'^grid$', 'makeaface.views.facegrid', name='facegrid'),
+    url(r'^grid\.$', 'django.views.generic.simple.redirect_to',
+        {'url': r'/grid'}),
 )
 
 urlpatterns += patterns('',
