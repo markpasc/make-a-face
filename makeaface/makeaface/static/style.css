@@ -942,8 +942,22 @@ big img {
     background-image: -moz-linear-gradient(#292929, #131313);
     filter: progid:DXImageTransform.Microsoft.gradient(enabled='true', startColorstr=#292929, endColorstr=#131313, GradientType=0); }
 
-.tp-button .button-makeface a.disabled img {
-  visibility: hidden; }
+.tp-button .button-makeface {
+  text-align: center; }
+  .tp-button .button-makeface a {
+    position: relative; }
+    .tp-button .button-makeface a img {
+      visibility: visible; }
+    .tp-button .button-makeface a .disabled-text {
+      position: absolute;
+      visibility: hidden;
+      width: 99px;
+      padding: 0;
+      margin: 0; }
+  .tp-button .button-makeface a.disabled img {
+    visibility: hidden; }
+  .tp-button .button-makeface a.disabled .disabled-text {
+    visibility: visible; }
 
 .tp-button .button-heart a, .tp-button .button-share a {
   color: #030;

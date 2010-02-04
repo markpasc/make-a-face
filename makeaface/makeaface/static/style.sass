@@ -255,8 +255,26 @@ big img
     &:hover
         +buttongradient(#292929, #131313)
 
-.tp-button .button-makeface a.disabled img
-    visibility: hidden
+.tp-button .button-makeface
+    text-align: center
+
+    a
+        position: relative
+
+        img
+            visibility: visible
+        .disabled-text
+            position: absolute
+            visibility: hidden
+            width: 99px
+            padding: 0
+            margin: 0
+
+    a.disabled
+        img
+            visibility: hidden
+        .disabled-text
+            visibility: visible
 
 .tp-button .button-heart a, .tp-button .button-share a
     color: #030
