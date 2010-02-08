@@ -9,8 +9,8 @@ from urlparse import urlparse
 
 from django.conf import settings
 from django.core.cache import cache
-from django.core.urlresolvers import reverse
-from django.http import HttpResponse, HttpResponseRedirect, Http404
+from django.core.urlresolvers import reverse, resolve
+from django.http import HttpResponse, HttpResponseRedirect, HttpResponseNotFound, Http404
 from oauth.oauth import OAuthConsumer, OAuthToken
 import simplejson as json
 from templateresponse import TemplateResponse
@@ -195,6 +195,64 @@ def photo(request, xid):
         'lastface': lastface,
         'share': elsewhere,
     })
+
+
+photo.is_photo_view = True
+
+
+def oembed(request):
+    # Ask this up front to get the user object outside of batches.
+    authed = request.user.is_authenticated()
+
+    url = request.GET['url']
+    urlparts = urlparse(url)
+    view, args, kwargs = resolve(urlparts.path)
+
+    if not getattr(view, 'is_photo_view', False):
+        return HttpResponseNotFound('not a photo url', content_type='text/plain')
+    if request.GET.get('format', 'json') != 'json':
+        return HttpResponse('unsupported format :(', status=501, content_type='text/plain')
+
+    xid = kwargs['xid']
+    maxwidth = request.GET.get('maxwidth')
+    maxheight = request.GET.get('maxheight')
+    if maxwidth and maxheight:
+        size = maxwidth if maxwidth < maxheight else maxheight
+    elif maxwidth:
+        size = maxwidth
+    elif maxheight:
+        size = maxheight
+    else:
+        size = 500
+
+    typepad.client.batch_request()
+    photo = Asset.get_by_url_id(xid)
+    try:
+        typepad.client.complete_batch()
+    except Asset.NotFound:
+        return HttpResponseNotFound('no such photo', content_type='text/plain')
+
+    photo_url = photo.links['rel__enclosure']['maxwidth__%d' % size].href
+
+    data = {
+        'type': 'photo',
+        'version': '1.0',
+        'title': "%s's face" % photo.author.display_name,
+        'author_name': photo.author.display_name,
+        'provider_name': 'Make A Face',
+        'provider_url': 'http://make-a-face.org/',
+        'url': photo_url,
+        'width': size,
+        'height': size,
+    }
+    if size > 150:
+        data.update({
+            'thumbnail_url': photo.links['rel__enclosure']['maxwidth__150'].href,
+            'thumbnail_width': 150,
+            'thumbnail_height': 150,
+        })
+
+    return HttpResponse(json.dumps(data), content_type='application/json+javascript')
 
 
 @oops
