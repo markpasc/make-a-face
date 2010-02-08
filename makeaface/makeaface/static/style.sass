@@ -157,6 +157,9 @@ div#camera, #photo
     margin: 0 auto
     overflow: hidden
 
+#gridcontainer
+    min-height: 150px
+
 #gridsubstrate
     position: relative
     width: 1078px
@@ -221,11 +224,20 @@ div#camera, #photo
     z-index: 40
     text-align: center
 
-#colophon p
-    margin: 2em 0 0 0
+    p
+        margin: 1.5em 0 0 0
 
-#colophon img
-    vertical-align: middle
+    img
+        vertical-align: middle
+
+    &.colophon-mini p
+        margin: 3.5em 0 0 0
+
+a.arrow
+    &:link, &:visited, &:active
+        text-decoration: none
+    &:hover
+        text-decoration: underline
 
 #photobox
     position: relative

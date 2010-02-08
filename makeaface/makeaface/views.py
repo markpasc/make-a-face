@@ -63,12 +63,20 @@ def next_box_loc():
         row += 1
 
 
-def home(request):
+def home(request, page=None, template=None):
     authed = request.user.is_authenticated()
 
     elsewhere = None
     with typepad.client.batch_request():
         events = request.group.events
+
+        if page is not None:
+            page = int(page)
+            start_index = 50 * (page - 1) + 1
+            events = events.filter(max_results=50, start_index=start_index)
+        else:
+            page = 0
+
         if authed:
             elsewhere = request.user.elsewhere_accounts
 
@@ -78,22 +86,26 @@ def home(request):
     user_agent = request.META['HTTP_USER_AGENT']
     log.debug('User agent is %r', user_agent)
 
-    return TemplateResponse(request, 'makeaface/home.html', {
+    if template is None:
+        template = 'makeaface/home.html'
+    return TemplateResponse(request, template, {
         'events': events,
         'next_box_loc': next_box_loc(),
         'share': elsewhere,
+        'next_page': page + 1,
+        'prev_page': page - 1,
     })
 
 
 @oops
-def asset_meta(request):
+def asset_meta(request, fresh=False):
     if not request.user.is_authenticated():
         return HttpResponse('silly rabbit, asset_meta is for authenticated users',
             status=400, content_type='text/plain')
 
     user_id = request.user.xid
     cache_key = 'favorites:%s' % user_id
-    favs = cache.get(cache_key)
+    favs = None if fresh else cache.get(cache_key)
 
     if favs is None:
         log.debug("Oops, going to server for %s's asset_meta", request.user.preferred_username)
@@ -108,7 +120,8 @@ def asset_meta(request):
 
         favs = list(html_id for html_id, fav_obj in fav_objs.items()
             if fav_obj.found())
-        cache.set(cache_key, favs, ONE_DAY)
+        if not fresh:
+            cache.set(cache_key, favs, ONE_DAY)
     else:
         log.debug('Yay, returning asset_meta for %s from cache', request.user.preferred_username)
 

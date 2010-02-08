@@ -1,0 +1,115 @@
+{% extends "makeaface/base.html" %}
+{% load abs %}
+
+{% block content %}
+    <div id="gridcontainer">
+
+        {% if user.is_authenticated %}
+            <script type="text/javascript">
+                $('#gridsubstrate .gridcell .heart').live('click', function (evt) {
+                    var heart = $(this);
+                    $.post('{% url favorite %}', {
+                        'action': 'favorite',
+                        'asset_id': heart.attr('href')
+                    }, function () {
+                        heart.addClass('favorited');
+                    });
+                    heart.blur();
+                    return false;
+                });
+
+                $('#gridsubstrate .gridcell .share').live('click', function (evt) {
+                    var share = $(this);
+                    var here = share.attr('href');
+
+                    $(document).trigger('sharedaface');
+
+                    {% ifequal share "Facebook" %}
+                        $('#facebook-share-link').attr('share_url', here).trigger('click');
+                    {% else %}{% ifequal share "Twitter" %}
+                        window.location.href = "http://twitter.com/?status=I+made+a+face:+" + here;
+                    {% else %}
+                        window.location.href = here + "#share";
+                    {% endifequal %}{% endifequal %};
+
+                    share.blur();
+                    return false;
+                });
+
+                $('#gridsubstrate .gridcell .flag').live('click', function (evt) {
+                    var flag = $(this);
+                    var asset_id = flag.attr('href').match(/6a\w+/)[0];
+                    var flags = $('#gridsubstrate .flag-' + asset_id);
+
+                    $.post('{% url flag %}', {
+                        'action': 'flag',
+                        'asset_id': asset_id
+                    }, function (data, textStatus) {
+                        flags.addClass('flagged');
+                        if (data == 'BALEETED') {
+                            flags.parents('.gridcell').find('img').animate({'opacity': 0.25}, 'slow');
+                        }
+                    });
+
+                    flag.blur();
+                    return false;
+                });
+
+                var asset_ids = [null {% for event in events %}
+                    {% if event.object %},'asset-{{ event.object.xid }}'{% endif %}
+                {% endfor %} ];
+                asset_ids.splice(0, 1);
+                $(document).ready(function () {
+                    $.ajax({
+                        url: '{% url asset_meta_fresh %}',
+                        type: "POST",
+                        data: {"asset_id": asset_ids},
+                        dataType: "json",
+                        traditional: true,
+                        success: function(data) {
+                            $.each(data, function (key, val) {
+                                if (val.favorite) {
+                                    key = key.replace(/^asset-/, '');
+                                    $('#gridsubstrate .heart-' + key).addClass('favorited');
+                                }
+                                if (val.can_delete) {
+                                    key = key.replace(/^asset-/, '');
+                                    $('#gridsubstrate .flag-' + key).addClass('hidden');
+                                }
+                            });
+                        }
+                    });
+                });
+            </script>
+        {% endif %}
+
+        <div id="colophon" class="colophon-mini">
+            {% ifequal prev_page 1 %}
+                <p><a href="{% url home %}" class="arrow">&larr;</a> <a href="{% url home %}">Newer</a></p>
+            {% else %}
+                <p><a href="{% url archive page=prev_page %}" class="arrow">&larr;</a> <a href="{% url archive page=prev_page %}">Newer</a></p>
+            {% endifequal %}
+            <p><a href="{% url archive page=next_page %}">Older</a> <a href="{% url archive page=next_page %}" class="arrow">&rarr;</a></p>
+        </div>
+
+        <div id="gridsubstrasse">
+        {% for event in events %}
+            {% if event.object %}
+                <div class="gridcell">
+                    <a class="link" href="{% url photo xid=event.object.xid %}" title="View {{ event.object.author.display_name }}'s face"><img src="{{ event.object.links.rel__enclosure.maxwidth__150.href|slice:":-6" }}-150si"></a>
+                    {% if user.is_authenticated %}
+                        {% ifequal user.xid event.object.author.xid %}
+                            <a class="share action" href="{% absoluteurl %}{% url photo xid=event.object.xid %}{% endabsoluteurl %}" title="Share this face on {{ share }}"><span class="share-{{ share.lower }}">&nbsp;</span></a>
+                        {% else %}
+                            <a class="heart action heart-{{ event.object.xid }}" href="{{ event.object.xid }}" title="I like this face">♥</a>
+                            <a class="flag action flag-{{ event.object.xid }}" href="{{ event.object.xid }}" title="This is not a face">⚑</a>
+                        {% endifequal %}
+                    {% endif %}
+                </div>
+            {% endif %}
+        {% endfor %}
+
+        </div>
+    </div>
+
+{% endblock %}
