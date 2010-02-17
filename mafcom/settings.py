@@ -66,6 +66,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
 
+    'makeaface.middleware.FixSecureRequestBustednessMiddleware',
     'djangoflash.middleware.FlashMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
 
