@@ -206,16 +206,30 @@
                     <li>Make a face at your web cam.</li>
                     <li>Click the button.</li>
                     </ol></h2>
-
-                    <h1>Like someone's face? Say so!</h1>
-
-                    <h2><ol>
-                    <li>Point at the face you like with the mouse.</li>
-                    <li>Click the <big style="color: rgb(204, 0, 0);">♥</big>.</li>
-                    </ol></h2>
-
-                    <h1>That's it!</h1>
                 </div>
+
+                <div id="howto-show-jacket">
+                <div id="howto-show">
+                    <div id="howto-show-1"><img src="{% url static path="makeaface/howto/sign-in.png" %}" width="120" height="120" alt=""></div>
+                    <div id="howto-show-2"><img src="{% url static path="makeaface/howto/make-face.jpg" %}" width="151" height="151" alt=""></div>
+                    <div id="howto-show-3"><img src="{% url static path="makeaface/howto/maf-button.png" %}" width="120" height="120" alt=""></div>
+                </div>
+                </div>
+
+                <script type="text/javascript">
+                    function nextshow() {
+                        $('#howto-show').css({'left': '0px'}).delay(4000).queue(function (next) {
+                            $('#howto-show').animate({'left': '-458px'}, 'slow', 'swing', function () {
+                                $(this)
+                                    .append($('#howto-show div:first').detach())
+                                    .css({'left': '0px'});
+                            });
+                            nextshow();
+                            next();
+                        });
+                    }
+                    $(document).ready(nextshow);
+                </script>
             </div>
         {% endif %}
 

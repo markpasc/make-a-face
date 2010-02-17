@@ -66,6 +66,7 @@ a:visited
     height: 458px
     top: 0
     left: -2px
+    z-index: 10
     margin: 0 0 4px 4px
     border: 0 solid #333
     border-width: 0 2px 2px 0
@@ -78,19 +79,55 @@ a:visited
     left: 0
     width: 418px
     height: 418px
-    background: #262626
+    background: url(howto/burst.png)
     +boxshadow(#000 0 1px 2px)
 
     h1.first
         margin-top: 0
 
+#howto-show-jacket
+    position: absolute
+    bottom: 40px
+    left: 0
+    width: 458px
+    height: 180px
+    overflow: hidden
+
+#howto-show
+    position: absolute
+    left: 0
+    top: 0
+    width: 1374px
+    height: 180px
+
+    div
+        float: left
+
+        img
+            +boxshadow(0 2px 4px #000)
+
+    #howto-show-1, #howto-show-3
+        width: 120px
+        height: 120px
+        padding: 30px 169px 31px
+
+    #howto-show-2
+        width: 151px
+        height: 151px
+        padding: 15px 153px 15px 154px
+
 #camerabox
-    z-index: 10
     overflow: hidden
 
 #howto
     color: white
-    z-index: 10
+    text-shadow: #000 0 1px 1px
+
+    h1
+        color: #f90
+
+    li
+        margin-top: 1em
 
 div#camera, #photo
     position: absolute
