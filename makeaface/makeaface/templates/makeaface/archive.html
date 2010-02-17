@@ -83,15 +83,6 @@
             </script>
         {% endif %}
 
-        <div id="colophon" class="colophon-mini">
-            {% ifequal prev_page 1 %}
-                <p><a href="{% url home %}" class="arrow">&larr;</a> <a href="{% url home %}">Newer</a></p>
-            {% else %}
-                <p><a href="{% url archive page=prev_page %}" class="arrow">&larr;</a> <a href="{% url archive page=prev_page %}">Newer</a></p>
-            {% endifequal %}
-            <p><a href="{% url archive page=next_page %}">Older</a> <a href="{% url archive page=next_page %}" class="arrow">&rarr;</a></p>
-        </div>
-
         <div id="gridsubstrasse">
         {% for event in events %}
             {% if event.object %}
@@ -108,6 +99,15 @@
                 </div>
             {% endif %}
         {% endfor %}
+
+            <div id="colophon-mini" class="colophon">
+                {% ifequal prev_page 1 %}
+                    <p><a href="{% url home %}" class="arrow">&larr;</a> <a href="{% url home %}">Newer</a></p>
+                {% else %}
+                    <p><a href="{% url archive page=prev_page %}" class="arrow">&larr;</a> <a href="{% url archive page=prev_page %}">Newer</a></p>
+                {% endifequal %}
+                <p><a href="{% url archive page=next_page %}">Older</a> <a href="{% url archive page=next_page %}" class="arrow">&rarr;</a></p>
+            </div>
 
         </div>
     </div>

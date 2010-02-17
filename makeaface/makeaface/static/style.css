@@ -832,7 +832,7 @@ div#camera, #photo {
   width: 1078px;
   left: -156px; }
 
-.gridcell, #colophon {
+.gridcell, .colophon {
   position: relative;
   float: left;
   width: 150px;
@@ -888,14 +888,19 @@ div#camera, #photo {
 #colophon {
   position: absolute;
   bottom: 0;
-  right: 2px;
+  right: 2px; }
+
+.colophon {
   z-index: 40;
   text-align: center; }
-  #colophon p {
+  .colophon p {
     margin: 1.5em 0 0 0; }
-  #colophon img {
+  .colophon img {
     vertical-align: middle; }
-  #colophon.colophon-mini p {
+
+#colophon-mini {
+  float: right; }
+  #colophon-mini p {
     margin: 3.5em 0 0 0; }
 
 a.arrow:link, a.arrow:visited, a.arrow:active {
