@@ -6,7 +6,7 @@
 
         {% if user.is_authenticated %}
             <script type="text/javascript">
-                $('#gridsubstrate .gridcell .heart').live('click', function (evt) {
+                $('#gridsubstrasse .gridcell .heart').live('click', function (evt) {
                     var heart = $(this);
                     $.post('{% url favorite %}', {
                         'action': 'favorite',
@@ -18,7 +18,7 @@
                     return false;
                 });
 
-                $('#gridsubstrate .gridcell .share').live('click', function (evt) {
+                $('#gridsubstrasse .gridcell .share').live('click', function (evt) {
                     var share = $(this);
                     var here = share.attr('href');
 
@@ -36,10 +36,10 @@
                     return false;
                 });
 
-                $('#gridsubstrate .gridcell .flag').live('click', function (evt) {
+                $('#gridsubstrasse .gridcell .flag').live('click', function (evt) {
                     var flag = $(this);
                     var asset_id = flag.attr('href').match(/6a\w+/)[0];
-                    var flags = $('#gridsubstrate .flag-' + asset_id);
+                    var flags = $('#gridsubstrasse .flag-' + asset_id);
 
                     $.post('{% url flag %}', {
                         'action': 'flag',
@@ -70,11 +70,11 @@
                             $.each(data, function (key, val) {
                                 if (val.favorite) {
                                     key = key.replace(/^asset-/, '');
-                                    $('#gridsubstrate .heart-' + key).addClass('favorited');
+                                    $('#gridsubstrasse .heart-' + key).addClass('favorited');
                                 }
                                 if (val.can_delete) {
                                     key = key.replace(/^asset-/, '');
-                                    $('#gridsubstrate .flag-' + key).addClass('hidden');
+                                    $('#gridsubstrasse .flag-' + key).addClass('hidden');
                                 }
                             });
                         }
