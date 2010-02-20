@@ -23,6 +23,7 @@ urlpatterns = patterns('',
     url(r'^asset_meta/fresh$', 'makeaface.views.asset_meta',
         {'fresh': True}, name='asset_meta_fresh'),
     url(r'^oembed$', 'makeaface.views.oembed', name='oembed'),
+    url(r'^noob$', 'makeaface.views.noob'),
 
     url(r'^faq$', 'makeaface.views.faq', name='faq'),
 

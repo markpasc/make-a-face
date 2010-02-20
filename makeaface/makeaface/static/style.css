@@ -738,7 +738,9 @@ a:visited {
   top: 0;
   left: -2px;
   z-index: 10;
-  margin: 0 0 4px 4px;
+  margin: 0 0 4px 4px; }
+
+#camerabox, #howto {
   border: 0 solid #333;
   border-width: 0 2px 2px 0; }
 
@@ -905,7 +907,8 @@ div#camera, #photo {
   font-size: 28px; }
 
 .gridcell .action {
-  display: none; }
+  display: none;
+  text-shadow: #000 0 1px 1px; }
 
 .gridcell .favorited {
   display: block;
@@ -1117,11 +1120,10 @@ div.photo-action-flag, div.photo-action-delete {
 #share {
   display: none; }
 
-.oops {
+.first-post {
+  display: none;
+  opacity: 0;
   position: absolute;
-  top: 20px;
-  right: 20px;
-  width: 418px;
   background: #333;
   border-radius: 20px;
   -moz-border-radius: 20px;
@@ -1129,10 +1131,25 @@ div.photo-action-flag, div.photo-action-delete {
   box-shadow: black 0 10px 20px;
   -moz-box-shadow: black 0 10px 20px;
   -webkit-box-shadow: black 0 10px 20px;
+  text-shadow: #000 0 1px 1px;
+  text-align: center;
   z-index: 9003;
-  font-size: 2em;
-  line-height: 1em; }
-  .oops .oops-inner {
+  font-size: 1.5em;
+  line-height: 1em;
+  border: 2px solid #f90; }
+  .first-post .point {
+    position: absolute;
+    top: -20px;
+    width: 100%;
+    height: 20px;
+    background: url(point.png) no-repeat bottom center; }
+  .first-post .point-left {
+    position: absolute;
+    width: 20px;
+    height: 100%;
+    left: -20px;
+    background: url(point-left.png) no-repeat center right; }
+  .first-post .oops-inner {
     margin: 5px;
     padding: 10px;
     background: #333;
@@ -1140,23 +1157,19 @@ div.photo-action-flag, div.photo-action-delete {
     border-radius: 20px;
     -moz-border-radius: 20px;
     -webkit-border-radius: 20px; }
-  .oops h2 {
+  .first-post big {
+    display: block;
     font-size: 1.5em;
-    line-height: 1.5em;
-    margin: 0;
-    padding: 0;
-    font-weight: normal;
-    font-style: italic; }
-  .oops p {
-    margin: 0;
-    padding: 0; }
-  .oops p+p {
-    margin-top: 1em; }
-  .oops strong {
-    font-size: 1.1em;
     line-height: 1em;
-    font-style: normal;
-    font-weight: bold; }
-  .oops em {
-    font-style: normal;
-    font-weight: bold; }
+    color: #f90;
+    padding: 20px 20px 0 20px;
+    margin: 0;
+    font-weight: normal; }
+  .first-post p {
+    padding: 0 20px 20px 20px;
+    margin: 0; }
+  .first-post .heart {
+    color: #f33;
+    font-size: 1.5em;
+    line-height: 1em;
+    text-shadow: #000 0 2px 2px; }

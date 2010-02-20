@@ -26,6 +26,26 @@
                 <div id="camera-one" class="camera-throb">☃</div>
             </div>
 
+            {% if flash.signedin %}
+            <div id="first-post-1" class="first-post">
+                <div class="point-left"></div>
+                <big>Here you are</big>
+                <p>and so’s your face</p>
+            </div>
+
+            <div id="first-post-2" class="first-post">
+                <div class="point"></div>
+                <big>Share your face</big>
+                <p>in your favorite place</p>
+            </div>
+
+            <div id="first-post-3" class="first-post">
+                <div class="point"></div>
+                <big>Then share the love</big>
+                <p>by <span class="heart">♥</span>ing faces you like</p>
+            </div>
+            {% endif %}
+
             <script type="text/javascript">
                 cameraman.url = '{% absoluteurl %}{% url static path="makeaface/" %}{% endabsoluteurl %}';
                 mycam = cameraman.createCamera({
@@ -109,6 +129,81 @@
                         $(document).trigger('madeaface');
                     });
                 }
+
+                {% if flash.signedin %}
+                // FRIST PSOT
+                $(document).bind('madeaface', function () {
+                    $('#first-post-1').trigger('your-turn');
+                });
+
+                $('#first-post-1').one('your-turn', function () {
+                    $(this).show();  // but still invisible
+
+                    var target = $('#gridsubstrate .gridcell:nth(1)');
+                    var targpos = target.offset();
+                    $(this).offset({
+                        top: targpos.top + (target.outerHeight() / 2) - ($(this).outerHeight() / 2),
+                        left: targpos.left + 160
+                    });
+
+                    $(this).animate({opacity: 1}, 'fast').delay(3000).queue(function (next) {
+                        $('#first-post-2').trigger('your-turn');
+                        next();
+                    });
+                    $(this).click(function () {
+                        $(this).clearQueue();
+                        $('#first-post-2').trigger('your-turn');
+                    });
+                });
+
+                $('#first-post-2').one('your-turn', function () {
+                    $('#first-post-1').animate({opacity: 0}, 'fast').hide(0);
+                    $(this).show();  // but still invisible
+
+                    var target = $('#gridsubstrate .gridcell:nth(1)');
+                    var targpos = target.offset();
+                    $(this).offset({
+                        top: targpos.top + 160,
+                        left: targpos.left + (target.outerWidth() / 2) - ($(this).outerWidth() / 2)
+                    });
+
+                    target.addClass('gridcell-hover');
+                    $(this).animate({opacity: 1}, 'fast').delay(6000).queue(function (next) {
+                        $('#first-post-3').trigger('your-turn');
+                        next();
+                    });
+                    $(this).click(function () {
+                        $(this).clearQueue();
+                        $('#first-post-3').trigger('your-turn');
+                    });
+                });
+
+                $('#first-post-3').one('your-turn', function () {
+                    $('#gridsubstrate .gridcell:nth(1)').removeClass('gridcell-hover');
+                    $('#first-post-2').animate({opacity: 0}, 'fast').hide(0);
+                    $(this).show();  // but still invisible
+
+                    var target = $('#gridsubstrate .gridcell:nth(2)');
+                    var targpos = target.offset();
+                    $(this).offset({
+                        top: targpos.top + 160,
+                        left: targpos.left + (target.outerWidth() / 2) - ($(this).outerWidth() / 2)
+                    });
+
+                    target.addClass('gridcell-hover');
+                    $(this).animate({opacity: 1}, 'fast').delay(6000).queue(function (next) {
+                        $(this).trigger('turn-done');
+                        next();
+                    });
+                    $(this).click(function () {
+                        $(this).clearQueue();
+                        $(this).trigger('turn-done');
+                    });
+                }).bind('turn-done', function () {
+                    $('#gridsubstrate .gridcell:nth(2)').removeClass('gridcell-hover');
+                    $(this).animate({opacity: 0}, 'fast').hide(0);
+                });
+                {% endif %}
 
                 $('#gridsubstrate .gridcell .heart').live('click', function (evt) {
                     var heart = $(this);

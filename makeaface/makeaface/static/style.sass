@@ -242,6 +242,7 @@ div#camera, #photo
 
 .gridcell .action
     display: none
+    text-shadow: #000 0 1px 1px
 
 .gridcell .favorited
     display: block
@@ -426,17 +427,33 @@ div.photo-action-flag, div.photo-action-delete
 #share
     display: none
 
-.oops
+.first-post
+    display: none
+    opacity: 0
     position: absolute
-    top: 20px
-    right: 20px
-    width: 418px
     background: #333
     +borderradius(20px)
     +boxshadow(#000 0 10px 20px)
+    text-shadow: #000 0 1px 1px
+    text-align: center
     z-index: 9003
-    font-size: 2em
+    font-size: 1.5em
     line-height: 1em
+    border: 2px solid #f90
+
+    .point
+        position: absolute
+        top: -20px
+        width: 100%
+        height: 20px
+        background: url(point.png) no-repeat bottom center
+
+    .point-left
+        position: absolute
+        width: 20px
+        height: 100%
+        left: -20px
+        background: url(point-left.png) no-repeat center right
 
     .oops-inner
         margin: 5px
@@ -445,27 +462,21 @@ div.photo-action-flag, div.photo-action-delete
         border: 5px solid #fc0
         +borderradius(20px)
 
-    h2
+    big
+        display: block
         font-size: 1.5em
-        line-height: 1.5em
+        line-height: 1em
+        color: #f90
+        padding: 20px 20px 0 20px
         margin: 0
-        padding: 0
         font-weight: normal
-        font-style: italic
 
     p
+        padding: 0 20px 20px 20px
         margin: 0
-        padding: 0
 
-    p+p
-        margin-top: 1em
-
-    strong
-        font-size: 1.1em
+    .heart
+        color: #f33
+        font-size: 1.5em
         line-height: 1em
-        font-style: normal
-        font-weight: bold
-
-    em
-        font-style: normal
-        font-weight: bold
+        text-shadow: #000 0 2px 2px

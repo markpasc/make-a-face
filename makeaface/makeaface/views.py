@@ -136,6 +136,11 @@ def authorize(request):
     return resp
 
 
+def noob(request):
+    request.flash['signedin'] = True
+    return HttpResponseRedirect(reverse('home'))
+
+
 def sharing_for_elsewhere(ew):
     twitter, facebook = None, None
     for account in ew:
