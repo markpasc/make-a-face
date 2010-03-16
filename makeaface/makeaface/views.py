@@ -269,10 +269,16 @@ def upload_photo(request):
     assert content_type.startswith('image/')
     bodyfile = StringIO(request.raw_post_data)
 
+    target_url = request.group.photo_assets._location
+    target_parts = urlparse(target_url)
+    target_path = target_parts.path.replace('.json', '')
+    log.debug('Using %r as target URL', target_path)
+
     asset = Asset()
     asset.title = "a face"
     resp, content = typepad.api.browser_upload.upload(asset, bodyfile,
-        content_type=content_type, redirect_to='http://example.com/')
+        content_type=content_type, redirect_to='http://example.com/',
+        target_url=target_path)
 
     if resp.status != 302:
         log.debug('%d response from typepad: %s', resp.status, content)
