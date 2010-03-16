@@ -110,4 +110,6 @@ INSTALLED_APPS = (
 
 LOG_LEVELS.update({'makeaface': logging.DEBUG})
 
+STATIC_FILES_VERSION = 6
+
 from local_settings import *
