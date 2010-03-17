@@ -25,6 +25,7 @@
                 <div id="camera-two" class="camera-throb">2</div>
                 <div id="camera-one" class="camera-throb">☃</div>
                 <div id="camera-zero" class="camera-throb"></div>
+                <div id="camera-spin" class="camera-throb">⤾</div>
             </div>
 
             {% if flash.signedin %}
@@ -89,7 +90,20 @@
                     }).hide('fast');
                 }
 
+                function spinSpinner(i) {
+                    var transform = 'rotate(' + i + 'deg)';
+                    $('#camera-spin').css({
+                        '-moz-transform': transform,
+                        '-webkit-transform': transform,
+                        'transform': transform
+                    }).delay(40).queue(function (next) {
+                        spinSpinner((i + 10) % 360);
+                        next();
+                    });
+                }
+
                 function tookPhoto(cam) {
+                    spinSpinner(0);
                     $('#camerabox').addClass('sending');
                     cam.sendPhoto();
                 }
@@ -129,6 +143,7 @@
                         // Turn the camera back on.
                         cam.dropPhoto();
                         $('#camerabox').removeClass('sending');
+                        $('#camera-spin').clearQueue();
 
                         $(document).trigger('madeaface');
                     });
