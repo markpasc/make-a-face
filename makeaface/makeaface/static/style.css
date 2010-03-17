@@ -930,6 +930,11 @@ div#camera, #photo {
 .gridcell .flag {
   right: 0; }
 
+.gridcell .busy-heart, .gridcell .busy-flag {
+  background: rgba(0, 0, 0, 0.5) url(busy-heart.gif) no-repeat center center; }
+  .gridcell .busy-heart span, .gridcell .busy-flag span {
+    visibility: hidden; }
+
 .gridcell .share .share-twitter, .gridcell .share .share-typepad, .gridcell .share .share-facebook {
   display: inline-block;
   width: 16px;

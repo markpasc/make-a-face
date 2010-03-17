@@ -207,10 +207,12 @@
 
                 $('#gridsubstrate .gridcell .heart').live('click', function (evt) {
                     var heart = $(this);
+                    heart.addClass('busy-heart');
                     $.post('{% url favorite %}', {
                         'action': 'favorite',
                         'asset_id': heart.attr('href')
                     }, function () {
+                        heart.removeClass('busy-heart');
                         heart.addClass('favorited');
                     });
                     heart.blur();
@@ -240,10 +242,12 @@
                     var asset_id = flag.attr('href').match(/6a\w+/)[0];
                     var flags = $('#gridsubstrate .flag-' + asset_id);
 
+                    flag.addClass('busy-flag');
                     $.post('{% url flag %}', {
                         'action': 'flag',
                         'asset_id': asset_id
                     }, function (data, textStatus) {
+                        flag.removeClass('busy-flag');
                         flags.addClass('flagged');
                         if (data == 'BALEETED') {
                             flags.parents('.gridcell').find('img').animate({'opacity': 0.25}, 'slow');
@@ -352,8 +356,8 @@
                         {% ifequal user.xid event.object.author.xid %}
                             <a class="share action" href="{% absoluteurl %}{% url photo xid=event.object.xid %}{% endabsoluteurl %}" title="Share this face on {{ share }}"><span class="share-{{ share.lower }}">&nbsp;</span></a>
                         {% else %}
-                            <a class="heart action heart-{{ event.object.xid }}" href="{{ event.object.xid }}" title="I like this face">♥</a>
-                            <a class="flag action flag-{{ event.object.xid }}" href="{{ event.object.xid }}" title="This is not a face">⚑</a>
+                            <a class="heart action heart-{{ event.object.xid }}" href="{{ event.object.xid }}" title="I like this face"><span>♥</span></a>
+                            <a class="flag action flag-{{ event.object.xid }}" href="{{ event.object.xid }}" title="This is not a face"><span>⚑</span></a>
                         {% endifequal %}
                     {% endif %}
                 </div>
@@ -364,8 +368,8 @@
                         {% ifequal user.xid event.object.author.xid %}
                             <a class="share action" href="{% absoluteurl %}{% url photo xid=event.object.xid %}{% endabsoluteurl %}" title="Share this face on {{ share }}"><span class="share-{{ share.lower }}">&nbsp;</span></a>
                         {% else %}
-                            <a class="heart action heart-{{ event.object.xid }}" href="{{ event.object.xid }}" title="I like this face">♥</a>
-                            <a class="flag action flag-{{ event.object.xid }}" href="{{ event.object.xid }}" title="This is not a face">⚑</a>
+                            <a class="heart action heart-{{ event.object.xid }}" href="{{ event.object.xid }}" title="I like this face"><span>♥</span></a>
+                            <a class="flag action flag-{{ event.object.xid }}" href="{{ event.object.xid }}" title="This is not a face"><span>⚑</span></a>
                         {% endifequal %}
                     {% endif %}
                 </div>
