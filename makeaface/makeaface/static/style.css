@@ -833,6 +833,10 @@ div#camera, #photo {
   width: 458px;
   height: 458px; }
 
+#camera-zero {
+  background: white;
+  opacity: 0; }
+
 #take-picture-box {
   position: absolute;
   bottom: 17px;

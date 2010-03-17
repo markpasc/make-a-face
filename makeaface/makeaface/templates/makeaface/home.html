@@ -24,6 +24,7 @@
                 <div id="camera-three" class="camera-throb">3</div>
                 <div id="camera-two" class="camera-throb">2</div>
                 <div id="camera-one" class="camera-throb">☃</div>
+                <div id="camera-zero" class="camera-throb"></div>
             </div>
 
             {% if flash.signedin %}
@@ -76,7 +77,10 @@
                     $('#camera-three').show('fast').delay(800).queue(function (next) {
                         $('#camera-two').show('fast').delay(800).queue(function (next) {
                             $('#camera-one').show('fast').delay(800).queue(function (next) {
-                                mycam.takePhoto();
+                                $('#camera-zero').show(0).animate({opacity:1}, 'fast').delay(100).queue(function (next) {
+                                    mycam.takePhoto();
+                                    next();
+                                }).animate({opacity:0}, 'fast').hide(0);
                                 next();
                             }).hide('fast');
                             next();
