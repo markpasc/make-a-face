@@ -26,6 +26,7 @@
                 <div id="camera-one" class="camera-throb">☃</div>
                 <div id="camera-zero" class="camera-throb"></div>
                 <div id="camera-spin" class="camera-throb">⤾</div>
+                <div id="camera-yay" class="camera-throb">✓</div>
             </div>
 
             {% if flash.signedin %}
@@ -144,6 +145,7 @@
                         cam.dropPhoto();
                         $('#camerabox').removeClass('sending');
                         $('#camera-spin').clearQueue();
+                        $('#camera-yay').css({opacity:1}).show(0).animate({opacity:0}, 1200).hide(0);
 
                         $(document).trigger('madeaface');
                     });
