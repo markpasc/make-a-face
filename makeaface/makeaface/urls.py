@@ -24,6 +24,7 @@ urlpatterns = patterns('',
         {'fresh': True}, name='asset_meta_fresh'),
     url(r'^oembed$', 'makeaface.views.oembed', name='oembed'),
     url(r'^noob$', 'makeaface.views.noob'),
+    url(r'^face/(?P<xid>\w+)/(?P<spec>[^/]+)', 'makeaface.views.lastface', name='lastface'),
 
     url(r'^faq$', 'makeaface.views.faq', name='faq'),
 

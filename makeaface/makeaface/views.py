@@ -10,6 +10,7 @@ from urlparse import urlparse
 from django.conf import settings
 from django.core.cache import cache
 from django.core.urlresolvers import reverse, resolve
+import django.db.models.signals
 from django.http import HttpResponse, HttpResponseRedirect, HttpResponseNotFound, Http404
 from oauth.oauth import OAuthConsumer, OAuthToken
 import simplejson as json
@@ -17,7 +18,7 @@ from templateresponse import TemplateResponse
 import typepad
 import typepad.api
 import typepadapp.signals
-from typepadapp.models import Asset, Favorite, Photo
+from typepadapp.models import Asset, Favorite, Photo, User
 
 from makeaface.models import Lastface, Favoriteface
 
@@ -360,6 +361,14 @@ typepadapp.signals.favorite_created.connect(uncache_favorites)
 typepadapp.signals.favorite_deleted.connect(uncache_favorites)
 
 
+def uncache_lastface(sender, instance, **kwargs):
+    cache_key = 'lastface:%s' % instance.owner
+    cache.delete(cache_key)
+
+django.db.models.signals.post_save.connect(uncache_lastface, sender=Lastface)
+django.db.models.signals.post_delete.connect(uncache_lastface, sender=Lastface)
+
+
 @oops
 def flag(request):
     if request.method != 'POST':
@@ -445,6 +454,33 @@ def delete(request):
             group=request.group)
 
     return HttpResponse('', status=204)
+
+
+@oops
+def lastface(request, xid, spec):
+    cache_key = 'lastface:%s' % xid
+    face = cache.get(cache_key)
+
+    if face is None:
+        try:
+            face = Lastface.objects.get(owner=xid)
+        except Lastface.DoesNotExist:
+            # Get that person's userpic.
+            with typepad.client.batch_request():
+                user = User.get_by_url_id(xid)
+
+            face = user.links['rel__avatar']['maxwidth__200'].href
+            if 'default-userpics' in face:
+                return HttpResponseNotFound('no such face', content_type='text/plain')
+
+            face = face.rsplit('/', 1)[-1].split('-', 1)[0]
+        else:
+            face = face.face
+
+        cache.set(cache_key, face)
+
+    url = 'http://a0.typepad.com/%s-%s' % (face, spec)
+    return HttpResponseRedirect(url)
 
 
 def facegrid(request):
