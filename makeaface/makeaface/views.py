@@ -238,7 +238,7 @@ def oembed(request):
     except Asset.NotFound:
         return HttpResponseNotFound('no such photo', content_type='text/plain')
 
-    photo_url = photo.links['rel__enclosure']['maxwidth__%d' % size].href
+    photo_url = photo.image_link.square(size).url
 
     data = {
         'type': 'photo',
@@ -253,7 +253,7 @@ def oembed(request):
     }
     if size > 150:
         data.update({
-            'thumbnail_url': photo.links['rel__enclosure']['maxwidth__150'].href,
+            'thumbnail_url': photo.image_link.square(150).url,
             'thumbnail_width': 150,
             'thumbnail_height': 150,
         })
@@ -301,7 +301,7 @@ def upload_photo(request):
     log.debug('LOCATION IS A %s %r', type(loc).__name__, loc)
     with typepad.client.batch_request():
         asset = Asset.get(loc)
-    image_url = asset.links['maxwidth__150'].href[:-6] + '-150si'
+    image_url = asset.image_link.square(150).url
 
     # Save the photo as a new last face for the poster.
     Lastface(owner=request.user.xid, face=asset.xid).save()
@@ -469,7 +469,7 @@ def lastface(request, xid, spec):
             with typepad.client.batch_request():
                 user = User.get_by_url_id(xid)
 
-            face = user.links['rel__avatar']['maxwidth__200'].href
+            face = user.avatar_link.by_width(200).url
             if 'default-userpics' in face:
                 return HttpResponseNotFound('no such face', content_type='text/plain')
 

@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 <html><head>
+    {% load typepad_filters %}
+
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>{% block htmltitle %}make-a-face{% endblock %}</title>
     <link rel="stylesheet" type="text/css" href="{% url static path="makeaface/style.css" %}">
@@ -11,7 +13,7 @@
 
         var faces = [
         {% for photo in photos %}
-            "{{ photo.links.rel__enclosure.maxwidth__458.href }}"{% if forloop.last %}{% else %},{% endif %}
+            "{% with photo|enclosurebymaxwidth:458 as face %}{{ face.url }}{% endwith %}"{% if forloop.last %}{% else %},{% endif %}
         {% endfor %}
         ];
 

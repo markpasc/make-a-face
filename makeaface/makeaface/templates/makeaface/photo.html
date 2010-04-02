@@ -1,5 +1,6 @@
 {% extends "makeaface/base.html" %}
 {% load abs %}
+{% load typepad_filters %}
 
 {% block htmltitle %}{{ photo.author.display_name }}'s face &middot; {{ block.super }}{% endblock %}
 
@@ -11,7 +12,7 @@
     <div id="gridcontainer" class="photogrid">
         <div id="photobox">
             <div id="photo">
-                <img src="{{ photo.links.maxwidth__500.href }}">
+                <img src="{% with photo|enclosurebymaxwidth:500 as face %}{{ face.url }}{% endwith %}">
             </div>
         </div>
 
@@ -19,8 +20,8 @@
             <div id="photo-data-inner">
             <div id="photo-by">
                 <p><big>
-                    <a href="{{ photo.author.typepad_url }}"><img src="{{ photo.author.links.rel__avatar.maxwidth__50.href }}"></a>
-                    <a href="{{ photo.author.typepad_url }}">{{ photo.author.display_name }}</a>'s face
+                    <a href="{{ photo.author.profile_page_url }}"><img src="{% with photo.author|userpicbywidth:50 as userpic %}{{ userpic.url }}{% endwith %}"></a>
+                    <a href="{{ photo.author.profile_page_url }}">{{ photo.author.display_name }}</a>'s face
                 </big></p>
             </div>
 
@@ -149,9 +150,9 @@
         {% for fav in favorites %}
         <div class="gridcell">
             {% if fav.lastface %}
-                <a href="{% url photo xid=fav.lastface.xid %}" title="{{ fav.author.display_name }} liked this face"><img src="{{ fav.lastface.links.rel__enclosure.maxwidth__150.href|slice:":-6" }}-150si"></a>
+                <a href="{% url photo xid=fav.lastface.xid %}" title="{{ fav.author.display_name }} liked this face"><img src="{% with fav.lastface|enclosurebymaxwidth:150 as face %}{{ face.url }}{% endwith %}"></a>
             {% else %}
-                <a href="{{ fav.author.typepad_url }}" title="{{ fav.author.display_name }} liked this face"><img src="{{ fav.author.links.rel__avatar.maxwidth__200.href }}"></a>
+                <a href="{{ fav.author.profile_page_url }}" title="{{ fav.author.display_name }} liked this face"><img src="{% with fav.author|userpicbywidth:200 as userpic %}{{ userpic.url }}{% endwith %}"></a>
             {% endif %}
         </div>
         {% endfor %}
@@ -160,9 +161,9 @@
         {% if user_favorite %}{% else %}
         <div id="new-favorite" class="gridcell hidden">
             {% if lastface %}
-                <a href="{% url photo xid=lastface.xid %}" title="{{ user.display_name }} liked this face"><img src="{{ lastface.links.rel__enclosure.maxwidth__150.href|slice:":-6" }}-150si"></a>
+                <a href="{% url photo xid=lastface.xid %}" title="{{ user.display_name }} liked this face"><img src="{% with lastface|enclosurebymaxwidth:150 as face %}{{ face.url }}{% endwith %}"></a>
             {% else %}
-                <a href="{{ user.typepad_url }}" title="{{ user.display_name }} liked this face"><img src="{{ user.links.rel__avatar.maxwidth__200.href }}"></a>
+                <a href="{{ user.profile_page_url }}" title="{{ user.display_name }} liked this face"><img src="{% with user|userpicbywidth:200 as userpic %}{{ userpic.url }}{% endwith %}"></a>
             {% endif %}
         </div>
         {% endif %}

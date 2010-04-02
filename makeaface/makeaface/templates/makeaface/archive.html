@@ -1,5 +1,6 @@
 {% extends "makeaface/base.html" %}
 {% load abs %}
+{% load typepad_filters %}
 
 {% block content %}
     <div id="gridcontainer">
@@ -87,7 +88,7 @@
         {% for event in events %}
             {% if event.object %}
                 <div class="gridcell">
-                    <a class="link" href="{% url photo xid=event.object.xid %}" title="View {{ event.object.author.display_name }}'s face"><img src="{{ event.object.links.rel__enclosure.maxwidth__150.href|slice:":-6" }}-150si"></a>
+                    <a class="link" href="{% url photo xid=event.object.xid %}" title="View {{ event.object.author.display_name }}'s face"><img src="{% with event.object|enclosurebywidth:150 as face %}{{ face.url }}{% endwith %}"></a>
                     {% if user.is_authenticated %}
                         {% ifequal user.xid event.object.author.xid %}
                             <a class="share action" href="{% absoluteurl %}{% url photo xid=event.object.xid %}{% endabsoluteurl %}" title="Share this face on {{ share }}"><span class="share-{{ share.lower }}">&nbsp;</span></a>

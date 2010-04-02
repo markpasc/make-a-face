@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 <html><head>
+    {% load typepad_filters %}
+
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>{% block htmltitle %}Make A Face{% endblock %}</title>
     <link rel="stylesheet" type="text/css" href="{% url static path="makeaface/style.css" %}">
@@ -19,7 +21,7 @@
                 <p>Hi! <span class="tp-button"><span class="button button-signin"><a href="{% url login %}">Sign in</a></span></span> to face</p>
             {% else %}
                 <p>
-                    <span class="hi">Hi, <a href="{{ user.typepad_url }}"><img src="{{ user.links.rel__avatar.maxwidth__50.href }}"></a> <a href="{{ user.typepad_url }}">{{ user.display_name }}</a>!</span>
+                    <span class="hi">Hi, <a href="{{ user.profile_page_url }}"><img src="{% with user|userpicbysize:50 as userpic %}{{ userpic.url }}{% endwith %}">{{ user.display_name }}</a>!</span>
                     <span class="tp-button"><span class="button button-signout"><a href="{% url logout %}">Sign out</a></span></span>
                 </p>
             {% endif %}
