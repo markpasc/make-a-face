@@ -507,3 +507,7 @@ def facegrid(request):
 def faq(request):
     return TemplateResponse(request, 'makeaface/faq.html', {
     })
+
+
+def mobile_photo(request):
+    raise NotImplementedError
