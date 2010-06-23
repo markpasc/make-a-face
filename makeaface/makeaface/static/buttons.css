@@ -54,13 +54,6 @@ http://www.sixapart.com/
     filter: progid:DXImageTransform.Microsoft.gradient(enabled='true', startColorstr=#e5e5e5, endColorstr=#d9d9d9, GradientType=0);
 }
 
-.tp-button .button a span {
-    padding: 0 10px 0 0;
-    background-image: url(../../../images/app/design/buttons/down.png);
-    background-repeat: no-repeat;
-    background-position: right center;
-}
-
 .tp-button .menu {
     display: none;
     position: absolute;
