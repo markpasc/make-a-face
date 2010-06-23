@@ -157,7 +157,7 @@ def sharing_for_elsewhere(ew):
         else 'TypePad')
 
 
-def photo(request, xid):
+def photo(request, xid, template=None):
     # Ask this up front to get the user object outside of batches.
     authed = request.user.is_authenticated()
 
@@ -196,7 +196,10 @@ def photo(request, xid):
         except KeyError:
             pass
 
-    return TemplateResponse(request, 'makeaface/photo.html', {
+    if template is None:
+        mobile_context = makeaface.context_processors.mobile(request)
+        template = 'mobileface/photo.html' if mobile_context['mobile'] else 'makeaface/photo.html'
+    return TemplateResponse(request, template, {
         'photo': photo,
         'favorites': favs,
         'user_favorite': userfav,
