@@ -20,6 +20,7 @@ import typepad.api
 import typepadapp.signals
 from typepadapp.models import Asset, Favorite, Photo, User
 
+import makeaface.context_processors
 from makeaface.models import Lastface, Favoriteface
 
 
@@ -88,7 +89,8 @@ def home(request, page=None, template=None):
     log.debug('User agent is %r', user_agent)
 
     if template is None:
-        template = 'makeaface/home.html'
+        mobile_context = makeaface.context_processors.mobile(request)
+        template = 'mobileface/home.html' if mobile_context['mobile'] else 'makeaface/home.html'
     return TemplateResponse(request, template, {
         'events': events,
         'next_box_loc': next_box_loc(),

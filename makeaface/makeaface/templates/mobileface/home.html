@@ -1,0 +1,28 @@
+{% extends "mobileface/base.html" %}
+{% load abs %}
+{% load typepad_filters %}
+
+{% block content %}
+
+    <div id="gridsubstrate">
+        {% for event in events %}
+            {% if event.object %}
+            <div class="gridcell {% cycle '' '' 'lastcell' %}">
+                <a class="link" href="{% url photo xid=event.object.xid %}" title="View {{ event.object.author.display_name }}'s face">
+                    <img src="{% with event.object|enclosurebywidth:100 as face %}{{ face.url }}{% endwith %}">
+                </a>
+
+                {% if user.is_authenticated %}
+                    {% ifequal user.xid event.object.author.xid %}
+                        <a class="share action" href="{% absoluteurl %}{% url photo xid=event.object.xid %}{% endabsoluteurl %}" title="Share this face on {{ share }}"><span class="share-{{ share.lower }}">&nbsp;</span></a>
+                    {% else %}
+                        <a class="heart action heart-{{ event.object.xid }}" href="{{ event.object.xid }}" title="I like this face"><span>♥</span></a>
+                        <a class="flag action flag-{{ event.object.xid }}" href="{{ event.object.xid }}" title="This is not a face"><span>⚑</span></a>
+                    {% endifequal %}
+                {% endif %}
+            </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+
+{% endblock %}

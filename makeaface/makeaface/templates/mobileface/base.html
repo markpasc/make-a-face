@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html><head>
+    {% load typepad_filters %}
+
+    <meta charset="utf-8">
+    <title>{% block htmltitle %}Make A Face{% endblock %}</title>
+    <link rel="stylesheet" type="text/css" href="{% url static path="makeaface/mobile/style.css" %}">
+    <script type="text/javascript" src="{% url static path="makeaface/jquery.js" %}"></script>
+    <meta name="viewport" content="width=320; initial-scale=1.0; user-scalable=no">
+
+    {% block htmlhead %}{% endblock %}
+</head><body>
+
+    {% block toolbar %}
+    <div id="toolbar">
+        <div id="title">
+            <h1><a href="{% url home %}"><img src="{% url static path="makeaface/banner.png" %}" alt="Make A Face"></a></h1>
+        </div>
+        <div id="hi">
+            {% if user.is_anonymous %}
+                <p>Hi! <span class="tp-button"><span class="button button-signin"><a href="{% url login %}">Sign in</a></span></span> to face</p>
+            {% else %}
+                <p>
+                    <span class="hi">Hi, <a href="{{ user.profile_page_url }}"><img src="{% with user|userpicbysize:50 as userpic %}{{ userpic.url }}{% endwith %}">{{ user.display_name }}</a>!</span>
+                    <span class="tp-button"><span class="button button-signout"><a href="{% url logout %}">Sign out</a></span></span>
+                </p>
+            {% endif %}
+        </div>
+    </div>
+    {% endblock %}
+
+    {% block content %}{% endblock %}
+
+{% if ganalytics_code %}
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("{{ ganalytics_code }}");
+pageTracker._trackPageview();
+{% block ganalytics_callbacks %}{% endblock %}
+} catch(err) {}</script>
+{% endif %}
+
+</body></html>
