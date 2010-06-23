@@ -279,7 +279,7 @@ def upload_photo(request):
     asset.title = "a face"
     resp, content = typepad.api.browser_upload.upload(asset, bodyfile,
         content_type=content_type, redirect_to='http://example.com/',
-        target_url=target_path)
+        target_url=target_path, post_type='photo')
 
     if resp.status != 302:
         log.debug('%d response from typepad: %s', resp.status, content)
