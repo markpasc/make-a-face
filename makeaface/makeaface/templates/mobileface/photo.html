@@ -1,0 +1,47 @@
+{% extends "mobileface/base.html" %}
+{% load abs %}
+{% load typepad_filters %}
+
+{% block content %}
+
+    <div id="photo">
+        <img src="{% with photo|enclosurebymaxwidth:320 as face %}{{ face.url }}{% endwith %}">
+    </div>
+
+    <div id="photo-by">
+        <a href="{{ photo.author.profile_page_url }}"><img src="{% with photo.author|userpicbywidth:50 as userpic %}{{ userpic.url }}{% endwith %}" width="50" height="50"></a>
+        <a href="{{ photo.author.profile_page_url }}">{{ photo.author.display_name }}</a>'s face
+    </div>
+
+    <div id="photo-actions">
+        {% if user.is_authenticated %}
+            {% ifequal user.xid photo.author.xid %}
+            {% else %}
+            <div class="photo-action">
+                <span class="tp-button">
+                    <span class="button button-heart button-xl">
+                        <a id="photo-action-heart" {% if user_favorite %}class="favorited"{% endif %} href="{{ photo.xid }}"><span class="heart">♥</span><span class="text">{% if user_favorite %}You like this face!{% else %}I like this face{% endif %}</span></a>
+                    </span>
+                </span>
+            </div>
+
+            <div class="photo-action">
+                <span class="tp-button">
+                    <span class="button button-flag">
+                        <a id="photo-action-flag" href="{{ photo.xid }}"><span class="flag">⚑</span><span class="text">This is not a face</span></a>
+                    </span>
+                </span>
+            </div>
+            {% endifequal %}
+        {% else %}
+            <div class="photo-action">
+                <span class="tp-button">
+                    <span class="button button-signin">
+                        <a id="photo-action-signin" href="{% url login %}">Sign in to favorite &amp; flag</a>
+                    </span>
+                </span>
+            </div>
+        {% endif %}
+    </div>
+
+{% endblock %}

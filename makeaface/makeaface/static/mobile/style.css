@@ -1,3 +1,10 @@
+@import url(../buttons.css);
+
+body, th, td {
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 1.2em;
+  line-height: 1.3em; }
+
 body {
     background: #333;
     color: white;
@@ -28,3 +35,62 @@ body {
 .lastcell {
     margin-right: 0;
 }
+
+#photo img {
+    width: 300px;
+    height: 300px;
+}
+
+#photo-by img {
+    vertical-align: middle;
+}
+
+#photo-by, .photo-action {
+    margin-top: 10px;
+    text-align: center;
+}
+
+    .tp-button {
+      float: none;
+      display: inline-block; }
+
+.tp-button .button-heart a, .tp-button .button-share a {
+  color: #030;
+  text-shadow: #d4ff00 0 1px 1px;
+  border-color: #99ff00;
+  background-color: #99ff00;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#ccff00), to(#99ff00));
+  background-image: -moz-linear-gradient(#ccff00, #99ff00);
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled='true', startColorstr=#ccff00, endColorstr=#99ff00, GradientType=0);
+  box-shadow: black 0 1px 2px;
+  -moz-box-shadow: black 0 1px 2px;
+  -webkit-box-shadow: black 0 1px 2px; }
+  .tp-button .button-heart a:hover, .tp-button .button-share a:hover {
+    border-color: #77dd00;
+    background-color: #77dd00;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#aadd00), to(#77dd00));
+    background-image: -moz-linear-gradient(#aadd00, #77dd00);
+    filter: progid:DXImageTransform.Microsoft.gradient(enabled='true', startColorstr=#aadd00, endColorstr=#77dd00, GradientType=0); }
+
+    .tp-button .button-flag a, .tp-button .button-delete a {
+      color: #300;
+      text-shadow: #ff8400 0 1px 1px;
+      border-color: #ff3300;
+      background-color: #ff3300;
+      background-image: -webkit-gradient(linear, left top, left bottom, from(#ff6600), to(#ff3300));
+      background-image: -moz-linear-gradient(#ff6600, #ff3300);
+      filter: progid:DXImageTransform.Microsoft.gradient(enabled='true', startColorstr=#ff6600, endColorstr=#ff3300, GradientType=0);
+      box-shadow: black 0 1px 2px;
+      -moz-box-shadow: black 0 1px 2px;
+      -webkit-box-shadow: black 0 1px 2px; }
+      .tp-button .button-flag a:hover, .tp-button .button-delete a:hover {
+        border-color: #dd7700;
+        background-color: #dd7700;
+        background-image: -webkit-gradient(linear, left top, left bottom, from(#ddaa00), to(#dd7700));
+        background-image: -moz-linear-gradient(#ddaa00, #dd7700);
+        filter: progid:DXImageTransform.Microsoft.gradient(enabled='true', startColorstr=#ddaa00, endColorstr=#dd7700, GradientType=0); }
+
+    .button-heart .heart {
+      color: #933;
+      text-shadow: #600 0 1px 1px;
+      font-size: 22px; }
