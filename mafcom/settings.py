@@ -1,6 +1,7 @@
 # Django settings for mafcom project.
 
 import logging
+import logging.handlers
 from motion.settings import *
 
 DEBUG = True
@@ -113,4 +114,15 @@ LOG_LEVELS.update({'makeaface': logging.DEBUG})
 FULL_FEED_CONTENT = True
 STATIC_FILES_VERSION = 6
 
+logging.basicConfig(level=logging.DEBUG)
+
 from local_settings import *
+
+try:
+    LOG_FILENAME
+except NameError:
+    pass
+else:
+    handler = logging.handlers.WatchedFileHandler(LOG_FILENAME)
+    handler.setFormatter(logging.Formatter(LOG_FORMAT))
+    logging.getLogger().addHandler(handler)
