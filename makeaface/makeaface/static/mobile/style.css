@@ -1,0 +1,30 @@
+body {
+    background: #333;
+    color: white;
+    width: 300px;
+    padding: 0 10px;
+    margin: 0;
+}
+
+#title img {
+    width: 300px;
+    height: auto;
+}
+
+#hi {
+    display: none;
+}
+
+.gridcell {
+    float: left;
+    margin: 0 6px 6px 0;
+}
+
+.gridcell img {
+    width: 96px;
+    height: 96px;
+}
+
+.lastcell {
+    margin-right: 0;
+}
