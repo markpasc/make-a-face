@@ -356,7 +356,6 @@ def uncache_favorites(sender, instance, **kwargs):
     cache_key = 'favorites:%s' % instance.author.xid
     cache.delete(cache_key)
 
-
 typepadapp.signals.favorite_created.connect(uncache_favorites)
 typepadapp.signals.favorite_deleted.connect(uncache_favorites)
 
@@ -427,7 +426,6 @@ def flag(request):
 def cull_old_lastfavfaces(sender, instance, group, **kwargs):
     Lastface.objects.filter(face=instance.xid).delete()
     Favoriteface.objects.filter(lastface=instance.xid).delete()
-
 
 typepadapp.signals.asset_deleted.connect(cull_old_lastfavfaces)
 
