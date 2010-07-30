@@ -270,10 +270,27 @@ def oembed(request):
 def upload_photo(request):
     if request.method != 'POST':
         return HttpResponse('POST required at this url', status=400, content_type='text/plain')
+    log.debug('%r', request.raw_post_data[:100])
 
     content_type = request.META['CONTENT_TYPE']
-    assert content_type.startswith('image/')
-    bodyfile = StringIO(request.raw_post_data)
+    log.debug('Content type is %r', content_type)
+    if content_type.startswith('image/'):
+        bodyfile = StringIO(request.raw_post_data)
+    elif content_type.startswith('multipart/form-data'):
+        log.debug('Let us see what is in these %d bytes', len(request.raw_post_data))
+        files = request.FILES.items()
+        if len(files) < 1:
+            log.debug('Oops, no files in this multipart form-data?')
+            return HttpResponse('Expected some files in this multipart/form-data but there were none',
+                status=400, content_type='text/plain')
+        thisfile = files[0]
+        if thisfile.multiple_chunks():
+            log.debug('HOMG MULTICHUNK FILE')
+        bodyfile = StringIO(thisfile.read())
+    else:
+        log.debug('Oops, uploaded "photo" was %s', content_type)
+        return HttpResponse('Expected image or multipart/form-data, not %s' % content_type,
+            status=400, content_type='text/plain')
 
     target_url = request.group.photo_assets._location
     target_parts = urlparse(target_url)
