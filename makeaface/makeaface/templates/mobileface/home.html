@@ -12,6 +12,13 @@
                 </span>
             </span>
         </div>
+        <script type="text/javascript">
+            var cookie = $.cookie('motion');
+            if (cookie) {
+                var makeface = $('#photo-action-makeface');
+                makeface.attr('href', makeface.attr('href') + '#' + cookie);
+            }
+        </script>
     {% endif %}
 
     <div id="gridsubstrate">
