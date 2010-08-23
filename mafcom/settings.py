@@ -73,6 +73,7 @@ MIDDLEWARE_CLASSES = (
     'typepadapp.middleware.ApplicationMiddleware',
     'typepadapp.middleware.UserAgentMiddleware',
     'typepadapp.middleware.AuthorizationExceptionMiddleware',
+    'makeaface.middleware.OopsMiddleware',
 )
 
 ROOT_URLCONF = 'mafcom.urls'
