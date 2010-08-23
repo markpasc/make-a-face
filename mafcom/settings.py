@@ -123,6 +123,10 @@ try:
 except NameError:
     pass
 else:
-    handler = logging.handlers.WatchedFileHandler(LOG_FILENAME)
-    handler.setFormatter(logging.Formatter(LOG_FORMAT))
-    logging.getLogger().addHandler(handler)
+    try:
+        handler = logging.handlers.WatchedFileHandler(LOG_FILENAME)
+        handler.setFormatter(logging.Formatter(LOG_FORMAT))
+        logging.getLogger().addHandler(handler)
+    except IOError:
+        pass
+
