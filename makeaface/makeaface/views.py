@@ -504,3 +504,8 @@ def facegrid(request):
 def faq(request):
     return TemplateResponse(request, 'makeaface/faq.html', {
     })
+
+
+def error(request):
+    raise NotImplementedError
+

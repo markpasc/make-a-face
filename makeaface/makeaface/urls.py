@@ -27,6 +27,7 @@ urlpatterns = patterns('',
     url(r'^face/(?P<xid>\w+)/(?P<spec>[^/]+)', 'makeaface.views.lastface', name='lastface'),
 
     url(r'^faq$', 'makeaface.views.faq', name='faq'),
+    url(r'^error$', 'makeaface.views.error'),
 
     url(r'^grid$', 'makeaface.views.facegrid', name='facegrid'),
     url(r'^grid\.$', 'django.views.generic.simple.redirect_to',
