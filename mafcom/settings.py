@@ -109,12 +109,18 @@ INSTALLED_APPS = (
     'makeaface',
 )
 
-LOG_LEVELS.update({'makeaface': logging.DEBUG})
+LOG_LEVELS.update({
+    'makeaface': logging.DEBUG,
+    'gunicorn': logging.WARNING,
+    'batchhttp.client': logging.ERROR,
+})
 
 FULL_FEED_CONTENT = True
 STATIC_FILES_VERSION = 6
 
-logging.basicConfig(level=logging.DEBUG)
+LOG_FORMAT = '%(asctime)-19s %(name)-20s %(levelname)-8s %(message)s'
+
+logging.basicConfig(level=logging.DEBUG, format=LOG_FORMAT)
 
 from local_settings import *
 
