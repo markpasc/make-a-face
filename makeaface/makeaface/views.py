@@ -511,3 +511,8 @@ def faq(request):
 
 def mobile_photo(request):
     raise NotImplementedError
+
+
+def error(request):
+    raise NotImplementedError
+

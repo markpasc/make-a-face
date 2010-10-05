@@ -73,6 +73,7 @@ MIDDLEWARE_CLASSES = (
     'typepadapp.middleware.ApplicationMiddleware',
     'typepadapp.middleware.UserAgentMiddleware',
     'typepadapp.middleware.AuthorizationExceptionMiddleware',
+    'makeaface.middleware.OopsMiddleware',
 )
 
 ROOT_URLCONF = 'mafcom.urls'
@@ -109,12 +110,18 @@ INSTALLED_APPS = (
     'makeaface',
 )
 
-LOG_LEVELS.update({'makeaface': logging.DEBUG})
+LOG_LEVELS.update({
+    'makeaface': logging.DEBUG,
+    'gunicorn': logging.WARNING,
+    'batchhttp.client': logging.ERROR,
+})
 
 FULL_FEED_CONTENT = True
 STATIC_FILES_VERSION = 6
 
-logging.basicConfig(level=logging.DEBUG)
+LOG_FORMAT = '%(asctime)-19s %(name)-20s %(levelname)-8s %(message)s'
+
+logging.basicConfig(level=logging.DEBUG, format=LOG_FORMAT)
 
 from local_settings import *
 
@@ -123,6 +130,10 @@ try:
 except NameError:
     pass
 else:
-    handler = logging.handlers.WatchedFileHandler(LOG_FILENAME)
-    handler.setFormatter(logging.Formatter(LOG_FORMAT))
-    logging.getLogger().addHandler(handler)
+    try:
+        handler = logging.handlers.WatchedFileHandler(LOG_FILENAME)
+        handler.setFormatter(logging.Formatter(LOG_FORMAT))
+        logging.getLogger().addHandler(handler)
+    except IOError:
+        pass
+
