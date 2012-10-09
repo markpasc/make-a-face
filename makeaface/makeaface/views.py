@@ -100,6 +100,79 @@ def home(request, page=None, template=None):
     })
 
 
+def facejson(request, page=None):
+    resp = home(request, page, 'faces.json')
+
+    events = resp.template_context['events']
+    events_data = list()
+    for event in events:
+        about_event = event.__dict__
+        obj = event.object
+        if obj is None:
+            continue
+
+        author = obj.author
+        author_data = {
+            'xid': author.xid,
+            'displayName': author.display_name,
+        }
+        event_data = {
+            'xid': obj.xid,
+            'url': obj.image_link.url,
+            'published': obj.published.replace(microsecond=0).isoformat(),
+            'author': author_data,
+        }
+
+        if obj.favorite_count > 0:
+            xid = obj.xid
+            with typepad.client.batch_request():
+                favs = Asset.get_by_url_id(xid).favorites
+
+                favfaces = dict()
+                for face in Favoriteface.objects.all().filter(favorited=xid):
+                    favfaces[face.favoriter] = Asset.get_by_url_id(face.lastface)
+
+            favs_data = list()
+            for fav in favs:
+                author = fav.author
+                fav_data = {
+                    'xid': author.xid,
+                    'displayName': author.display_name,
+                    'favorited': fav.published.replace(microsecond=0).isoformat(),
+                }
+                if author.xid in favfaces:
+                    face = favfaces[author.xid]
+                    face_data = {
+                        'xid': face.xid,
+                        'url': face.image_link.url,
+                        'published': face.published.replace(microsecond=0).isoformat(),
+                    }
+                    fav_data['face'] = face_data
+                favs_data.append(fav_data)
+
+            event_data['favorites'] = favs_data
+
+        events_data.append(event_data)
+
+
+    next_page = resp.template_context['next_page']
+    next_url = reverse('facejson', kwargs={'page': next_page})
+    next_url = request.build_absolute_uri(next_url)
+    data = {
+        'events': events_data,
+        'next': next_url,
+    }
+
+    prev_page = resp.template_context['prev_page']
+    if prev_page > 0:
+        prev_url = reverse('facejson', kwargs={'page': prev_page})
+        prev_url = request.build_absolute_uri(prev_url)
+        data['prev'] = prev_url
+
+    jsontext = json.dumps(data, sort_keys=True, indent=4)
+    return HttpResponse(jsontext, content_type='application/json')
+
+
 @oops
 def asset_meta(request, fresh=False):
     if not request.user.is_authenticated():

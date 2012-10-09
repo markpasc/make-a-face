@@ -7,6 +7,8 @@ urlpatterns = patterns('',
     url(r'^$', 'makeaface.views.home', name='home'),
     url(r'^$', 'makeaface.views.home', name='group_events'),
 
+    url(r'^faces/(?P<page>\d+).json$', 'makeaface.views.facejson', name='facejson'),
+
     url(r'^authorize/?$', 'makeaface.views.authorize', name='authorize'),
 
     url(r'^entry/(?P<id>\w+)$', 'django.views.generic.simple.redirect_to',
